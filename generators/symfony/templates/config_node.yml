@@ -1,0 +1,5 @@
+imports:
+    - { resource: config_dev.yml }
+
+zoerb_filerev:
+    enabled: false
