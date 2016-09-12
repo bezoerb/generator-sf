@@ -1,4 +1,5 @@
 'use strict';
+var os = require('os');
 var path = require('path');
 var Promise = require('bluebird');
 var decompress = require('decompress');
@@ -19,34 +20,6 @@ function read(file) {
 }
 
 module.exports = generators.Base.extend({
-
-    /**
-     * Check for installed composer and prompt for installing composer locally if not found
-     */
-    _checkComposer: function _checkComposer() {
-        this.globalComposer = false;
-
-        return new Promise(function (resolve, reject) {
-            // Check if composer is installed globally
-            exec('composer', ['-V'], function (error) {
-                if (error !== null && os.platform() !== 'win32') {
-                    this.log.write().info('WARNING: No global composer installation found. Installing composer locally.');
-                    // Use the secondary installation method as we cannot assume curl is installed
-                    exec('php -r "readfile(\'https://getcomposer.org/installer\');" | php');
-                    this.log('Installing composer locally.');
-                    this.log('See http://getcomposer.org for more details on composer.');
-                    this.log('');
-                    resolve();
-                } else if (error !== null) {
-                    this.log('WARNING: No global composer installation found. Go to https://getcomposer.org/download/ and install first.');
-                    reject(error);
-                } else {
-                    this.globalComposer = true;
-                    resolve();
-                }
-            }.bind(this));
-        }.bind(this));
-    },
 
     _composer: function (args) {
         var cmd = 'composer';
@@ -95,10 +68,7 @@ module.exports = generators.Base.extend({
     },
 
     initializing: function () {
-        return Promise.all([
-            this._checkComposer(),
-            this._getSymfonyTags()
-        ]);
+        return this._getSymfonyTags();
     },
 
     prompting: function () {
@@ -157,6 +127,30 @@ module.exports = generators.Base.extend({
             .then(function() {
                 return fs.copyAsync(path.join(cache, dirname) + '/', dest + '/.');
             });
+    },
+
+    /**
+     * Check for installed composer and prompt for installing composer locally if not found
+     */
+    checkComposer: function checkComposer() {
+        this.globalComposer = false;
+
+        return new Promise(function (resolve, reject) {
+            // Check if composer is installed globally
+            exec('composer', ['-V'], function (error) {
+                if (error !== null && os.platform() !== 'win32') {
+                    this.log.write().info('No global composer installation found. Installing composer locally.');
+                    // Use the secondary installation method as we cannot assume curl is installed
+                    exec('php -r "readfile(\'https://getcomposer.org/installer\');" | php');
+                    resolve();
+                } else if (error !== null) {
+                    reject(error);
+                } else {
+                    this.globalComposer = true;
+                    resolve();
+                }
+            }.bind(this));
+        }.bind(this));
     },
 
     writing: {
@@ -256,7 +250,6 @@ module.exports = generators.Base.extend({
             fs.writeFileSync('app/AppKernel.php', appKernel);
 
             this.log().info('FilerevBundle added');
-        },
-
+        }
     }
 });
