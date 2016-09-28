@@ -118,7 +118,7 @@ module.exports = generators.Base.extend({
         var log = this.log.write();
 
         // check cache first
-        return fs.statAsync(cache)
+        return fs.statAsync(path.join(cache, dirname))
             .catch(function(){
                 log.info('Fetching %s ...', source)
                    .info(chalk.yellow('This might take a few moments'));
