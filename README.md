@@ -1,5 +1,10 @@
-# generator-sf [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
+# generator-sf 
+
 > Yeoman generator to scaffold Symfony PHP apps with full featured frontend tooling incl. browsersync
+
+### Work in Progress
+This generqator should replace [`generator-grunt-symfony`](https://github.com/bezoerb/generator-grunt-symfony) when it's done.
+The new name should allow more task runner flexibility (e.g. gulp) 
 
 ## Installation
 
@@ -27,12 +32,3 @@ yo sf
 
 MIT © [Ben Zörb](http://dommerlaune.com)
 
-
-[npm-image]: https://badge.fury.io/js/generator-sf.svg
-[npm-url]: https://npmjs.org/package/generator-sf
-[travis-image]: https://travis-ci.org/bezoerb/generator-sf.svg?branch=master
-[travis-url]: https://travis-ci.org/bezoerb/generator-sf
-[daviddm-image]: https://david-dm.org/bezoerb/generator-sf.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/bezoerb/generator-sf
-[coveralls-image]: https://coveralls.io/repos/bezoerb/generator-sf/badge.svg
-[coveralls-url]: https://coveralls.io/r/bezoerb/generator-sf
