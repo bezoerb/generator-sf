@@ -62,6 +62,7 @@ module.exports = generators.Base.extend({
         return (this.version || 3) < 3;
     },
 
+
     constructor: function () {
         generators.Base.apply(this, arguments);
 
@@ -154,6 +155,7 @@ module.exports = generators.Base.extend({
     },
 
     writing: {
+
         dropAssetic: function dropAssetic() {
             if (!this._hasAssetic()) {
                 return;
@@ -251,5 +253,6 @@ module.exports = generators.Base.extend({
 
             this.log().info('FilerevBundle added');
         }
+
     }
 });
