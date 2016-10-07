@@ -1,0 +1,271 @@
+/**
+ *
+ *  Web Starter Kit
+ *  Copyright 2015 Google Inc. All rights reserved.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License
+ *
+ */
+
+'use strict';
+
+// This gulpfile makes use of new JavaScript features.
+// Babel handles this without us having to do anything. It just works.
+// You can read more about the new JavaScript features here:
+// https://babeljs.io/docs/learn-es2015/
+
+import fs from 'fs';
+import path from 'path';
+import gulp from 'gulp';
+import gutil from 'gulp-util';
+import del from 'del';
+import runSequence from 'run-sequence';
+import browserSync from 'browser-sync';
+import swPrecache from 'sw-precache';
+import gulpLoadPlugins from 'gulp-load-plugins';
+import {output as pagespeed} from 'psi';
+import {prefixDev, prefixDist} from './gulp/helper/utils';
+import pkg from './package.json';
+
+import webpack from 'webpack';
+import webpackConfig from './webpack.config.js';
+
+const $ = gulpLoadPlugins();
+const reload = browserSync.reload;
+
+const paths = {
+    app: 'app/Resources/public',
+    dist: 'web'
+};
+
+
+
+// Lint JavaScript
+//gulp.task('lint', () =>
+//    gulp.src(paths.app + '/app/scripts/**/*.js')
+//        .pipe($.eslint())
+//        .pipe($.eslint.format())
+//        .pipe($.if(!browserSync.active, $.eslint.failOnError()))
+//);                          y
+
+// Optimize images
+gulp.task('imagess', () =>
+    gulp.src(path.join(paths.app, 'img/**/*.{png,jpg,gif,svg}'))
+        .pipe($.if('*.{png,jpg,gif}', $.cache($.imagemin({
+            progressive: true,
+            interlaced: true
+        }))))
+        .pipe($.if('*.svg', $.cache($.svgmin({
+            plugins: [
+                {removeViewBox: false},
+                {removeUselessStrokeAndFill: false}
+            ],
+            js2svg: {pretty: true}
+        }))))
+        .pipe(gulp.dest(path.join(paths.dist, 'img')))
+        .pipe($.size({title: 'images'}))
+);
+
+
+
+
+gulp.task('copy', () =>
+    gulp.src([
+            path.join(paths.app, '**/*.{ico,txt,webp}')
+        ], {dot: true})
+        .pipe(gulp.dest(paths.dist))
+        .pipe($.size({title: 'copy'}))
+);
+
+
+// Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
+// to enables ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
+// `.babelrc` file.
+gulp.task('scripts', cb => {
+    let config = Object.create(webpackConfig.dist);
+    config.stats = {
+        // Configure the console output
+        colors: true,
+        modules: true,
+        reasons: true,
+        errorDetails: true
+    };
+
+    webpack(config, function (err, stats) {
+        if (err) {
+            throw new gutil.PluginError("webpack:build", err);
+        }
+        gutil.log("[webpack:build]", stats.toString({
+            colors: true
+        }));
+        cb();
+    });
+
+});
+
+//'<%= paths.dist %>/img/**/*.{jpg,jpeg,gif,png,webp}',
+//    '<%= paths.dist %>/styles/main.css',
+//    '<%= paths.dist %>/scripts/main.js'
+gulp.task('rev', () => {
+    return gulp.src([
+            path.join(paths.dist, 'img/**/*.{jpg,jpeg,gif,png,webp}'),
+            path.join(paths.dist, 'styles/*.css'),
+            path.join(paths.dist, 'scripts/*.js')
+        ], {base: paths.dist})
+        .pipe($.rev())
+        .pipe(gulp.dest(paths.dist))
+        .pipe($.rev.manifest())
+        .pipe(gulp.dest('app/config'))
+        .pipe($.size({title: 'rev'}));
+
+});
+
+
+gulp.task('assets', ['clean', 'rev'], () => {
+
+});
+
+// Scan your HTML for assets & optimize them
+gulp.task('html', () => {
+    return gulp.src('app/**/*.html')
+        .pipe($.useref({searchPath: '{.tmp,app}'}))
+        // Remove any unused CSS
+        .pipe($.if('*.css', $.uncss({
+            html: [
+                'app/index.html'
+            ],
+            // CSS Selectors for UnCSS to ignore
+            ignore: []
+        })))
+
+        // Concatenate and minify styles
+        // In case you are still using useref build blocks
+        .pipe($.if('*.css', $.minifyCss()))
+
+        // Minify any HTML
+        .pipe($.if('*.html', $.minifyHtml()))
+        // Output files
+        .pipe($.if('*.html', $.size({title: 'html', showFiles: true})))
+        .pipe(gulp.dest('dist'));
+});
+
+
+// Clean output directory
+gulp.task('clean', cb => del([
+    '.tmp',
+    path.join(paths.dist, 'styles'),
+    path.join(paths.dist, 'scripts'),
+    path.join(paths.dist, 'img')
+], {dot: true}));
+
+// Watch files for changes & reload
+gulp.task('serve', ['scripts', 'styles'], () => {
+    browserSync({
+        notify: false,
+        // Customize the Browsersync console logging prefix
+        logPrefix: 'WSK',
+        // Allow scroll syncing across breakpoints
+        scrollElementMapping: ['main', '.mdl-layout'],
+        // Run as an https by uncommenting 'https: true'
+        // Note: this uses an unsigned certificate which on first access
+        //       will present a certificate warning in the browser.
+        // https: true,
+        server: ['.tmp', 'app'],
+        port: 3000
+    });
+
+    gulp.watch(['app/**/*.html'], reload);
+    gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
+    gulp.watch(['app/scripts/**/*.js'], ['lint', 'scripts']);
+    gulp.watch(['app/images/**/*'], reload);
+});
+
+// Build and serve the output from the dist build
+gulp.task('serve:dist', ['default'], () =>
+    browserSync({
+        notify: false,
+        logPrefix: 'WSK',
+        // Allow scroll syncing across breakpoints
+        scrollElementMapping: ['main', '.mdl-layout'],
+        // Run as an https by uncommenting 'https: true'
+        // Note: this uses an unsigned certificate which on first access
+        //       will present a certificate warning in the browser.
+        // https: true,
+        server: 'dist',
+        port: 3001
+    })
+);
+
+// Build production files, the default task
+gulp.task('default', ['clean'], cb =>
+    runSequence(
+        'styles',
+        ['lint', 'html', 'scripts', 'images', 'copy'],
+        'generate-service-worker',
+        cb
+    )
+);
+
+// Run PageSpeed Insights
+gulp.task('pagespeed', cb =>
+    // Update the below URL to the public URL of your site
+    pagespeed('example.com', {
+        strategy: 'mobile'
+        // By default we use the PageSpeed Insights free (no API key) tier.
+        // Use a Google Developer API key if you have one: http://goo.gl/RkN0vE
+        // key: 'YOUR_API_KEY'
+    }, cb)
+);
+
+// Copy over the scripts that are used in importScripts as part of the generate-service-worker task.
+gulp.task('copy-sw-scripts', () => {
+    return gulp.src(['node_modules/sw-toolbox/sw-toolbox.js', 'app/scripts/sw/runtime-caching.js'])
+        .pipe(gulp.dest('dist/scripts/sw'));
+});
+
+// See http://www.html5rocks.com/en/tutorials/service-worker/introduction/ for
+// an in-depth explanation of what service workers are and why you should care.
+// Generate a service worker file that will provide offline functionality for
+// local resources. This should only be done for the 'dist' directory, to allow
+// live reload to work as expected when serving from the 'app' directory.
+gulp.task('generate-service-worker', ['copy-sw-scripts'], () => {
+    const rootDir = 'dist';
+    const filepath = path.join(rootDir, 'service-worker.js');
+
+    return swPrecache.write(filepath, {
+        // Used to avoid cache conflicts when serving on localhost.
+        cacheId: pkg.name || 'web-starter-kit',
+        // sw-toolbox.js needs to be listed first. It sets up methods used in runtime-caching.js.
+        importScripts: [
+            'scripts/sw/sw-toolbox.js',
+            'scripts/sw/runtime-caching.js'
+        ],
+        staticFileGlobs: [
+            // Add/remove glob patterns to match your directory setup.
+            `${rootDir}/images/**/*`,
+            `${rootDir}/scripts/**/*.js`,
+            `${rootDir}/styles/**/*.css`,
+            `${rootDir}/*.{html,json}`
+        ],
+        // Translates a static file path to the relative URL that it's served from.
+        stripPrefix: path.join(rootDir, path.sep)
+    });
+});
+
+// Load custom tasks from the `tasks` directory
+// Run: `npm install --save-dev require-dir` from the command-line
+try {
+    require('require-dir')('gulp');
+} catch (err) {
+    console.error(err);
+}

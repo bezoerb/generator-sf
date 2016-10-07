@@ -169,6 +169,7 @@ module.exports = generators.Base.extend({
          */
         updateComposerJson: function () {
             var data = this.fs.readJSON(this.destinationPath('composer.json'));
+            fs.removeSync(this.destinationPath('composer.json'));
 
             // remove assetic
             delete data.require['symfony/assetic-bundle'];
@@ -182,6 +183,8 @@ module.exports = generators.Base.extend({
 
             // add phpunit
             data['require-dev'] = _.assign(data['require-dev'] || {}, {'phpunit/phpunit': '~4.6'});
+
+
 
             this.fs.writeJSON(this.destinationPath('composer.json'), data);
         },

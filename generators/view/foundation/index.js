@@ -31,7 +31,41 @@ module.exports = common.extend({
 
     },
 
-    writing: {
+    bower: function() {
+        if (this.props.noBower) {
+            return;
+        }
 
+        var bower = {
+            name: _.camelCase(this.appname),
+            private: true,
+            dependencies: {}
+        };
+
+        bower.dependencies['foundation-sites'] = '^6.2.0';
+        bower.dependencies.jquery = '~2.2.1';
+        bower.dependencies.picturefill = '~3.0.1';
+        bower.dependencies.modernizr = '~3.3.1';
+
+        // add standalone glyphicons if bootstrap is not used
+        bower.dependencies['sass-bootstrap-glyphicons'] = '~1.0.0';
+
+        if (this.props.loader === 'requirejs') {
+            bower.dependencies.requirejs = '~2.2.0';
+            bower.dependencies.almond = '~0.3.0';
+            bower.dependencies['visionmedia-debug'] = '~2.2.0';
+            bower.dependencies['appcache-nanny'] = '~1.0.3';
+        }
+
+        this.fs.writeJSON(this.destinationPath('bower.json'), bower);
+    },
+
+    writing: function () {
+        this.addConfigFiles();
+        this.addFavicon();
+        this.addServiceWorker();
+        this.addStyles();
+        this.addScripts();
+        this.addTemplates();
     }
 });

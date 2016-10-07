@@ -1,0 +1,15 @@
+.panel {
+    background: #eee;
+    padding: 2em;
+    margin-bottom: 2em;
+}
+
+.header {
+    margin-bottom: 2em;
+}
+
+.yeoman-team {
+    max-width: 90%;
+    display:block;
+    margin: 20px 0 50px;
+}

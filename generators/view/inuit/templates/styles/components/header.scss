@@ -1,0 +1,23 @@
+.header {
+    background: rgba(#000,0.1);
+    color: #fff;
+    background: #444;
+}
+
+
+.header__content {
+    max-width: $page-width;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5em 0;
+}
+
+.header__title {
+    @include inuit-font-size(30px,1);
+}
+
+.header__description {
+    @include inuit-font-size(14px,1);
+}
