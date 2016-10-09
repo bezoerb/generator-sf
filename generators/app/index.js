@@ -127,5 +127,9 @@ module.exports = yeoman.Base.extend({
     configuring: function configuring() {
         this._invoke('generator:' + this.props.taskrunner, '../taskrunner/' + this.props.taskrunner);
         this._invoke('generator:' + this.props.view, '../view/' + this.props.view);
+    },
+
+    install: function () {
+        this.installDependencies({bower: !this.props.noBower});
     }
 });

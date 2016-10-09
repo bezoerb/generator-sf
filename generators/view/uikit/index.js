@@ -31,29 +31,17 @@ module.exports = common.extend({
 
     },
 
-    bower: function() {
+
+    dependencies: function () {
         if (this.props.noBower) {
-            return;
+            this.addNpmDependencies({
+                'uikit': '^2.25.0'
+            });
+        } else {
+            this.addBowerDependencies({
+                'uikit': '~2.26.2'
+            });
         }
-
-        var bower = {
-            name: _.camelCase(this.appname),
-            private: true,
-            dependencies: {}
-        };
-
-        bower.dependencies.modernizr = '~3.3.1';
-        bower.dependencies.picturefill = '~3.0.1';
-        bower.dependencies.uikit = '~2.26.2';
-
-        if (this.props.loader === 'requirejs') {
-            bower.dependencies.requirejs = '~2.2.0';
-            bower.dependencies.almond = '~0.3.0';
-            bower.dependencies['visionmedia-debug'] = '~2.2.0';
-            bower.dependencies['appcache-nanny'] = '~1.0.3';
-        }
-
-        this.fs.writeJSON(this.destinationPath('bower.json'), bower);
     },
 
     writing: function () {

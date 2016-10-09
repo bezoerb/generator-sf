@@ -31,40 +31,32 @@ module.exports = common.extend({
 
     },
 
-    bower: function() {
+    dependencies: function () {
         if (this.props.noBower) {
-            return;
+            switch (this.props.preprocessor) {
+                case 'sass':
+                    this.addNpmDependencies({'bootstrap-sass': '^3.3.6'});
+                    break;
+                case 'stylus':
+                    this.addNpmDependencies({'bootstrap-styl': '~5.0.5'});
+                    break;
+                default:
+                    this.addNpmDependencies({'bootstrap': '~3.3.5'});
+                    break;
+            }
+        } else {
+            switch (this.props.preprocessor) {
+                case 'sass':
+                    this.addBowerDependencies({'bootstrap-sass-official': '~3.3.0'});
+                    break;
+                case 'stylus':
+                    this.addBowerDependencies({'bootstrap-stylus': '~5.0.2'});
+                    break;
+                default:
+                    this.addBowerDependencies({'bootstrap': '~3.3.0'});
+                    break;
+            }
         }
-
-        var bower = {
-            name: _.camelCase(this.appname),
-            private: true,
-            dependencies: {}
-        };
-
-        bower.dependencies['bootstrap-sass-official'] = '~3.3.0';
-        bower.dependencies.modernizr = '~3.3.1';
-
-        switch (this.props.preprocessor) {
-            case 'sass':
-                bower.dependencies['bootstrap-sass-official'] = '~3.3.0';
-                break;
-            case 'stylus':
-                bower.dependencies['bootstrap-stylus'] = '~5.0.2';
-                break;
-            default:
-                bower.dependencies['bootstrap'] = '~3.3.0';
-                break;
-        }
-
-        if (this.props.loader === 'requirejs') {
-            bower.dependencies.requirejs = '~2.2.0';
-            bower.dependencies.almond = '~0.3.0';
-            bower.dependencies['visionmedia-debug'] = '~2.2.0';
-            bower.dependencies['appcache-nanny'] = '~1.0.3';
-        }
-
-        this.fs.writeJSON(this.destinationPath('bower.json'), bower);
     },
 
     writing: function () {

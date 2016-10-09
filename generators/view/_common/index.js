@@ -12,6 +12,78 @@ var generators = require('yeoman-generator');
 Promise.promisifyAll(fs);
 
 module.exports = generators.Base.extend({
+
+    /**
+     * Re-read the content because a composed generator might modify it.
+     * @returns {*}
+     * @private
+     */
+    _readPkg: function () {
+        return _.merge(this.fs.readJSON(this.destinationPath('package.json'), {
+            name: _.camelCase(this.appname),
+            version: "0.0.0",
+            scripts: {},
+            dependencies: {},
+            devDependencies: {}
+        }), { dependencies: {
+            jquery: '^3.1.1',
+            picturefill: '^3.0.2'
+        }});
+    },
+
+    /**
+     * Let's extend package.json so we're not overwriting user previous fields
+     *
+     * @private
+     */
+    _writePkg: function (pkg) {
+        this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+    },
+
+    _readBower: function () {
+
+        var dependencies = {
+            picturefill: '~3.0.1',
+            modernizr: '~3.3.1',
+            jquery: '~3.1.1'
+        };
+
+        if (this.props.loader === 'requirejs') {
+            dependencies.requirejs = '~2.2.0';
+            dependencies.almond = '~0.3.0';
+            dependencies['visionmedia-debug'] = '~2.2.0';
+            dependencies['appcache-nanny'] = '~1.0.3';
+        }
+
+        return _.merge(this.fs.readJSON(this.destinationPath('bower.json'), {
+            name: _.snakeCase(this.appname),
+            private: true,
+            dependencies: {}
+        }), { dependencies: dependencies });
+    },
+
+    _writeBower: function(bower) {
+        this.fs.writeJSON(this.destinationPath('bower.json'), bower);
+    },
+
+
+    addNpmDependencies: function(deps) {
+        var pkg = _.merge(this._readPkg(), {
+            dependencies: deps
+        });
+
+        return this._writePkg(pkg);
+    },
+
+    addBowerDependencies: function(deps) {
+        var bower = _.merge(this._readBower(), {
+            dependencies: deps
+        });
+
+        return this._writeBower(bower);
+    },
+
+
     constructor: function () {
         generators.Base.apply(this, arguments);
 
@@ -147,7 +219,7 @@ module.exports = generators.Base.extend({
         this.commonTemplate('base.html.twig', path.join(this.props.base, '..', 'views', 'base.html.twig'));
 
         // copy default action template
-        this.template('index.html.twig', path.join(this.props.base, '..', 'views', 'controller', 'default', 'base.html.twig'));
+        this.template('index.html.twig', path.join(this.props.base, '..', 'views', 'controller', 'default', 'index.html.twig'));
 
         fs.copySync(this.commonTemplatePath('img'), path.join(this.props.base,'img'));
     }

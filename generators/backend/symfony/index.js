@@ -276,12 +276,51 @@ module.exports = generators.Base.extend({
 
             var appKernel = read('app/AppKernel.php');
 
+            // Add node env
+            if (this.props.version < 2.8) {
+                appKernel = appKernel.replace('array(\'dev\', \'test\')', 'array(\'node\', \'dev\', \'test\')');
+            } else {
+                appKernel = appKernel.replace('[\'dev\', \'test\']', '[\'node\', \'dev\', \'test\']');
+            }
+
             // add bundle
             appKernel = addBundle(appKernel, 'new Zoerb\\Bundle\\FilerevBundle\\ZoerbFilerevBundle(),');
             fs.writeFileSync('app/AppKernel.php', appKernel);
 
             this.log().info('FilerevBundle added');
-        }
+        },
+
+        /**
+         * update default controller to use own template
+         */
+        updateController: function updateControler() {
+            var controllerPath = 'src/AppBundle/Controller/DefaultController.php';
+            if (fs.existsSync(controllerPath)) {
+                fs.unlinkSync(controllerPath);
+            }
+
+            fs.copySync(this.templatePath('DefaultController.php'), controllerPath);
+        },
+
+        /**
+         * update default controller test to use own template
+         */
+        updateControllerTest: function updateControllerTest() {
+
+
+            var controllerPath = this.props.version < 3 ?
+                'src/AppBundle/Tests/Controller/DefaultControllerTest.php' : 'tests/AppBundle/Controller/DefaultControllerTest.php';
+            if (fs.existsSync(controllerPath)) {
+                fs.unlinkSync(controllerPath);
+            }
+
+            this.fs.copyTpl(
+                this.templatePath('DefaultControllerTest.php'),
+                this.destinationPath(controllerPath),
+                this
+            );
+
+        },
     },
 
     install: function () {

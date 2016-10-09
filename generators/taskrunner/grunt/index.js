@@ -25,38 +25,6 @@ module.exports = common.extend({
     },
 
     writing: {
-        pkgDeps: function () {
-            if (!this.props.noBower) {
-                return;
-            }
-
-            var pkg = this._readPkg();
-
-            pkg.dependencies.jquery = '^3.1.1';
-            pkg.dependencies.picturefill = '^3.0.2';
-
-            // bootstrap
-            if (this.props.view === 'bootstrap' && this.props.preprocessor === 'sass') {
-                pkg.dependencies['bootstrap-sass'] = '^3.3.6';
-            } else if (this.props.view === 'bootstrap' && this.props.preprocessor === 'stylus') {
-                pkg.dependencies['bootstrap-styl'] = '^5.0.5';
-            } else if (this.props.view === 'bootstrap') {
-                pkg.dependencies['bootstrap'] = '^3.3.5';
-            }
-
-            // uikit
-            if (this.props.view === 'uikit') {
-                pkg.dependencies['uikit'] = '^2.25.0';
-            }
-
-            // foundation
-            if (this.props.view === 'foundation') {
-                pkg.dependencies['foundation-sites'] = '^6.2.0';
-            }
-
-            this._writePkg(pkg);
-        },
-
         pkgDev: function () {
             var pkg = this._readPkg();
 
