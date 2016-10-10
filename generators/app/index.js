@@ -104,7 +104,7 @@ module.exports = yeoman.Base.extend({
 
             return this.prompt(prompts).then(function (props) {
                 this.props = _.merge(this.props, props);
-                this.props.noBower = this.props.loader === 'useWebpack' || this.props.loader === 'useBrowserify' || this.props.loader === 'jspm';
+                this.props.noBower = this.props.loader === 'webpack' || this.props.loader === 'browserify' || this.props.loader === 'jspm';
             }.bind(this));
         },
 

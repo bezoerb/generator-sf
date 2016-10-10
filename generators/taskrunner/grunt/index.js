@@ -20,7 +20,7 @@ module.exports = common.extend({
 
     configuring: {
         common: function () {
-            this.props.noBower = this.props.loader === 'useWebpack' || this.props.loader === 'useBrowserify' || this.props.loader === 'jspm';
+            this.props.noBower = this.props.loader === 'webpack' || this.props.loader === 'browserify' || this.props.loader === 'jspm';
         }
     },
 
@@ -251,7 +251,7 @@ module.exports = common.extend({
                     break;
                 case 'webpack':
                     this.template('grunt/webpack.js', 'grunt/webpack.js');
-                    this.template('webpack.config.js', 'webpack.config.js');
+                    this.commonTemplate('webpack.config.js', 'webpack.config.js');
                     break;
                 case 'browserify':
                     this.template('grunt/browserify.js', 'grunt/browserify.js');

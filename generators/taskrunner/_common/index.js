@@ -1,5 +1,7 @@
 'use strict';
 var _ = require('lodash');
+var path = require('path');
+var pathIsAbsolute = require('path-is-absolute');
 var generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
@@ -58,6 +60,34 @@ module.exports = generators.Base.extend({
         this.props = _.merge({
             symfony: this.env.symfony || {commit: '3.1.5', version: 3.1}
         }, this.options);
+
+        this.commonRoot = path.join(path.dirname(this.resolved), '..', '_common');
+    },
+
+    commonTemplatePath: function commonTemplatePath() {
+        var filepath = path.join.apply(path, arguments);
+
+        if (!pathIsAbsolute(filepath)) {
+            filepath = path.join(path.join(this.commonRoot , 'templates'), filepath);
+        }
+
+        return filepath;
+    },
+
+    commonTemplate: function commonTemplate(source, dest, data, options) {
+        if (typeof dest !== 'string') {
+            options = data;
+            data = dest;
+            dest = source;
+        }
+
+        this.fs.copyTpl(
+            path.join(this.commonRoot, 'templates', source),
+            this.destinationPath(dest),
+            data || this,
+            options
+        );
+        return this;
     },
 
     /**
