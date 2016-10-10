@@ -52,7 +52,8 @@ module.exports = common.extend({
                 'inuit-tables': '~0.2.1',
                 'inuit-tabs': '~0.2.1',
                 'inuit-list-inline': '~0.3.2',
-                'inuit-list-ui': '~0.4.1'
+                'inuit-list-ui': '~0.4.1',
+                'bootstrap': '~3.3.5'
             });
         } else {
             this.addBowerDependencies({
@@ -76,7 +77,8 @@ module.exports = common.extend({
                 'inuit-tables': '~0.2.1',
                 'inuit-tabs': '~0.2.1',
                 'inuit-list-inline': '~0.3.2',
-                'inuit-list-ui': '~0.4.1'
+                'inuit-list-ui': '~0.4.1',
+                'bootstrap': '~3.3.5'
             });
         }
     },
@@ -88,5 +90,9 @@ module.exports = common.extend({
         this.addStyles();
         this.addScripts();
         this.addTemplates();
+    },
+
+    end: function () {
+        this.addFonts();
     }
 });

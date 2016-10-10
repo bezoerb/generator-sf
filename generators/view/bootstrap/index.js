@@ -66,5 +66,9 @@ module.exports = common.extend({
         this.addStyles();
         this.addScripts();
         this.addTemplates();
+    },
+
+    end: function () {
+        this.addFonts();
     }
 });

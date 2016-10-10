@@ -20,7 +20,7 @@ module.exports = common.extend({
 
     configuring: {
         common: function () {
-            this.props.noBower = this.props.loader === 'useWebpack' || this.props.loader === 'useBrowserify';
+            this.props.noBower = this.props.loader === 'useWebpack' || this.props.loader === 'useBrowserify' || this.props.loader === 'jspm';
         }
     },
 

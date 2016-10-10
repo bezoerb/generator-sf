@@ -1,8 +1,8 @@
 'use strict';
 module.exports = {
     options: {<% if (props.libsass) { %>
-        includePaths: ['bower_components'<% if (props.loader === 'browserify' || props.loader === 'webpack') { %>, 'node_modules'<% } %>]<% } else { %>
-        loadPath: ['bower_components'<% if (props.loader === 'browserify' || props.loader === 'webpack') { %>, 'node_modules'<% } %>]<% } %>
+        includePaths: [<% if (!props.noBower) { %>'bower_components', <% } %>'node_modules']<% } else { %>
+        loadPath: [<% if (!props.noBower) { %>'bower_components', <% } %>'node_modules']<% } %>
     },
     all: {
         files: {

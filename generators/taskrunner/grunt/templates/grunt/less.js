@@ -4,8 +4,8 @@ module.exports = {
         options: {
             paths: [
                 '<%%= paths.app %>/styles',
-                'bower_components'<% if (props.loader === 'browserify' || props.loader === 'webpack') { %>,
-                'node_modules'<% } %>
+                'bower_components',
+                'node_modules'
             ]
         },
         src: '<%%= paths.app %>/styles/main.less',

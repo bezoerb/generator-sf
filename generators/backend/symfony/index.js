@@ -9,10 +9,11 @@ var fs = require('fs-extra');
 var got = require('got');
 var exec = require('child_process').exec;
 var yaml = require('js-yaml');
+var wsfp = require('wsfp');
 var _ = require('lodash');
 var xdgBasedir = require('xdg-basedir');
 var generators = require('yeoman-generator');
-
+var commands = require('../../../lib/commands');
 
 Promise.promisifyAll(fs);
 
@@ -21,19 +22,6 @@ function read(file) {
 }
 
 module.exports = generators.Base.extend({
-
-    _composer: function (args) {
-        var cmd = 'composer';
-        if (!this.globalComposer) {
-            args.unshift('composer.phar');
-            cmd = 'php';
-        }
-
-        return new Promise(function (resolve, reject) {
-            this.spawnCommand(cmd, args, {}).on('error', reject).on('exit', resolve);
-        }.bind(this));
-    },
-
     /**
      * Get available symfony tags
      *
@@ -63,6 +51,30 @@ module.exports = generators.Base.extend({
         return (this.version || 3) < 3;
     },
 
+    _setPermissions: function () {
+        return new Promise(function (resolve, reject) {
+            var folder = this.props.version >= 3 ? 'var' : 'app';
+            wsfp([folder + '/cache', folder + '/logs'], function(err, data) {
+                if (err) {
+                    this.log('Your system doesn\'t support ACL. Setting permissions via ' + chalk.bold.yellow('umask'));
+                    this.log('See: http://symfony.com/doc/current/book/installation.html#book-installation-permissions');
+
+                    // Without using ACL
+                    var consoleContents = read('app/console').replace('<?php', '<?php' + os.EOL + 'umask(0002);');
+                    fs.outputFileSync('app/console', consoleContents);
+
+                    var appContents = read('web/app.php').replace('<?php', '<?php' + os.EOL + 'umask(0002);');
+                    fs.outputFileSync('web/app.php', appContents);
+
+                    var appDevContents = read('web/app_dev.php').replace('<?php', '<?php' + os.EOL + 'umask(0002);');
+                    fs.outputFileSync('web/app_dev.php', appDevContents);
+
+                    return resolve(err);
+                }
+                return resolve(data);
+            }.bind(this));
+        }.bind(this));
+    },
 
     constructor: function () {
         this.props = {};
@@ -74,7 +86,6 @@ module.exports = generators.Base.extend({
     },
 
     prompting: function () {
-
 
         this.commit = this.versions['latest'];
         this.version = parseFloat(this.commit);
@@ -128,12 +139,12 @@ module.exports = generators.Base.extend({
 
         // check cache first
         return fs.statAsync(path.join(cache, dirname))
-            .catch(function(){
+            .catch(function () {
                 log.info('Fetching %s ...', source)
-                   .info(chalk.yellow('This might take a few moments'));
-                return download(source,cache, {extract: true})
+                    .info(chalk.yellow('This might take a few moments'));
+                return download(source, cache, {extract: true})
             })
-            .then(function() {
+            .then(function () {
                 return fs.copyAsync(path.join(cache, dirname) + '/', dest + '/.');
             });
     },
@@ -183,8 +194,6 @@ module.exports = generators.Base.extend({
 
             // add phpunit
             data['require-dev'] = _.assign(data['require-dev'] || {}, {'phpunit/phpunit': '~4.6'});
-
-
 
             this.fs.writeJSON(this.destinationPath('composer.json'), data);
         },
@@ -306,26 +315,25 @@ module.exports = generators.Base.extend({
          * update default controller test to use own template
          */
         updateControllerTest: function updateControllerTest() {
-
-
             var controllerPath = this.props.version < 3 ?
                 'src/AppBundle/Tests/Controller/DefaultControllerTest.php' : 'tests/AppBundle/Controller/DefaultControllerTest.php';
             if (fs.existsSync(controllerPath)) {
                 fs.unlinkSync(controllerPath);
             }
 
-            this.fs.copyTpl(
-                this.templatePath('DefaultControllerTest.php'),
-                this.destinationPath(controllerPath),
-                this
-            );
-
+            this.template('DefaultControllerTest.php', controllerPath);
         },
     },
 
     install: function () {
-        this.log('');
-        this.log('Running ' + chalk.bold.yellow('composer update') + ' for you to install the required dependencies.');
-        this._composer(['update']);
+        if (!this.options['skip-install-message'] && !!this.options['skipInstallMessage']) {
+            this.log('');
+            this.log('Running ' + chalk.bold.yellow('composer update') + ' for you to install the required dependencies.');
+        }
+        return !this.options['skipInstall'] && !this.options['skip-install'] && commands.composer(['update']);
+    },
+
+    end: function () {
+        return this._setPermissions();
     }
 });

@@ -208,6 +208,32 @@ module.exports = generators.Base.extend({
         var file = path.join('scripts', 'sw', 'runtime-caching.js');
         this.commonTemplate(file, path.join(this.props.base,  file));
 
+        // testfiles
+        var dest = 'tests/Frontend';
+        if (this.props.loader === 'requirejs') {
+            fs.copySync(
+                this.commonTemplatePath(path.join('test', 'requirejs', 'spec')),
+                this.destinationPath(path.join(dest, 'spec'))
+            );
+            fs.copySync(this.commonTemplatePath(path.join('test', 'requirejs', 'karma.conf.js')), this.destinationPath(path.join(dest, 'karma.conf.js')));
+            this.commonTemplate(path.join('test', 'requirejs', 'test-main.js'), path.join(dest, 'test-main.js'));
+        } else if (this.props.loader === 'jspm') {
+            fs.copySync(
+                this.commonTemplatePath(path.join('test', 'jspm')),
+                this.destinationPath(dest)
+            );
+        } else if (this.props.loader === 'webpack') {
+            fs.copySync(
+                this.commonTemplatePath(path.join('test', 'webpack')),
+                this.destinationPath(dest)
+            );
+        } else if (this.props.loader === 'browserify') {
+            fs.copySync(
+                this.commonTemplatePath(path.join('test', 'browserify')),
+                this.destinationPath(dest)
+            );
+        }
+
         return this;
     },
 
@@ -222,6 +248,28 @@ module.exports = generators.Base.extend({
         this.template('index.html.twig', path.join(this.props.base, '..', 'views', 'controller', 'default', 'index.html.twig'));
 
         fs.copySync(this.commonTemplatePath('img'), path.join(this.props.base,'img'));
-    }
+    },
+
+    addFonts: function addFonts() {
+        var dest = this.destinationPath('app/Resources/public/fonts');
+        fs.mkdirsSync(dest);
+
+        var src = this.destinationPath(this.props.noBower ? 'node_modules': 'bower_components');
+
+        var fontpath = path.join(src, 'bootstrap', 'fonts');
+
+        if (this.props.view === 'bootstrap' && this.props.preprocessor === 'sass') {
+            fontpath = path.join(src, this.props.noBower ? 'bootstrap-sass': 'bootstrap-sass-official', 'assets', 'fonts');
+        } else if (this.props.view === 'bootstrap' && this.props.preprocessor === 'stylus') {
+            fontpath = path.join(src, 'bootstrap-stylus', 'fonts');
+        } else if (this.props.view === 'uikit') {
+            fontpath = path.join(src, 'uikit', 'fonts');
+        }
+
+        if (fs.existsSync(fontpath)) {
+            fs.copySync(fontpath, dest);
+        }
+    },
+
 
 });

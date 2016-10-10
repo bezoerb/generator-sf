@@ -40,7 +40,7 @@ module.exports = function (grunt, options) {
             ]);
             if (target === 'dist') {
                 <% if (props.uncss || props.critical) { %>// configure routes inside gruntfile if you'd like to use <% if (props.critical) { %>critical <% } if (props.critical && props.uncss) { %>and <% } if (props.uncss) { %>uncss<% } %>
-                grunt.task.run(size(options.routes) ? ['fetch',<% if (props.critical) { %> 'critical',<% } if (props.uncss) { %> 'uncss',<% } %> 'cssmin'] : ['cssmin']);<% } else { 
+                grunt.task.run(size(options.routes) ? ['fetch',<% if (props.critical) { %> 'critical',<% } if (props.uncss) { %> 'uncss',<% } %> 'cssmin'] : ['cssmin']);<% } else {
                 %>grunt.task.run('cssmin');<% } %>
             } else if (target === 'assets') {
                 grunt.task.run(['copy:assets-css']);
@@ -133,7 +133,7 @@ module.exports = function (grunt, options) {
             grunt.task.run(['clean:tmp']);
 
             if (target === 'dist') {
-                grunt.task.run(['build']);
+                grunt.task.run(['exec:sfclprod','build']);
             } else {
                 target = 'dev';
                 grunt.task.run(['css:serve'<% if (props.loader === 'browserify') { %>, 'browserify:dev'<% } %>]);

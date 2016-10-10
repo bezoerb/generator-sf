@@ -1,6 +1,6 @@
 import debugFn from 'debug';
 import $ from 'jquery';
-import UI from 'uikit';<
+import UI from 'uikit';
 import picturefill from 'picturefill';
 import * as SW from './modules/service-worker';
 

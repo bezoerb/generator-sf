@@ -5,17 +5,32 @@ var chalk = require('chalk');
 var yosay = require('yosay');
 var _ = require('lodash');
 
+var commands = require('../../lib/commands');
+
 module.exports = yeoman.Base.extend({
 
     _invoke: function _invoke(generatorName, generatorPath) {
         this.composeWith(generatorName, {
             arguments: ['app'],
             options: _.assign(this.props, {
-                skipInstall: this.options.skipInstall
+                skipInstall: true
             })
         }, {
             local: require.resolve(generatorPath)
         });
+    },
+
+    /**
+     * Check for installed git
+     */
+    checkGit: function checkGit() {
+        // Check if jspm is installed globally
+        this.globalGit = false;
+        this.spawnCommand('git', ['--version'], {stdio: 'ignore'}).on('exit', function () {
+            this.globalGit = true;
+        }.bind(this)).on('error', function () {
+            this.globalGit = false;
+        }.bind(this));
     },
 
     initializing: function () {
@@ -89,6 +104,7 @@ module.exports = yeoman.Base.extend({
 
             return this.prompt(prompts).then(function (props) {
                 this.props = _.merge(this.props, props);
+                this.props.noBower = this.props.loader === 'useWebpack' || this.props.loader === 'useBrowserify' || this.props.loader === 'jspm';
             }.bind(this));
         },
 
@@ -130,6 +146,31 @@ module.exports = yeoman.Base.extend({
     },
 
     install: function () {
-        this.installDependencies({bower: !this.props.noBower});
+        var installer = ['npm install'];
+        if (!this.props.noBower) {
+            installer.push('bower install');
+        }
+        if (this.props.loader === 'jspm') {
+            installer.push('jspm install');
+        }
+        installer.push('composer update');
+
+        this.log('');
+        this.log('I\'m all done. Running ' + chalk.bold.yellow(installer.join(' && ')) + ' for you to install the required dependencies.');
+        this.log('If this fails, try running the command yourself.');
+        this.log('');
+
+        this.installDependencies({
+            skipMessage: true,
+            skipInstall: this.options.skipInstall,
+            bower: !this.props.noBower,
+            callback: function() {
+                if (!this.options['skip-install']) {
+                    commands.composer(['update'], {cwd: this.destinationPath()}).then(function(){
+                       return this.props.loader === 'jspm' && commands.jspm(['install']);
+                    }.bind(this));
+                }
+            }.bind(this)
+        });
     }
 });
