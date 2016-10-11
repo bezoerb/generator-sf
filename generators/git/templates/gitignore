@@ -1,0 +1,24 @@
+
+### Files compiled or processed by grunt/gulp ###
+/web/scripts
+/web/styles
+/web/img
+/web/manifest.appcache
+/web/service-worker.js
+.tmp/
+
+### Node ###
+node_modules
+npm-debug.log
+
+### Bower ###
+bower_components
+
+### JSPM ###
+jspm_packages
+
+### IDEs ###
+.vscode
+.idea
+
+

@@ -39,6 +39,7 @@ module.exports = yeoman.Base.extend({
         };
 
         this._invoke('generator:symfony', '../backend/symfony');
+        this._invoke('generator:git', '../git');
     },
 
     prompting: {
