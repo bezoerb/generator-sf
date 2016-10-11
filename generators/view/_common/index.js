@@ -97,15 +97,13 @@ module.exports = generators.Base.extend({
             symfony: this.env.symfony || {commit: '3.1.5', version: 3.1},
             safeAppame: _.camelCase(this.appname)
         }, this.options);
-
-        this.commonRoot = path.join(path.dirname(this.resolved), '..', '_common');
     },
 
     commonTemplatePath: function commonTemplatePath() {
         var filepath = path.join.apply(path, arguments);
 
         if (!pathIsAbsolute(filepath)) {
-            filepath = path.join(path.join(this.commonRoot , 'templates'), filepath);
+            filepath = path.join(path.join(__dirname , 'templates'), filepath);
         }
 
         return filepath;
@@ -119,7 +117,7 @@ module.exports = generators.Base.extend({
         }
 
         this.fs.copyTpl(
-            path.join(this.commonRoot, 'templates', source),
+            path.join(this.commonTemplatePath(), source),
             this.destinationPath(dest),
             data || this,
             options
@@ -157,7 +155,7 @@ module.exports = generators.Base.extend({
         this.commonTemplate('public/manifest.json', path.join(this.props.base, 'manifest.json'));
         this.commonTemplate('public/manifest.webapp', path.join(this.props.base, 'manifest.webapp'));
 
-        return fs.copyAsync(path.join(this.commonRoot, 'templates', 'img/touch'), path.join(this.props.base, 'img/touch'));
+        return fs.copyAsync(this.commonTemplatePath('img', 'touch'), path.join(this.props.base, 'img/touch'));
     },
 
 
@@ -169,7 +167,7 @@ module.exports = generators.Base.extend({
         filesMap['none'] = '**/*.css';
 
         var roots = [
-            path.join(this.commonRoot, 'templates/styles', filesMap[this.props.preprocessor]),
+            path.join(this.commonTemplatePath('styles'), filesMap[this.props.preprocessor]),
             path.join(this.templatePath('styles'), filesMap[this.props.preprocessor])
         ];
 
@@ -191,7 +189,7 @@ module.exports = generators.Base.extend({
      */
     addScripts: function addScripts() {
         var roots = [
-            path.join(this.commonRoot, 'templates/scripts', this.props.loader,'**/*.js'),
+            path.join(this.commonTemplatePath('scripts'), this.props.loader,'**/*.js'),
             path.join(this.templatePath('scripts'), this.props.loader,'**/*.js')
         ];
 

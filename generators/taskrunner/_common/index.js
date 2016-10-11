@@ -60,15 +60,13 @@ module.exports = generators.Base.extend({
         this.props = _.merge({
             symfony: this.env.symfony || {commit: '3.1.5', version: 3.1}
         }, this.options);
-
-        this.commonRoot = path.join(path.dirname(this.resolved), '..', '_common');
     },
 
     commonTemplatePath: function commonTemplatePath() {
         var filepath = path.join.apply(path, arguments);
 
         if (!pathIsAbsolute(filepath)) {
-            filepath = path.join(path.join(this.commonRoot , 'templates'), filepath);
+            filepath = path.join(path.join(__dirname , 'templates'), filepath);
         }
 
         return filepath;
@@ -82,7 +80,7 @@ module.exports = generators.Base.extend({
         }
 
         this.fs.copyTpl(
-            path.join(this.commonRoot, 'templates', source),
+            this.commonTemplatePath(source),
             this.destinationPath(dest),
             data || this,
             options
@@ -102,7 +100,7 @@ module.exports = generators.Base.extend({
     },
 
     prompting: function () {
-        var askLibsass = function useSass(answers) {
+        var askLibsass = function (answers) {
             return _.result(answers, 'preprocessor') === 'sass' && this.options.libsass === undefined;
         }.bind(this);
 

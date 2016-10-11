@@ -25,6 +25,10 @@ module.exports = common.extend({
     },
 
     writing: {
+        pkgScripts: function () {
+            var pkg = this._readPkg();
+            pkg.scripts.test = 'grunt test';
+        },
         pkgDev: function () {
             var pkg = this._readPkg();
 
@@ -36,9 +40,9 @@ module.exports = common.extend({
             pkg.devDependencies['grunt'] = '^1.0.1';
             pkg.devDependencies['chalk'] = '^1.1.1';
             pkg.devDependencies['lodash'] = '^4.6.1';
-            pkg.devDependencies['eslint'] = '^2.3.0';
-            pkg.devDependencies['eslint-config-xo'] = '^0.14.1';
-            pkg.devDependencies['grunt-eslint'] = '^18.0.0';
+            pkg.devDependencies['eslint'] = '^3.7.1';
+            pkg.devDependencies['eslint-config-xo'] = '^0.17.0';
+            pkg.devDependencies['grunt-eslint'] = '^19.0.0';
             pkg.devDependencies['grunt-available-tasks'] = '^0.6.1';
             pkg.devDependencies['grunt-browser-sync'] = '^2.0.0';
             pkg.devDependencies['grunt-contrib-clean'] = '^1.0.0';
@@ -52,19 +56,19 @@ module.exports = common.extend({
             pkg.devDependencies['grunt-autoprefixer'] = '^3.0.0';
             pkg.devDependencies['grunt-contrib-watch'] = '^1.0.0';
             pkg.devDependencies['grunt-filerev'] = '^2.1.2';
-            pkg.devDependencies['grunt-svgmin'] = '^3.1.2';
+            pkg.devDependencies['grunt-svgmin'] = '^4.0.0';
             pkg.devDependencies['grunt-usemin'] = '^3.0.0';
             pkg.devDependencies['grunt-phpunit'] = '^0.3.6';
             pkg.devDependencies['jit-grunt'] = '^0.10.0';
-            pkg.devDependencies['grunt-exec'] = '^0.4.6';
+            pkg.devDependencies['grunt-exec'] = '^1.0.1';
             pkg.devDependencies['parseurl'] = '^1.3.0';
             pkg.devDependencies['php-proxy-middleware'] = '^1.0.1';
             pkg.devDependencies['load-grunt-config'] = '^0.19.0';
             pkg.devDependencies['core-js'] = '^2.4.0';
             pkg.devDependencies['chai'] = '^3.3.0';
-            pkg.devDependencies['karma'] = '^0.13.10';
-            pkg.devDependencies['mocha'] = '^2.3.3';
-            pkg.devDependencies['grunt-karma'] = '^1.0.0';
+            pkg.devDependencies['karma'] = '^1.3.0';
+            pkg.devDependencies['mocha'] = '^3.1.2';
+            pkg.devDependencies['grunt-karma'] = '^2.0.0';
             pkg.devDependencies['karma-chai'] = '^0.1.0';
             pkg.devDependencies['karma-coverage'] = '^1.0.0';
             pkg.devDependencies['karma-mocha'] = '^1.0.1';
@@ -97,7 +101,7 @@ module.exports = common.extend({
                 pkg.devDependencies['grunt-wiredep'] = '^3.0.1';
             } else if (this.props.loader === 'jspm') {
                 pkg.devDependencies['jspm'] = '^0.16.19';
-                pkg.devDependencies['grunt-contrib-uglify'] = '^1.0.0';
+                pkg.devDependencies['grunt-contrib-uglify'] = '^2.0.0';
                 pkg.devDependencies['karma-jspm'] = '^2.0.1';
                 pkg.devDependencies['systemjs'] = '^0.19.3';
                 pkg.devDependencies['babel'] = '^6.0.15';
