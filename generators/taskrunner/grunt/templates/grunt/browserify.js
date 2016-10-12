@@ -3,6 +3,7 @@ var babelify = require('babelify');
 module.exports = {
     options: {
         transform: [
+            ['rollupify'],
             [babelify.configure({
                 presets: ['es2015'],
                 ignore: /(node_modules|bower_components)/,
