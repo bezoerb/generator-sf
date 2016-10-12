@@ -1,11 +1,12 @@
 'use strict';
 var path = require('path');
 var Buffer = require('buffer').Buffer;
-var fs = require('fs-extra');
 var _ = require('lodash');
 var generators = require('yeoman-generator');
 var spawn = require('cross-spawn');
 var Promise = require('bluebird');
+var fs = Promise.promisifyAll(require('fs-extra'));
+
 
 
 module.exports = generators.Base.extend({
@@ -37,7 +38,6 @@ module.exports = generators.Base.extend({
             });
 
             spawned.on('close', function (exitCode, exitSignal) {
-                this.log(exitCode, exitSignal, stdErr, stdOut);
                 if (exitCode && stdErr.length) {
                     stdErr = Buffer.concat(stdErr).toString('utf-8');
                     reject(new Error(stdErr));
@@ -69,13 +69,13 @@ module.exports = generators.Base.extend({
         }.bind(this));
     },
 
-    writing: {
+    install: {
         init: function() {
             if (!this.props.git) {
                 return;
             }
 
-            this._gitBase()
+            return this._gitBase()
                 .then(function(base) {
                     fs.copySync(this.templatePath('post-merge'), this.destinationPath(path.join(base, '.git/hooks/post-merge')));
                     fs.chmodSync(this.destinationPath(path.join(base, '.git/hooks/post-merge')), '755');
