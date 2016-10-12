@@ -23,6 +23,6 @@ get_dir() {
 
 # Example usage
 # In this example it's used to run `npm install` if package.json changed and `bower install` if `bower.json` changed.
-check_run package.json "npm install && [ -f ./node_modules/.bin/jspm ] && ./node_modules/.bin/jspm install"
+check_run package.json "( [ -f "$(which yarn)" ] && yarn || npm install ) && [ -f ./node_modules/.bin/jspm ] && ./node_modules/.bin/jspm install"
 check_run bower.json "bower install"
 check_run composer.lock "[ -f ./composer.phar ] && php composer.phar install || composer install"

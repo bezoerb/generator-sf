@@ -66,11 +66,12 @@ module.exports = function (grunt, options) {
             }<% } %>
         },
         img: function (target) {
-            grunt.task.run(['clean:img']);
+            grunt.task.run(['clean:img', 'svgstore', 'svgmin:icons']);
+
             if (target === 'dist') {
                 grunt.task.run([
                     'imagemin',
-                    'svgmin'
+                    'svgmin:dist'
                 ]);
             } else {
                 grunt.task.run(['copy:assets-img']);
@@ -136,7 +137,7 @@ module.exports = function (grunt, options) {
                 grunt.task.run(['exec:sfclprod','build']);
             } else {
                 target = 'dev';
-                grunt.task.run(['css:serve'<% if (props.loader === 'browserify') { %>, 'browserify:dev'<% } %>]);
+                grunt.task.run(['svgstore', 'svgmin:icons', 'css:serve'<% if (props.loader === 'browserify') { %>, 'browserify:dev'<% } %>]);
             }
 
             // start php middleware

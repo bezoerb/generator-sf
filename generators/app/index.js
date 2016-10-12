@@ -23,15 +23,29 @@ module.exports = yeoman.Base.extend({
     /**
      * Check for installed git
      */
-    checkGit: function checkGit() {
+    _yarnAvailable: function () {
         // Check if jspm is installed globally
-        this.globalGit = false;
-        this.spawnCommand('git', ['--version'], {stdio: 'ignore'}).on('exit', function () {
-            this.globalGit = true;
-        }.bind(this)).on('error', function () {
-            this.globalGit = false;
+        return new Promise(function (resolve, reject) {
+            this.spawnCommand('which', ['yarn'], {stdio: 'ignore'}).on('error', reject).on('exit', resolve);
         }.bind(this));
     },
+
+    _installCmd: function () {
+        var installer = [];
+        if (this.props.yarn) {
+            installer.push('yarn');
+        } else {
+            installer.push('npm install');
+        }
+
+        if (!this.props.noBower) {
+            installer.push('bower install');
+        }
+        if (this.props.loader === 'jspm') {
+            installer.push('jspm install');
+        }
+        installer.push('composer update');
+    }
 
     initializing: function () {
         this.props = {
@@ -40,6 +54,14 @@ module.exports = yeoman.Base.extend({
 
         this._invoke('generator:symfony', '../backend/symfony');
         this._invoke('generator:git', '../git');
+
+        return this._yarnAvailable()
+            .then(function () {
+                this.props.yarn = true;
+            }.bind(this))
+            .catch(function () {
+                this.props.yarn = false;
+            }.bind(this));
     },
 
     prompting: {
@@ -61,8 +83,8 @@ module.exports = yeoman.Base.extend({
         },
 
         askTools: function () {
-            var useSass = function useSass (answers) {
-                return _.result(answers,'preprocessor') === 'sass';
+            var useSass = function useSass(answers) {
+                return _.result(answers, 'preprocessor') === 'sass';
             };
 
             var prompts = [{
@@ -83,7 +105,7 @@ module.exports = yeoman.Base.extend({
                 message: 'Would you like to use libsass? Read up more at' + os.EOL +
                 chalk.green('https://github.com/andrew/node-sass#node-sass'),
                 default: true
-            },{
+            }, {
                 type: 'list',
                 name: 'loader',
                 message: 'Which module loader would you like to use?',
@@ -109,7 +131,7 @@ module.exports = yeoman.Base.extend({
             }.bind(this));
         },
 
-        askView: function() {
+        askView: function () {
             var prompts = [{
                 when: this.props.preprocessor === 'sass',
                 type: 'list',
@@ -147,31 +169,33 @@ module.exports = yeoman.Base.extend({
     },
 
     install: function () {
-        var installer = ['npm install'];
-        if (!this.props.noBower) {
-            installer.push('bower install');
-        }
-        if (this.props.loader === 'jspm') {
-            installer.push('jspm install');
-        }
-        installer.push('composer update');
+
 
         this.log('');
         this.log('I\'m all done. Running ' + chalk.bold.yellow(installer.join(' && ')) + ' for you to install the required dependencies.');
         this.log('If this fails, try running the command yourself.');
         this.log('');
 
-        this.installDependencies({
-            skipMessage: true,
-            skipInstall: this.options.skipInstall,
-            bower: !this.props.noBower,
-            callback: function() {
-                if (!this.options['skip-install']) {
-                    commands.composer(['update'], {cwd: this.destinationPath()}).then(function(){
-                       return this.props.loader === 'jspm' && commands.jspm(['install']);
+        var cb = function () {
+            if (!this.options['skip-install']) {
+                commands.yarn().catch(function () {}).then(function () {
+                    commands.composer(['update'], {cwd: this.destinationPath()}).then(function () {
+                        return this.props.loader === 'jspm' && commands.jspm(['install']);
                     }.bind(this));
-                }
-            }.bind(this)
-        });
+                }.bind(this));
+            }
+        }.bind(this);
+
+        if (!this.props.noBower || !this.props.yarn) {
+            this.installDependencies({
+                skipMessage: true,
+                skipInstall: this.options.skipInstall,
+                bower: !this.props.noBower,
+                npm: !this.props.yarn,
+                callback: cb
+            });
+        } else {
+            cb();
+        }
     }
 });

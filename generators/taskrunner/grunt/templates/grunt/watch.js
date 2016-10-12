@@ -7,5 +7,9 @@ module.exports = {
     scripts: {
         files: ['<%%= paths.app %>/scripts/**/*.js'],
         tasks: ['eslint']
+    },
+    icons: {
+        files: ['<%%= paths.app %>/img/svg-icons/*.svg'],
+        tasks: ['svgstore','svgmin:icons']
     }
 };

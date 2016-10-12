@@ -57,6 +57,7 @@ module.exports = common.extend({
             pkg.devDependencies['grunt-contrib-watch'] = '^1.0.0';
             pkg.devDependencies['grunt-filerev'] = '^2.1.2';
             pkg.devDependencies['grunt-svgmin'] = '^4.0.0';
+            pkg.devDependencies['grunt-svgstore'] = '^1.0.0';
             pkg.devDependencies['grunt-usemin'] = '^3.0.0';
             pkg.devDependencies['grunt-phpunit'] = '^0.3.6';
             pkg.devDependencies['jit-grunt'] = '^0.10.0';

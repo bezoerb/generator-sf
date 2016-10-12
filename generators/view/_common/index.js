@@ -246,28 +246,5 @@ module.exports = generators.Base.extend({
         this.template('index.html.twig', path.join(this.props.base, '..', 'views', 'controller', 'default', 'index.html.twig'));
 
         fs.copySync(this.commonTemplatePath('img'), path.join(this.props.base,'img'));
-    },
-
-    addFonts: function addFonts() {
-        var dest = this.destinationPath('app/Resources/public/fonts');
-        fs.mkdirsSync(dest);
-
-        var src = this.destinationPath(this.props.noBower ? 'node_modules': 'bower_components');
-
-        var fontpath = path.join(src, 'bootstrap', 'fonts');
-
-        if (this.props.view === 'bootstrap' && this.props.preprocessor === 'sass') {
-            fontpath = path.join(src, this.props.noBower ? 'bootstrap-sass': 'bootstrap-sass-official', 'assets', 'fonts');
-        } else if (this.props.view === 'bootstrap' && this.props.preprocessor === 'stylus') {
-            fontpath = path.join(src, 'bootstrap-stylus', 'fonts');
-        } else if (this.props.view === 'uikit') {
-            fontpath = path.join(src, 'uikit', 'fonts');
-        }
-
-        if (fs.existsSync(fontpath)) {
-            fs.copySync(fontpath, dest);
-        }
-    },
-
-
+    }
 });

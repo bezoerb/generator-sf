@@ -28,7 +28,7 @@ module.exports = {
     // copy unoptimized images because optimization is skipped when using grunt assets
     'assets-img': {
         files: [
-            {expand: true, dot: true, cwd: '<%%= paths.app %>', dest: '<%%= paths.dist %>', src: ['img/**/*', '!img/**/*.webp']}
+            {expand: true, dot: true, cwd: '<%%= paths.app %>', dest: '<%%= paths.dist %>', src: ['img/**/*', '!img/**/*.webp', '!img/svg-icons/**/*.svg']}
         ]
     },
     'sw-scripts': {
