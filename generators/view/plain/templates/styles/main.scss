@@ -1,5 +1,3 @@
-@import "sass-bootstrap-glyphicons/scss/bootstrap-glyphicons";
-
 .header {
     height: 50px;
 }
@@ -21,4 +19,11 @@
     padding: 0 !important;
     border: 0 !important;
     clip: rect(1px, 1px, 1px, 1px) !important;
+}
+
+svg.icon {
+    width: 25px;
+    height: 25px;
+    fill: currentColor;
+    vertical-align: middle;
 }

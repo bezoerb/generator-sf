@@ -209,6 +209,7 @@ module.exports = common.extend({
             this.template('grunt/eslint.js', 'grunt/eslint.js');
             this.template('grunt/imagemin.js', 'grunt/imagemin.js');
             this.template('grunt/svgmin.js', 'grunt/svgmin.js');
+            this.template('grunt/svgstore.js', 'grunt/svgstore.js');
             this.template('grunt/browserSync.js', 'grunt/browserSync.js');
             this.template('grunt/phpunit.js', 'grunt/phpunit.js');
             this.template('grunt/availabletasks.js', 'grunt/availabletasks.js');

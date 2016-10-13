@@ -52,8 +52,7 @@ module.exports = common.extend({
                 'inuit-tables': '~0.2.1',
                 'inuit-tabs': '~0.2.1',
                 'inuit-list-inline': '~0.3.2',
-                'inuit-list-ui': '~0.4.1',
-                'bootstrap': '~3.3.5'
+                'inuit-list-ui': '~0.4.1'
             });
         } else {
             this.addBowerDependencies({
@@ -77,8 +76,7 @@ module.exports = common.extend({
                 'inuit-tables': '~0.2.1',
                 'inuit-tabs': '~0.2.1',
                 'inuit-list-inline': '~0.3.2',
-                'inuit-list-ui': '~0.4.1',
-                'bootstrap': '~3.3.5'
+                'inuit-list-ui': '~0.4.1'
             });
         }
     },

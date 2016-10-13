@@ -51,5 +51,6 @@ module.exports = common.extend({
         this.addStyles();
         this.addScripts();
         this.addTemplates();
+        this.addFonts();
     }
 });

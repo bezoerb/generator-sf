@@ -20,7 +20,7 @@ require.config({
         app: '../app/Resources/public/scripts/app',
         modules: '../app/Resources/public/scripts/modules',
         jquery: 'jquery/dist/jquery',
-        loglevel: 'loglevel/dist/loglevel.min'<% if (useFoundation) { %>,
+        loglevel: 'loglevel/dist/loglevel.min'<% if (props.view === 'foundation') { %>,
         foundation: 'foundation/js/foundation',
         'foundation/core': 'foundation/js/foundation/foundation',
         'foundation/abide': 'foundation/js/foundation/foundation.abide',
@@ -38,7 +38,7 @@ require.config({
         'foundation/slider': 'foundation/js/foundation/foundation.slider',
         'foundation/tab': 'foundation/js/foundation/foundation.tab',
         'foundation/tooltip': 'foundation/js/foundation/foundation.tooltip',
-        'foundation/topbar': 'foundation/js/foundation/foundation.topbar'<% } else if (useBootstrap && !useSass) { %>,
+        'foundation/topbar': 'foundation/js/foundation/foundation.topbar'<% } else if (props.view === 'bootstrap' && props.preprocessor !== 'sass') { %>,
         bootstrap: 'bootstrap/dist/js/bootstrap',
         'bootstrap/affix': 'bootstrap/js/affix',
         'bootstrap/alert': 'bootstrap/js/alert',
@@ -51,7 +51,7 @@ require.config({
         'bootstrap/scrollspy': 'bootstrap/js/scrollspy',
         'bootstrap/tab': 'bootstrap/js/tab',
         'bootstrap/tooltip': 'bootstrap/js/tooltip',
-        'bootstrap/transition': 'bootstrap/js/transition'<% } else if (useBootstrap) { %>,
+        'bootstrap/transition': 'bootstrap/js/transition'<% } else if (props.view === 'bootstrap') { %>,
         bootstrap: 'bootstrap-sass-official/assets/javascripts/bootstrap',
         'bootstrap/affix': 'bootstrap-sass-official/assets/javascripts/bootstrap/affix',
         'bootstrap/alert': 'bootstrap-sass-official/assets/javascripts/bootstrap/alert',
@@ -66,8 +66,8 @@ require.config({
         'bootstrap/tooltip': 'bootstrap-sass-official/assets/javascripts/bootstrap/tooltip',
         'bootstrap/transition': 'bootstrap-sass-official/assets/javascripts/bootstrap/transition'<% } %>
     },
-    shim: {<% if (useUikit) { %>
-        uikit: ['jquery']<% } else if (useFoundation) { %>
+    shim: {<% if (props.view === 'uikit') { %>
+        uikit: ['jquery']<% } else if (props.view === 'foundation') { %>
         foundation: { exports: 'Foundation', deps: ['jquery'] },
         'foundation/core': { exports: 'Foundation', deps: ['jquery'] },
         'foundation/abide': { exports: 'Foundation.libs.abide', deps: ['foundation/core'] },
@@ -85,7 +85,7 @@ require.config({
         'foundation/slider': { exports: 'Foundation.libs.slider', deps: ['foundation/core'] },
         'foundation/tab': { exports: 'Foundation.libs.tab', deps: ['foundation/core'] },
         'foundation/tooltip': { exports: 'Foundation.libs.tooltip', deps: ['foundation/core'] },
-        'foundation/topbar': { exports: 'Foundation.libs.topbar', deps: ['foundation/core'] }<% } else if (useBootstrap) { %>
+        'foundation/topbar': { exports: 'Foundation.libs.topbar', deps: ['foundation/core'] }<% } else if (props.view === 'bootstrap') { %>
         bootstrap: { exports: '$', deps: ['jquery'] },
         'bootstrap/affix': { exports: '$.fn.affix', deps: ['jquery'] },
         'bootstrap/alert': { exports: '$.fn.alert', deps: ['jquery'] },

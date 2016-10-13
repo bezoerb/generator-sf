@@ -34,13 +34,11 @@ module.exports = common.extend({
     dependencies: function () {
         if (this.props.noBower) {
             this.addNpmDependencies({
-                'foundation-sites': '^6.2.0',
-                'bootstrap': '~3.3.5',
+                'foundation-sites': '^6.2.0'
             });
         } else {
             this.addBowerDependencies({
-                'foundation-sites': '^6.2.0',
-                'bootstrap': '~3.3.5',
+                'foundation-sites': '^6.2.0'
             });
         }
     },
@@ -52,5 +50,6 @@ module.exports = common.extend({
         this.addStyles();
         this.addScripts();
         this.addTemplates();
+        this.addFonts();
     }
 });

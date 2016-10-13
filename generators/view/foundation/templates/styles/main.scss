@@ -1,5 +1,4 @@
 @import "foundation-sites/scss/foundation";
-@import "sass-bootstrap-glyphicons/scss/bootstrap-glyphicons";
 
 @include foundation-everything();
 
@@ -18,4 +17,11 @@
     display:block;
     margin: 20px 0 50px;
 
+}
+
+svg.icon {
+    width: 25px;
+    height: 25px;
+    fill: currentColor;
+    vertical-align: middle;
 }

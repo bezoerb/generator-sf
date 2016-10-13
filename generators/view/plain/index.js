@@ -35,11 +35,11 @@ module.exports = common.extend({
     dependencies: function () {
         if (this.props.noBower) {
             this.addNpmDependencies({
-                'bootstrap': '~3.3.5'
+                // dependencies ?
             });
         } else {
             this.addBowerDependencies({
-                'bootstrap': '~3.3.5'
+                // dependencies ?
             });
         }
     },
@@ -51,5 +51,6 @@ module.exports = common.extend({
         this.addStyles();
         this.addScripts();
         this.addTemplates();
+        this.addFonts();
     }
 });

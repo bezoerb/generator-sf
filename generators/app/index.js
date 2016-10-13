@@ -45,7 +45,9 @@ module.exports = yeoman.Base.extend({
             installer.push('jspm install');
         }
         installer.push('composer update');
-    }
+
+        return installer.join(' && ');
+    },
 
     initializing: function () {
         this.props = {
@@ -69,11 +71,11 @@ module.exports = yeoman.Base.extend({
         askTask: function () {
             var prompts = [{
                 type: 'list',
-                name: 'taskrunner',
-                message: 'Please select a taskrunner',
+                name: 'buildtool',
+                message: 'Please select a build tool',
                 choices: [
                     {name: 'Grunt', value: 'grunt'},
-                    {name: 'Gulp (beta)', value: 'gulp'}
+                    {name: 'Gulp (not yet ready)', value: 'gulp'}
                 ]
             }];
 
@@ -164,7 +166,7 @@ module.exports = yeoman.Base.extend({
     },
 
     configuring: function configuring() {
-        this._invoke('generator:' + this.props.taskrunner, '../taskrunner/' + this.props.taskrunner);
+        this._invoke('generator:' + this.props.buildtool, '../buildtool/' + this.props.buildtool);
         this._invoke('generator:' + this.props.view, '../view/' + this.props.view);
     },
 
@@ -172,7 +174,7 @@ module.exports = yeoman.Base.extend({
 
 
         this.log('');
-        this.log('I\'m all done. Running ' + chalk.bold.yellow(installer.join(' && ')) + ' for you to install the required dependencies.');
+        this.log('I\'m all done. Running ' + chalk.bold.yellow(this._installCmd()) + ' for you to install the required dependencies.');
         this.log('If this fails, try running the command yourself.');
         this.log('');
 
