@@ -7,8 +7,6 @@ var spawn = require('cross-spawn');
 var Promise = require('bluebird');
 var fs = Promise.promisifyAll(require('fs-extra'));
 
-
-
 module.exports = generators.Base.extend({
     /**
      * Check for installed git
@@ -37,19 +35,19 @@ module.exports = generators.Base.extend({
                 stdErr.push(new Buffer(err.stack, 'ascii'));
             });
 
-            spawned.on('close', function (exitCode, exitSignal) {
+            spawned.on('close', function (exitCode) {
                 if (exitCode && stdErr.length) {
                     stdErr = Buffer.concat(stdErr).toString('utf-8');
                     reject(new Error(stdErr));
                 } else {
-                    resolve(Buffer.concat(stdOut).toString('utf-8').replace(/[\r\n]/,''));
+                    resolve(Buffer.concat(stdOut).toString('utf-8').replace(/[\r\n]/, ''));
                 }
-            }.bind(this));
-        }.bind(this));
+            });
+        });
     },
 
     constructor: function () {
-        this.props = { git: false };
+        this.props = {git: false};
         generators.Base.apply(this, arguments);
     },
 
@@ -65,30 +63,30 @@ module.exports = generators.Base.extend({
 
         return this.prompt(prompts).then(function (props) {
             // To access props later use this.props.someAnswer;
-            this.props = _.merge(this.props,props);
+            this.props = _.merge(this.props, props);
         }.bind(this));
     },
 
     install: {
-        init: function() {
+        init: function () {
             if (!this.props.git) {
                 return;
             }
 
             return this._gitBase()
-                .then(function(base) {
+                .then(function (base) {
                     fs.copySync(this.templatePath('post-merge'), this.destinationPath(path.join(base, '.git/hooks/post-merge')));
                     fs.chmodSync(this.destinationPath(path.join(base, '.git/hooks/post-merge')), '755');
                 }.bind(this))
-                .catch(function(){
-                    this.spawnCommand('git', ['init'] ).on('exit', function () {
+                .catch(function () {
+                    this.spawnCommand('git', ['init']).on('exit', function () {
                         fs.copySync(this.templatePath('post-merge'), this.destinationPath('.git/hooks/post-merge'));
                         fs.chmodSync(this.destinationPath('.git/hooks/post-merge'), '755');
                     }.bind(this));
                 }.bind(this));
         },
 
-        gitignore: function() {
+        gitignore: function () {
             // append gitignore
             var ignores = fs.readFileSync(this.templatePath('gitignore'), 'utf-8');
             fs.ensureFileSync(this.destinationPath('.gitignore'));

@@ -1,6 +1,8 @@
 'use strict';
-var _ = require('lodash');
+var os = require('os');
 var path = require('path');
+var _ = require('lodash');
+var chalk = require('chalk');
 var pathIsAbsolute = require('path-is-absolute');
 var generators = require('yeoman-generator');
 
@@ -13,7 +15,7 @@ module.exports = generators.Base.extend({
     _readPkg: function () {
         return this.fs.readJSON(this.destinationPath('package.json'), {
             name: _.camelCase(this.appname),
-            version: "0.0.0",
+            version: '0.0.0',
             scripts: {},
             dependencies: {},
             devDependencies: {}
@@ -62,17 +64,17 @@ module.exports = generators.Base.extend({
         }, this.options);
     },
 
-    commonTemplatePath: function commonTemplatePath() {
+    commonTemplatePath: function () {
         var filepath = path.join.apply(path, arguments);
 
         if (!pathIsAbsolute(filepath)) {
-            filepath = path.join(path.join(__dirname , 'templates'), filepath);
+            filepath = path.join(path.join(__dirname, 'templates'), filepath);
         }
 
         return filepath;
     },
 
-    commonTemplate: function commonTemplate(source, dest, data, options) {
+    commonTemplate: function (source, dest, data, options) {
         if (typeof dest !== 'string') {
             options = data;
             data = dest;
@@ -144,5 +146,9 @@ module.exports = generators.Base.extend({
                 {value: 'critical', name: 'Critical - Extract & Inline Critical-path CSS', checked: true}
             ]
         }];
-    },
+
+        return this.prompt(prompts).then(function (props) {
+            this.props = _.merge(this.props, props);
+        }.bind(this));
+    }
 });

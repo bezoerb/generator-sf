@@ -1,10 +1,8 @@
 'use strict';
-var os = require('os');
 var path = require('path');
 var globby = require('globby');
 var Promise = require('bluebird');
 var pathIsAbsolute = require('path-is-absolute');
-var chalk = require('chalk');
 var fs = require('fs-extra');
 var _ = require('lodash');
 var generators = require('yeoman-generator');
@@ -21,14 +19,16 @@ module.exports = generators.Base.extend({
     _readPkg: function () {
         return _.merge(this.fs.readJSON(this.destinationPath('package.json'), {
             name: _.camelCase(this.appname),
-            version: "0.0.0",
+            version: '0.0.0',
             scripts: {},
             dependencies: {},
             devDependencies: {}
-        }), { dependencies: {
-            jquery: '^3.1.1',
-            picturefill: '^3.0.2'
-        }});
+        }), {
+            dependencies: {
+                jquery: '^3.1.1',
+                picturefill: '^3.0.2'
+            }
+        });
     },
 
     /**
@@ -41,7 +41,6 @@ module.exports = generators.Base.extend({
     },
 
     _readBower: function () {
-
         var dependencies = {
             picturefill: '~3.0.1',
             modernizr: '~3.3.1',
@@ -59,15 +58,14 @@ module.exports = generators.Base.extend({
             name: _.snakeCase(this.appname),
             private: true,
             dependencies: {}
-        }), { dependencies: dependencies });
+        }), {dependencies: dependencies});
     },
 
-    _writeBower: function(bower) {
+    _writeBower: function (bower) {
         this.fs.writeJSON(this.destinationPath('bower.json'), bower);
     },
 
-
-    addNpmDependencies: function(deps) {
+    addNpmDependencies: function (deps) {
         var pkg = _.merge(this._readPkg(), {
             dependencies: deps
         });
@@ -75,14 +73,13 @@ module.exports = generators.Base.extend({
         return this._writePkg(pkg);
     },
 
-    addBowerDependencies: function(deps) {
+    addBowerDependencies: function (deps) {
         var bower = _.merge(this._readBower(), {
             dependencies: deps
         });
 
         return this._writeBower(bower);
     },
-
 
     constructor: function () {
         generators.Base.apply(this, arguments);
@@ -99,17 +96,17 @@ module.exports = generators.Base.extend({
         }, this.options);
     },
 
-    commonTemplatePath: function commonTemplatePath() {
+    commonTemplatePath: function () {
         var filepath = path.join.apply(path, arguments);
 
         if (!pathIsAbsolute(filepath)) {
-            filepath = path.join(path.join(__dirname , 'templates'), filepath);
+            filepath = path.join(path.join(__dirname, 'templates'), filepath);
         }
 
         return filepath;
     },
 
-    commonTemplate: function commonTemplate(source, dest, data, options) {
+    commonTemplate: function (source, dest, data, options) {
         if (typeof dest !== 'string') {
             options = data;
             data = dest;
@@ -128,7 +125,7 @@ module.exports = generators.Base.extend({
     /**
      * Saving configurations and configure the project (creating .editorconfig files and other metadata files)
      */
-    addConfigFiles: function addConfigFiles() {
+    addConfigFiles: function () {
         this.commonTemplate('editorconfig', '.editorconfig');
         this.commonTemplate('eslintrc', '.eslintrc');
         this.commonTemplate('jscsrc', '.jscsrc');
@@ -141,7 +138,7 @@ module.exports = generators.Base.extend({
     /**
      * Add Service worker config
      */
-    addServiceWorker: function addServiceWorker() {
+    addServiceWorker: function () {
         this.commonTemplate('public/service-worker.js', path.join(this.props.base, 'service-worker.js'));
         this.commonTemplate('public/appcache-loader.html', path.join(this.props.base, 'appcache-loader.html'));
     },
@@ -149,7 +146,7 @@ module.exports = generators.Base.extend({
     /**
      * Add Favicon
      */
-    addFavicon: function addFavicon() {
+    addFavicon: function () {
         this.commonTemplate('public/browserconfig.xml', path.join(this.props.base, 'browserconfig.xml'));
         this.commonTemplate('public/favicon.ico', path.join(this.props.base, 'favicon.ico'));
         this.commonTemplate('public/manifest.json', path.join(this.props.base, 'manifest.json'));
@@ -158,28 +155,27 @@ module.exports = generators.Base.extend({
         return fs.copyAsync(this.commonTemplatePath('img', 'touch'), path.join(this.props.base, 'img/touch'));
     },
 
-
-    addStyles: function addStyles() {
+    addStyles: function () {
         var filesMap = {};
-        filesMap['sass'] = '**/*.scss';
-        filesMap['less'] = '**/*.less';
-        filesMap['stylus'] = '**/*.styl';
-        filesMap['none'] = '**/*.css';
+        filesMap.sass = '**/*.scss';
+        filesMap.less = '**/*.less';
+        filesMap.stylus = '**/*.styl';
+        filesMap.none = '**/*.css';
 
         var roots = [
             path.join(this.commonTemplatePath('styles'), filesMap[this.props.preprocessor]),
             path.join(this.templatePath('styles'), filesMap[this.props.preprocessor])
         ];
 
-        globby(roots).then(_.bind(function(paths) {
+        globby(roots).then(_.bind(function (paths) {
             _.forEach(paths, _.bind(function (file) {
                 this.fs.copyTpl(
                     file,
-                    this.destinationPath(path.join(this.props.base, 'styles', file.replace(/^.*styles\//,''))),
+                    this.destinationPath(path.join(this.props.base, 'styles', file.replace(/^.*styles\//, ''))),
                     this
                 );
             }, this));
-        },this));
+        }, this));
 
         return this;
     },
@@ -187,24 +183,24 @@ module.exports = generators.Base.extend({
     /**
      * Add scripts from instance
      */
-    addScripts: function addScripts() {
+    addScripts: function () {
         var roots = [
-            path.join(this.commonTemplatePath('scripts'), this.props.loader,'**/*.js'),
-            path.join(this.templatePath('scripts'), this.props.loader,'**/*.js')
+            path.join(this.commonTemplatePath('scripts'), this.props.loader, '**/*.js'),
+            path.join(this.templatePath('scripts'), this.props.loader, '**/*.js')
         ];
 
-        globby(roots).then(_.bind(function(paths) {
+        globby(roots).then(_.bind(function (paths) {
             _.forEach(paths, _.bind(function (file) {
                 this.fs.copyTpl(
                     file,
-                    this.destinationPath(path.join(this.props.base, 'scripts', file.replace(/^.*scripts\/[^\/]+\//,''))),
+                    this.destinationPath(path.join(this.props.base, 'scripts', file.replace(/^.*scripts\/[^\/]+\//, ''))),
                     this
                 );
             }, this));
-        },this));
+        }, this));
 
         var file = path.join('scripts', 'sw', 'runtime-caching.js');
-        this.commonTemplate(file, path.join(this.props.base,  file));
+        this.commonTemplate(file, path.join(this.props.base, file));
 
         // testfiles
         var dest = 'tests/Frontend';
@@ -235,7 +231,7 @@ module.exports = generators.Base.extend({
         return this;
     },
 
-    addTemplates: function addTemplates() {
+    addTemplates: function () {
         fs.removeSync(this.destinationPath('app/Resources/views'));
         fs.mkdirsSync(this.destinationPath('app/Resources/views/controller/default'));
 
@@ -245,19 +241,19 @@ module.exports = generators.Base.extend({
         // copy default action template
         this.template('index.html.twig', path.join(this.props.base, '..', 'views', 'controller', 'default', 'index.html.twig'));
 
-        fs.copySync(this.commonTemplatePath('img'), path.join(this.props.base,'img'));
+        fs.copySync(this.commonTemplatePath('img'), path.join(this.props.base, 'img'));
     },
 
-    addFonts: function addFonts() {
+    addFonts: function () {
         var dest = this.destinationPath('app/Resources/public/fonts');
         fs.mkdirsSync(dest);
 
-        var src = this.destinationPath(this.props.noBower ? 'node_modules': 'bower_components');
+        var src = this.destinationPath(this.props.noBower ? 'node_modules' : 'bower_components');
 
         var fontpath = '-';
 
         if (this.props.view === 'bootstrap' && this.props.preprocessor === 'sass') {
-            fontpath = path.join(src, this.props.noBower ? 'bootstrap-sass': 'bootstrap-sass-official', 'assets', 'fonts');
+            fontpath = path.join(src, this.props.noBower ? 'bootstrap-sass' : 'bootstrap-sass-official', 'assets', 'fonts');
         } else if (this.props.view === 'bootstrap' && this.props.preprocessor === 'stylus') {
             fontpath = path.join(src, 'bootstrap-stylus', 'fonts');
         } else if (this.props.view === 'uikit') {
@@ -267,7 +263,6 @@ module.exports = generators.Base.extend({
         if (fs.existsSync(fontpath)) {
             fs.copySync(fontpath, dest);
         }
-    },
-
+    }
 
 });

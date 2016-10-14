@@ -1,18 +1,16 @@
 'use strict';
-var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
+var common = require('../_common');
 
-module.exports = yeoman.Base.extend({
-  prompting: function () {
+module.exports = common.Base.extend({
+    prompting: function () {
 
-  },
+    },
 
-  writing: function () {
+    writing: function () {
 
-  },
+    },
 
-  install: function () {
+    install: function () {
 
-  }
+    }
 });

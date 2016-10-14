@@ -1,20 +1,9 @@
 'use strict';
-var os = require('os');
-var path = require('path');
-var Promise = require('bluebird');
-var chalk = require('chalk');
-var fs = require('fs-extra');
-var _ = require('lodash');
 var common = require('../_common');
-
-
-Promise.promisifyAll(fs);
-
 
 module.exports = common.extend({
     constructor: function () {
         common.apply(this, arguments);
-
     },
 
     /**
@@ -41,7 +30,7 @@ module.exports = common.extend({
                     this.addNpmDependencies({'bootstrap-styl': '~5.0.5'});
                     break;
                 default:
-                    this.addNpmDependencies({'bootstrap': '~3.3.5'});
+                    this.addNpmDependencies({bootstrap: '~3.3.5'});
                     break;
             }
         } else {
@@ -53,7 +42,7 @@ module.exports = common.extend({
                     this.addBowerDependencies({'bootstrap-stylus': '~5.0.2'});
                     break;
                 default:
-                    this.addBowerDependencies({'bootstrap': '~3.3.0'});
+                    this.addBowerDependencies({bootstrap: '~3.3.0'});
                     break;
             }
         }

@@ -9,8 +9,8 @@ var commands = require('../../lib/commands');
 
 module.exports = yeoman.Base.extend({
 
-    _invoke: function _invoke(generatorName, generatorPath) {
-        this.composeWith(generatorName, {
+    _invoke: function (generatorName, generatorPath) {
+        return this.composeWith(generatorName, {
             arguments: ['app'],
             options: _.assign(this.props, {
                 skipInstall: true
@@ -67,6 +67,11 @@ module.exports = yeoman.Base.extend({
     },
 
     prompting: {
+        greetings: function () {
+            if (!this.options['skip-welcome-message']) {
+                this.log(yosay('\'Allo \'allo! Let\'s scaffold your Symfony PHP app with full featured frontend tooling'));
+            }
+        },
 
         askTask: function () {
             var prompts = [{
@@ -85,7 +90,7 @@ module.exports = yeoman.Base.extend({
         },
 
         askTools: function () {
-            var useSass = function useSass(answers) {
+            var useSass = function (answers) {
                 return _.result(answers, 'preprocessor') === 'sass';
             };
 
@@ -165,14 +170,14 @@ module.exports = yeoman.Base.extend({
         }
     },
 
-    configuring: function configuring() {
+    configuring: function () {
+        this.props.symfony = this.env.symfony;
+
         this._invoke('generator:' + this.props.buildtool, '../buildtool/' + this.props.buildtool);
         this._invoke('generator:' + this.props.view, '../view/' + this.props.view);
     },
 
     install: function () {
-
-
         this.log('');
         this.log('I\'m all done. Running ' + chalk.bold.yellow(this._installCmd()) + ' for you to install the required dependencies.');
         this.log('If this fails, try running the command yourself.');
@@ -180,7 +185,8 @@ module.exports = yeoman.Base.extend({
 
         var cb = function () {
             if (!this.options['skip-install']) {
-                commands.yarn().catch(function () {}).then(function () {
+                commands.yarn().catch(function () {
+                }).then(function () {
                     commands.composer(['update'], {cwd: this.destinationPath()}).then(function () {
                         return this.props.loader === 'jspm' && commands.jspm(['install']);
                     }.bind(this));

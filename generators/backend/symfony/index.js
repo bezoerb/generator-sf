@@ -2,7 +2,6 @@
 var os = require('os');
 var path = require('path');
 var Promise = require('bluebird');
-var decompress = require('decompress');
 var download = require('download');
 var chalk = require('chalk');
 var fs = require('fs-extra');
@@ -34,8 +33,8 @@ module.exports = generators.Base.extend({
                 this.versions = JSON.parse(response.body);
 
                 this.commits = [
-                    {name: this.versions['lts'] + ' (lts)', value: this.versions['lts']},
-                    {name: this.versions['latest'] + ' (latest)', value: this.versions['latest']}
+                    {name: this.versions.lts + ' (lts)', value: this.versions.lts},
+                    {name: this.versions.latest + ' (latest)', value: this.versions.latest}
                 ];
             } else {
                 this.log.error('A problem occurred', response.statusCode);
@@ -43,18 +42,14 @@ module.exports = generators.Base.extend({
         }.bind(this));
     },
 
-    _hasAssetic: function _hasAssetic() {
+    _hasAssetic: function () {
         return (this.version || 3) < 2.8;
     },
 
-    _isDeprecated: function _isDeprecated() {
-        return (this.version || 3) < 3;
-    },
-
     _setPermissions: function () {
-        return new Promise(function (resolve, reject) {
+        return new Promise(function (resolve) {
             var folder = this.props.version >= 3 ? 'var' : 'app';
-            wsfp([folder + '/cache', folder + '/logs'], function(err, data) {
+            wsfp([folder + '/cache', folder + '/logs'], function (err, data) {
                 if (err) {
                     this.log('Your system doesn\'t support ACL. Setting permissions via ' + chalk.bold.yellow('umask'));
                     this.log('See: http://symfony.com/doc/current/book/installation.html#book-installation-permissions');
@@ -78,7 +73,20 @@ module.exports = generators.Base.extend({
 
     constructor: function () {
         this.props = {};
+
         generators.Base.apply(this, arguments);
+
+    //     this.option('symfonyStandard', {
+    //         type: Boolean,
+    //         desc: 'Would you like to use the Symfony "Standard Edition"'
+    //     });
+    //
+    //     this.option('symfonyCommit', {
+    //         type: String,
+    //         desc: 'Which commit'
+    //     });
+    //
+    //     this.props = _.merge({}, this.options);
     },
 
     initializing: function () {
@@ -86,23 +94,23 @@ module.exports = generators.Base.extend({
     },
 
     prompting: function () {
-
-        this.commit = this.versions['latest'];
+        this.commit = this.versions.latest;
         this.version = parseFloat(this.commit);
 
         var symfonyCustom = function (answers) {
-            return !_.result(answers, 'symfonyStandard');
-        };
+            return this.options.symfonyStandard === undefined && !_.result(answers, 'symfonyStandard');
+        }.bind(this);
 
         var prompts = [{
             type: 'confirm',
             name: 'symfonyStandard',
             message: 'Would you like to use the Symfony "Standard Edition" distribution ' + this.commit + ' (latest)',
+            when: this.options.symfonyStandard === undefined,
             default: true
         }, {
             type: 'list',
             name: 'symfonyCommit',
-            message: 'Commit (commit/branch/tag)',
+            message: 'Which version',
             default: 'lts',
             choices: this.commits,
             when: symfonyCustom
@@ -111,14 +119,16 @@ module.exports = generators.Base.extend({
         return this.prompt(prompts).then(function (answers) {
             if (answers.symfonyCommit) {
                 this.props.commit = answers.symfonyCommit;
-                this.props.version = parseFloat(this.commit);
+                this.props.version = parseFloat(answers.symfonyCommit);
             } else {
                 this.props.commit = this.commit;
                 this.props.version = this.version;
             }
 
-            this.env.symfony = this.props;
-
+            this.env.symfony = {
+                commit: this.props.commit,
+                version: this.props.version
+            };
         }.bind(this));
     },
 
@@ -128,13 +138,12 @@ module.exports = generators.Base.extend({
      * @returns {Promise}
      */
     symfonyBase: function () {
-
-        var source = 'https://github.com/symfony/symfony-standard/archive/v' + this.commit + '.zip';
+        var source = 'https://github.com/symfony/symfony-standard/archive/v' + this.props.commit + '.zip';
         var dest = this.destinationRoot();
         var cache = path.join(xdgBasedir.cache, 'generator-sf');
 
         // will be generated from the zip
-        var dirname = 'symfony-standard-' + this.commit;
+        var dirname = 'symfony-standard-' + this.props.commit;
         var log = this.log.write();
 
         // check cache first
@@ -142,7 +151,7 @@ module.exports = generators.Base.extend({
             .catch(function () {
                 log.info('Fetching %s ...', source)
                     .info(chalk.yellow('This might take a few moments'));
-                return download(source, cache, {extract: true})
+                return download(source, cache, {extract: true});
             })
             .then(function () {
                 return fs.copyAsync(path.join(cache, dirname) + '/', dest + '/.');
@@ -152,9 +161,7 @@ module.exports = generators.Base.extend({
     /**
      * Check for installed composer and prompt for installing composer locally if not found
      */
-    checkComposer: function checkComposer() {
-        this.globalComposer = false;
-
+    checkComposer: function () {
         return new Promise(function (resolve, reject) {
             // Check if composer is installed globally
             exec('composer', ['-V'], function (error) {
@@ -163,10 +170,9 @@ module.exports = generators.Base.extend({
                     // Use the secondary installation method as we cannot assume curl is installed
                     exec('php -r "readfile(\'https://getcomposer.org/installer\');" | php');
                     resolve();
-                } else if (error !== null) {
+                } else if (error) {
                     reject(error);
                 } else {
-                    this.globalComposer = true;
                     resolve();
                 }
             }.bind(this));
@@ -198,7 +204,7 @@ module.exports = generators.Base.extend({
             this.fs.writeJSON(this.destinationPath('composer.json'), data);
         },
 
-        dropAssetic: function dropAssetic() {
+        dropAssetic: function () {
             if (!this._hasAssetic()) {
                 return;
             }
@@ -220,7 +226,6 @@ module.exports = generators.Base.extend({
             fs.writeFileSync('app/AppKernel.php', appKernel);
 
             return this._composer(['remove', 'symfony/assetic-bundle']);
-
         },
 
         /**
@@ -230,7 +235,7 @@ module.exports = generators.Base.extend({
          *  - update parameters to use proposed dot notation
          *    @see http://symfony.com/doc/current/cookbook/configuration/external_parameters.html
          */
-        updateConfig: function updateConfig() {
+        updateConfig: function () {
             var conf = read('app/config/config.yml').replace(/\[([^"']+)\]/igm, '["$1"]');
 
             // change parameter names to use dot notation
@@ -247,7 +252,7 @@ module.exports = generators.Base.extend({
         /**
          * update parameters.yml.dist to use dot notation
          */
-        updateParameters: function updateParameters() {
+        updateParameters: function () {
             var file = 'app/config/parameters.yml.dist';
             var contents = read(file, 'utf8').replace(/(database|mailer)_(.*):/g, '$1.$2:');
             fs.unlinkSync(file);
@@ -258,7 +263,7 @@ module.exports = generators.Base.extend({
          * update app.php to consider environment variables SYMFONY_ENV and SYMFONY_DEBUG
          * add extend .htaccess with best practices from h5b
          */
-        updateApp: function updateApp() {
+        updateApp: function () {
             fs.unlinkSync(this.destinationPath('web/app.php'));
             this.template('app.php', 'web/app.php');
 
@@ -278,7 +283,7 @@ module.exports = generators.Base.extend({
          *
          * see http://symfony.com/doc/current/best_practices/web-assets.html
          */
-        updateAppKernel: function updateAppKernel() {
+        updateAppKernel: function () {
             function addBundle(contents, str) {
                 return contents.replace(/(\$bundles\s*=\s.*\n(?:[^;]*\n)+)/, '$&            ' + str + '\n');
             }
@@ -302,7 +307,7 @@ module.exports = generators.Base.extend({
         /**
          * update default controller to use own template
          */
-        updateController: function updateControler() {
+        updateController: function () {
             var controllerPath = 'src/AppBundle/Controller/DefaultController.php';
             if (fs.existsSync(controllerPath)) {
                 fs.unlinkSync(controllerPath);
@@ -314,7 +319,7 @@ module.exports = generators.Base.extend({
         /**
          * update default controller test to use own template
          */
-        updateControllerTest: function updateControllerTest() {
+        updateControllerTest: function () {
             var controllerPath = this.props.version < 3 ?
                 'src/AppBundle/Tests/Controller/DefaultControllerTest.php' : 'tests/AppBundle/Controller/DefaultControllerTest.php';
             if (fs.existsSync(controllerPath)) {
@@ -322,15 +327,15 @@ module.exports = generators.Base.extend({
             }
 
             this.template('DefaultControllerTest.php', controllerPath);
-        },
+        }
     },
 
     install: function () {
-        if (!this.options['skip-install-message'] && !!this.options['skipInstallMessage']) {
+        if (!this.options['skip-install-message'] && Boolean(this.options.skipInstallMessage)) {
             this.log('');
             this.log('Running ' + chalk.bold.yellow('composer update') + ' for you to install the required dependencies.');
         }
-        return !this.options['skipInstall'] && !this.options['skip-install'] && commands.composer(['update']);
+        return !this.options.skipInstall && !this.options['skip-install'] && commands.composer(['update']);
     },
 
     end: function () {

@@ -2,3 +2,11 @@
 .idea
 node_modules
 coverage
+temp
+jspm_packages
+bower_components
+vendor
+
+
+
+
