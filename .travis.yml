@@ -22,7 +22,7 @@ before_install:
   - jspm config registries.github.auth $JSPM_AUTH
   - currentfolder=${PWD##*/}
   - if [ "$currentfolder" != 'generator-sf' ]; then cd .. && eval "mv $currentfolder generator-sf" && cd generator-sf; fi
-  - npm install
+  - yarn
 
 matrix:
   fast_finish: true

@@ -79,7 +79,7 @@ module.exports = yeoman.Base.extend({
                 name: 'buildtool',
                 message: 'Please select a build tool',
                 choices: [
-                    {name: 'Grunt', value: 'grunt'},
+                    {name: 'Grunt', value: 'grunt'}
                     // {name: 'Gulp (not yet ready)', value: 'gulp'}
                 ]
             }];
