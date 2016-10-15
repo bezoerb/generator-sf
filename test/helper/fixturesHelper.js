@@ -3,6 +3,7 @@
  */
 'use strict';
 var _ = require('lodash');
+var pathExists = require('path-exists');
 var fs = require('fs-extra');
 var Promise = require('bluebird');
 var glob = require('glob');
@@ -42,13 +43,12 @@ function prepareNpmDeps(configFile, baseConfigFile, base, target) {
  * symlink bower dependencies
  */
 function prepareBowerDeps(configFile, base, target) {
-    try {
-        var config = fs.readJsonSync(configFile);
-        var dependencies = _.keys(_.merge(config.dependencies || {}, config.devDependencies));
-    } catch (err) {
-        console.log(err);
+    if (!pathExists.sync(configFile)) {
         return;
     }
+    var config = fs.readJsonSync(configFile);
+    var dependencies = _.keys(_.merge(config.dependencies || {}, config.devDependencies));
+
 
     // add dependencies from dependencies as bower has a flat directory structure
     var modules = _.reduce(dependencies, function (res, item) {
