@@ -1,7 +1,36 @@
+sudo: false
 language: node_js
 node_js:
-  - v6
-  - v5
-  - v4
-  - '0.12'
-  - '0.10'
+  - "4"
+  - "5"
+  - "6"
+addons:
+  apt:
+    packages:
+      - php5
+      - php5-curl
+      - php5-cli
+      - php5-intl
+
+before_install:
+  - gem update --system
+  - gem install sass
+  - php --version
+  - php -r "readfile('https://getcomposer.org/installer');" | php && php composer.phar config -g github-oauth.github.com $GH_AUTH
+  - npm update -g npm
+  - npm install -g bower grunt-cli jspm yarn
+  - jspm config registries.github.auth $JSPM_AUTH
+  - currentfolder=${PWD##*/}
+  - if [ "$currentfolder" != 'generator-sf' ]; then cd .. && eval "mv $currentfolder generator-sf" && cd generator-sf; fi
+  - npm install
+
+matrix:
+  fast_finish: true
+
+cache:
+  directories:
+    - node_modules
+    - test/fixtures/bower_components
+    - test/fixtures/jspm_packages
+    - test/fixtures/node_modules
+    - test/fixtures/vendor

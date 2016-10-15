@@ -15,7 +15,7 @@ define(function (require, exports) {
     var Foundation = require('foundation');
     $(document).foundation();
 
-    exports.init = function init() {
+    exports.init = function () {
         debug('\'Allo \'Allo');
         debug('Running jQuery:', $().jquery);
         debug('Running Foundation:', Foundation.version);<

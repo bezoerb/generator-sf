@@ -13,7 +13,7 @@ define(function (require, exports) {
     var serviceWorker = require('./modules/service-worker');
     var debug = require('visionmedia-debug')('<%= props.safeAppame %>:main');
 
-    exports.init = function init() {
+    exports.init = function () {
         debug('\'Allo \'Allo');
         debug('Running jQuery:', $().jquery);
 

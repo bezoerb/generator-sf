@@ -14,7 +14,7 @@ define(function (require, exports) {
     var debug = require('visionmedia-debug')('<%= props.safeAppame %>:main');
     require('bootstrap');
 
-    exports.init = function init() {
+    exports.init = function () {
         debug('\'Allo \'Allo');
         debug('Running jQuery:', $().jquery);
         debug('Running Bootstrap:', $.fn.scrollspy ? '~3.3.0' : false);

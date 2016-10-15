@@ -14,7 +14,7 @@ define(function (require, exports) {
     var debug = require('visionmedia-debug')('<%= props.safeAppame %>:main');
     var UI = require('uikit');
 
-    exports.init = function init() {
+    exports.init = function () {
         debug('\'Allo \'Allo');
         debug('Running jQuery:', $().jquery);
         debug('Running UIkit:', UI.version);

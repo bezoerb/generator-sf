@@ -46,6 +46,7 @@ function prepareBowerDeps(configFile, base, target) {
         var config = fs.readJsonSync(configFile);
         var dependencies = _.keys(_.merge(config.dependencies || {}, config.devDependencies));
     } catch (err) {
+        console.log(err);
         return;
     }
 
