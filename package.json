@@ -38,7 +38,7 @@
     "resolve": "^1.1.7",
     "wsfp": "0.0.7",
     "xdg-basedir": "^2.0.0",
-    "yeoman-generator": "^0.23.0",
+    "yeoman-generator": "^0.24.1",
     "yosay": "^1.0.0"
   },
   "devDependencies": {
