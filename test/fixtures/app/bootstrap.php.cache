@@ -401,6 +401,7 @@ return $headers;
 }
 namespace Symfony\Component\HttpFoundation
 {
+use Symfony\Component\HttpFoundation\Exception\ConflictingHeadersException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class Request
 {
@@ -750,30 +751,27 @@ $ip = $this->server->get('REMOTE_ADDR');
 if (!$this->isFromTrustedProxy()) {
 return array($ip);
 }
-if (self::$trustedHeaders[self::HEADER_FORWARDED] && $this->headers->has(self::$trustedHeaders[self::HEADER_FORWARDED])) {
+$hasTrustedForwardedHeader = self::$trustedHeaders[self::HEADER_FORWARDED] && $this->headers->has(self::$trustedHeaders[self::HEADER_FORWARDED]);
+$hasTrustedClientIpHeader = self::$trustedHeaders[self::HEADER_CLIENT_IP] && $this->headers->has(self::$trustedHeaders[self::HEADER_CLIENT_IP]);
+if ($hasTrustedForwardedHeader) {
 $forwardedHeader = $this->headers->get(self::$trustedHeaders[self::HEADER_FORWARDED]);
 preg_match_all('{(for)=("?\[?)([a-z0-9\.:_\-/]*)}', $forwardedHeader, $matches);
-$clientIps = $matches[3];
-} elseif (self::$trustedHeaders[self::HEADER_CLIENT_IP] && $this->headers->has(self::$trustedHeaders[self::HEADER_CLIENT_IP])) {
-$clientIps = array_map('trim', explode(',', $this->headers->get(self::$trustedHeaders[self::HEADER_CLIENT_IP])));
+$forwardedClientIps = $matches[3];
+$forwardedClientIps = $this->normalizeAndFilterClientIps($forwardedClientIps, $ip);
+$clientIps = $forwardedClientIps;
 }
-$clientIps[] = $ip; $firstTrustedIp = null;
-foreach ($clientIps as $key => $clientIp) {
-if (preg_match('{((?:\d+\.){3}\d+)\:\d+}', $clientIp, $match)) {
-$clientIps[$key] = $clientIp = $match[1];
+if ($hasTrustedClientIpHeader) {
+$xForwardedForClientIps = array_map('trim', explode(',', $this->headers->get(self::$trustedHeaders[self::HEADER_CLIENT_IP])));
+$xForwardedForClientIps = $this->normalizeAndFilterClientIps($xForwardedForClientIps, $ip);
+$clientIps = $xForwardedForClientIps;
 }
-if (!filter_var($clientIp, FILTER_VALIDATE_IP)) {
-unset($clientIps[$key]);
-continue;
+if ($hasTrustedForwardedHeader && $hasTrustedClientIpHeader && $forwardedClientIps !== $xForwardedForClientIps) {
+throw new ConflictingHeadersException('The request has both a trusted Forwarded header and a trusted Client IP header, conflicting with each other with regards to the originating IP addresses of the request. This is the result of a misconfiguration. You should either configure your proxy only to send one of these headers, or configure Symfony to distrust one of them.');
 }
-if (IpUtils::checkIp($clientIp, self::$trustedProxies)) {
-unset($clientIps[$key]);
-if (null === $firstTrustedIp) {
-$firstTrustedIp = $clientIp;
+if (!$hasTrustedForwardedHeader && !$hasTrustedClientIpHeader) {
+return $this->normalizeAndFilterClientIps(array(), $ip);
 }
-}
-}
-return $clientIps ? array_reverse($clientIps) : array($firstTrustedIp);
+return $clientIps;
 }
 public function getClientIp()
 {
@@ -1041,7 +1039,7 @@ return $this->getMethod() === strtoupper($method);
 }
 public function isMethodSafe()
 {
-return in_array($this->getMethod(), array('GET','HEAD'));
+return in_array($this->getMethod(), array('GET','HEAD','OPTIONS','TRACE'));
 }
 public function getContent($asResource = false)
 {
@@ -1067,7 +1065,7 @@ if ($currentContentIsResource) {
 rewind($this->content);
 return stream_get_contents($this->content);
 }
-if (null === $this->content) {
+if (null === $this->content || false === $this->content) {
 $this->content = file_get_contents('php://input');
 }
 return $this->content;
@@ -1303,6 +1301,26 @@ private function isFromTrustedProxy()
 {
 return self::$trustedProxies && IpUtils::checkIp($this->server->get('REMOTE_ADDR'), self::$trustedProxies);
 }
+private function normalizeAndFilterClientIps(array $clientIps, $ip)
+{
+$clientIps[] = $ip; $firstTrustedIp = null;
+foreach ($clientIps as $key => $clientIp) {
+if (preg_match('{((?:\d+\.){3}\d+)\:\d+}', $clientIp, $match)) {
+$clientIps[$key] = $clientIp = $match[1];
+}
+if (!filter_var($clientIp, FILTER_VALIDATE_IP)) {
+unset($clientIps[$key]);
+continue;
+}
+if (IpUtils::checkIp($clientIp, self::$trustedProxies)) {
+unset($clientIps[$key]);
+if (null === $firstTrustedIp) {
+$firstTrustedIp = $clientIp;
+}
+}
+}
+return $clientIps ? array_reverse($clientIps) : array($firstTrustedIp);
+}
 }
 }
 namespace Symfony\Component\HttpFoundation
@@ -1344,7 +1362,7 @@ const HTTP_REQUEST_URI_TOO_LONG = 414;
 const HTTP_UNSUPPORTED_MEDIA_TYPE = 415;
 const HTTP_REQUESTED_RANGE_NOT_SATISFIABLE = 416;
 const HTTP_EXPECTATION_FAILED = 417;
-const HTTP_I_AM_A_TEAPOT = 418; const HTTP_UNPROCESSABLE_ENTITY = 422; const HTTP_LOCKED = 423; const HTTP_FAILED_DEPENDENCY = 424; const HTTP_RESERVED_FOR_WEBDAV_ADVANCED_COLLECTIONS_EXPIRED_PROPOSAL = 425; const HTTP_UPGRADE_REQUIRED = 426; const HTTP_PRECONDITION_REQUIRED = 428; const HTTP_TOO_MANY_REQUESTS = 429; const HTTP_REQUEST_HEADER_FIELDS_TOO_LARGE = 431; const HTTP_UNAVAILABLE_FOR_LEGAL_REASONS = 451;
+const HTTP_I_AM_A_TEAPOT = 418; const HTTP_MISDIRECTED_REQUEST = 421; const HTTP_UNPROCESSABLE_ENTITY = 422; const HTTP_LOCKED = 423; const HTTP_FAILED_DEPENDENCY = 424; const HTTP_RESERVED_FOR_WEBDAV_ADVANCED_COLLECTIONS_EXPIRED_PROPOSAL = 425; const HTTP_UPGRADE_REQUIRED = 426; const HTTP_PRECONDITION_REQUIRED = 428; const HTTP_TOO_MANY_REQUESTS = 429; const HTTP_REQUEST_HEADER_FIELDS_TOO_LARGE = 431; const HTTP_UNAVAILABLE_FOR_LEGAL_REASONS = 451;
 const HTTP_INTERNAL_SERVER_ERROR = 500;
 const HTTP_NOT_IMPLEMENTED = 501;
 const HTTP_BAD_GATEWAY = 502;
@@ -1394,7 +1412,7 @@ public static $statusTexts = array(
 415 =>'Unsupported Media Type',
 416 =>'Requested Range Not Satisfiable',
 417 =>'Expectation Failed',
-418 =>'I\'m a teapot', 422 =>'Unprocessable Entity', 423 =>'Locked', 424 =>'Failed Dependency', 425 =>'Reserved for WebDAV advanced collections expired proposal', 426 =>'Upgrade Required', 428 =>'Precondition Required', 429 =>'Too Many Requests', 431 =>'Request Header Fields Too Large', 451 =>'Unavailable For Legal Reasons', 500 =>'Internal Server Error',
+418 =>'I\'m a teapot', 421 =>'Misdirected Request', 422 =>'Unprocessable Entity', 423 =>'Locked', 424 =>'Failed Dependency', 425 =>'Reserved for WebDAV advanced collections expired proposal', 426 =>'Upgrade Required', 428 =>'Precondition Required', 429 =>'Too Many Requests', 431 =>'Request Header Fields Too Large', 451 =>'Unavailable For Legal Reasons', 500 =>'Internal Server Error',
 501 =>'Not Implemented',
 502 =>'Bad Gateway',
 503 =>'Service Unavailable',
@@ -2157,10 +2175,10 @@ if (!$id) {
 throw new ServiceNotFoundException($id);
 }
 $alternatives = array();
-foreach ($this->services as $key => $associatedService) {
-$lev = levenshtein($id, $key);
-if ($lev <= strlen($id) / 3 || false !== strpos($key, $id)) {
-$alternatives[] = $key;
+foreach ($this->getServiceIds() as $knownId) {
+$lev = levenshtein($id, $knownId);
+if ($lev <= strlen($id) / 3 || false !== strpos($knownId, $id)) {
+$alternatives[] = $knownId;
 }
 }
 throw new ServiceNotFoundException($id, null, null, $alternatives);
@@ -2176,6 +2194,10 @@ unset($this->services[$id]);
 if ($e instanceof InactiveScopeException && self::EXCEPTION_ON_INVALID_REFERENCE !== $invalidBehavior) {
 return;
 }
+throw $e;
+} catch (\Throwable $e) {
+unset($this->loading[$id]);
+unset($this->services[$id]);
 throw $e;
 }
 unset($this->loading[$id]);
@@ -2377,11 +2399,11 @@ protected $booted = false;
 protected $name;
 protected $startTime;
 protected $loadClassCache;
-const VERSION ='2.7.12';
-const VERSION_ID = 20712;
+const VERSION ='2.7.19';
+const VERSION_ID = 20719;
 const MAJOR_VERSION = 2;
 const MINOR_VERSION = 7;
-const RELEASE_VERSION = 12;
+const RELEASE_VERSION = 19;
 const EXTRA_VERSION ='';
 const END_OF_MAINTENANCE ='05/2018';
 const END_OF_LIFE ='05/2019';
@@ -2623,8 +2645,8 @@ $name = $directChildren[$name];
 array_unshift($bundleMap, $this->bundles[$name]);
 $hierarchy[] = $name;
 }
-foreach ($hierarchy as $bundle) {
-$this->bundleMap[$bundle] = $bundleMap;
+foreach ($hierarchy as $hierarchyBundle) {
+$this->bundleMap[$hierarchyBundle] = $bundleMap;
 array_pop($bundleMap);
 }
 }
@@ -3060,6 +3082,7 @@ return $this->file.'.meta';
 namespace Symfony\Component\HttpKernel
 {
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
@@ -3069,6 +3092,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Event\PostResponseEvent;
+use Symfony\Component\HttpFoundation\Exception\ConflictingHeadersException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -3090,6 +3114,9 @@ $request->headers->set('X-Php-Ob-Level', ob_get_level());
 try {
 return $this->handleRaw($request, $type);
 } catch (\Exception $e) {
+if ($e instanceof ConflictingHeadersException) {
+$e = new BadRequestHttpException('The request headers contain conflicting information regarding the origin of this request.', $e);
+}
 if (false === $catch) {
 $this->finishRequest($request, $type);
 throw $e;
@@ -3241,6 +3268,10 @@ $this->container->set('request', $request,'request');
 try {
 $response = parent::handle($request, $type, $catch);
 } catch (\Exception $e) {
+$this->container->set('request', null,'request');
+$this->container->leaveScope('request');
+throw $e;
+} catch (\Throwable $e) {
 $this->container->set('request', null,'request');
 $this->container->leaveScope('request');
 throw $e;

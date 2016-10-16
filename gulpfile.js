@@ -11,6 +11,7 @@ var nsp = require('gulp-nsp');
 var plumber = require('gulp-plumber');
 var coveralls = require('gulp-coveralls');
 var runSequence = require('run-sequence');
+var debug = require('debug')('yeoman:generator-sf');
 
 gulp.task('static', function () {
     return gulp.src(['generators/**/*.js', '!generators/**/templates/**/*.js'])
@@ -49,8 +50,8 @@ gulp.task('jspm-fixtures', function (cb) {
 });
 
 gulp.task('composer-fixtures', function (cb) {
-    exec('php -r "readfile(\'https://getcomposer.org/installer\');" | php', {cwd: 'test/fixtures'}, function () {
-        exec('php composer.phar update --prefer-source --no-interaction --dev ', {cwd: 'test/fixtures'}, function () {
+    exec('php -r "readfile(\'https://getcomposer.org/installer\');" | php', {cwd: 'test/fixtures'}, function() {
+        exec('php composer.phar update --prefer-source --no-interaction', {cwd: 'test/fixtures'}, function () {
             exec('php composer.phar run-script post-update-cmd --no-interaction ', {cwd: 'test/fixtures'}, function () {
                 cb();
             });

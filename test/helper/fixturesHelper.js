@@ -31,7 +31,7 @@ function prepareNpmDeps(configFile, baseConfigFile, base, target) {
 
     fs.removeSync(target);
 
-    _.forEach(glob.sync(base + '/*'), function(fp) {
+    _.forEach(glob.sync(base + '/*'), function (fp) {
         var module = path.basename(fp);
         if (drop.indexOf(module) === -1) {
             fs.ensureSymlinkSync(fp, path.join(target, module));
@@ -48,7 +48,6 @@ function prepareBowerDeps(configFile, base, target) {
     }
     var config = fs.readJsonSync(configFile);
     var dependencies = _.keys(_.merge(config.dependencies || {}, config.devDependencies));
-
 
     // add dependencies from dependencies as bower has a flat directory structure
     var modules = _.reduce(dependencies, function (res, item) {
@@ -74,26 +73,32 @@ function prepareBowerDeps(configFile, base, target) {
 /**
  * link dependencies
  */
-function linkDeps(base, target, done) {
+function linkDeps(base, target) {
     return function () {
-        return new Promise(function (resolve) {
-            prepareNpmDeps(path.join(target, 'package.json'), path.join(base, 'package.json'), path.join(base, 'node_modules'), path.join(target, 'node_modules'));
-            prepareBowerDeps(path.join(target, 'bower.json'), path.join(base, 'bower_components'), path.join(target, 'bower_components'));
-            fs.ensureSymlinkSync(path.join(base, 'node_modules', '.bin'), path.join(target, 'node_modules', '.bin'));
-            fs.ensureSymlinkSync(path.join(base, 'vendor'), path.join(target, 'vendor'));
-            fs.removeSync(path.join(target, 'composer.lock'));
-            fs.ensureSymlinkSync(path.join(base, 'composer.lock'), path.join(target, 'composer.lock'));
-            fs.removeSync(path.join(target, 'composer.json'));
-            fs.ensureSymlinkSync(path.join(base, 'composer.json'), path.join(target, 'composer.json'));
-            fs.ensureSymlinkSync(path.join(base, 'bin'), path.join(target, 'bin'));
-            fs.copySync(path.join(base, 'app/autoload.php'), path.join(target, 'app/autoload.php'));
-            fs.copySync(path.join(base, 'app/bootstrap.php.cache'), path.join(target, 'app/bootstrap.php.cache'));
-            fs.copySync(path.join(base, 'app/config/parameters.yml'), path.join(target, 'app/config/parameters.yml'));
-            fs.copySync(path.join(base, 'app/config/parameters.yml.dist'), path.join(target, 'app/config/parameters.yml.dist'));
+        return new Promise(function (resolve, reject) {
+            try {
+                prepareNpmDeps(path.join(target, 'package.json'), path.join(base, 'package.json'), path.join(base, 'node_modules'), path.join(target, 'node_modules'));
+                prepareBowerDeps(path.join(target, 'bower.json'), path.join(base, 'bower_components'), path.join(target, 'bower_components'));
+                fs.ensureSymlinkSync(path.join(base, 'node_modules', '.bin'), path.join(target, 'node_modules', '.bin'));
+                fs.ensureSymlinkSync(path.join(base, 'vendor'), path.join(target, 'vendor'));
+                fs.removeSync(path.join(target, 'composer.lock'));
+                fs.ensureSymlinkSync(path.join(base, 'composer.lock'), path.join(target, 'composer.lock'));
+                fs.removeSync(path.join(target, 'composer.json'));
+                fs.ensureSymlinkSync(path.join(base, 'composer.json'), path.join(target, 'composer.json'));
+                fs.ensureSymlinkSync(path.join(base, 'bin'), path.join(target, 'bin'));
+                fs.copySync(path.join(base, 'app/autoload.php'), path.join(target, 'app/autoload.php'));
+                fs.copySync(path.join(base, 'app/bootstrap.php.cache'), path.join(target, 'app/bootstrap.php.cache'));
+                fs.copySync(path.join(base, 'app/config/parameters.yml'), path.join(target, 'app/config/parameters.yml'));
+                fs.copySync(path.join(base, 'app/config/parameters.yml.dist'), path.join(target, 'app/config/parameters.yml.dist'));
 
-            var pkg = fs.readJsonSync(path.join(target, 'package.json'));
-            if (pkg.jspm) {
-                fs.ensureSymlinkSync(path.join(base, 'jspm_packages'), path.join(target, 'jspm_packages'));
+                var pkg = fs.readJsonSync(path.join(target, 'package.json'));
+                if (pkg.jspm) {
+                    fs.ensureSymlinkSync(path.join(base, 'jspm_packages'), path.join(target, 'jspm_packages'));
+                }
+
+            } catch (err) {
+                debug('linkDeps', err);
+                reject(err);
             }
 
             resolve();

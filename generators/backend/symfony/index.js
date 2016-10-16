@@ -193,7 +193,7 @@ module.exports = generators.Base.extend({
 
             // add filerev bundle
             if (this.props.version >= 2.7) {
-                data.require['zoerb/filerevbundle'] = '~1.0.1';
+                data.require['zoerb/filerevbundle'] = '^1.0';
             } else {
                 data.require['zoerb/filerevbundle'] = '~0.1.2';
             }
