@@ -65,8 +65,10 @@
             <p>Extracts & inlines critical-path (above-the-fold) CSS from HTML.</p><% } %>
             <b>Foundation</b>
             <p>Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.</p>
-            <% if (props.loader === 'requirejs') { %><b>RequireJS</b>
-            <p>A JavaScript file and module loader optimized for in-browser use.</p><% } %>
+            <% if (props.loader === 'browserify') { %><h4>Browserify</h4>
+            <p>Browserify lets you require node modules in the browser by bundling up all of your dependencies.</p><% } %>
+            <% if (props.loader === 'webpack') { %><h4>Webpack</h4>
+            <p>A bundler for javascript and friends. Packs many modules into a few bundled assets. Code Splitting allows to load parts for the application on demand ...</p><% } %>
             <% if (props.loader === 'jspm') { %><b>JSPM</b>
             <p>jspm is a package manager for the SystemJS universal module loader, built on top of the dynamic ES6 module loader</p><% } %>
         </div>

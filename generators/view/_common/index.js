@@ -47,13 +47,6 @@ module.exports = generators.Base.extend({
             jquery: '~3.1.1'
         };
 
-        if (this.props.loader === 'requirejs') {
-            dependencies.requirejs = '~2.2.0';
-            dependencies.almond = '~0.3.0';
-            dependencies['visionmedia-debug'] = '~2.2.0';
-            dependencies['appcache-nanny'] = '~1.0.3';
-        }
-
         return _.merge(this.fs.readJSON(this.destinationPath('bower.json'), {
             name: _.snakeCase(this.appname),
             private: true,
@@ -204,14 +197,7 @@ module.exports = generators.Base.extend({
 
         // testfiles
         var dest = 'tests/Frontend';
-        if (this.props.loader === 'requirejs') {
-            fs.copySync(
-                this.commonTemplatePath(path.join('test', 'requirejs', 'spec')),
-                this.destinationPath(path.join(dest, 'spec'))
-            );
-            fs.copySync(this.commonTemplatePath(path.join('test', 'requirejs', 'karma.conf.js')), this.destinationPath(path.join(dest, 'karma.conf.js')));
-            this.commonTemplate(path.join('test', 'requirejs', 'test-main.js'), path.join(dest, 'test-main.js'));
-        } else if (this.props.loader === 'jspm') {
+        if (this.props.loader === 'jspm') {
             fs.copySync(
                 this.commonTemplatePath(path.join('test', 'jspm')),
                 this.destinationPath(dest)

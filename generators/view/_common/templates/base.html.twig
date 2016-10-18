@@ -47,10 +47,7 @@
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}<% if (props.loader !== 'webpack' && props.loader ) { %>
-            {% if app.environment == 'node' %}<% if (props.loader === 'requirejs') { %>
-                <script type="text/javascript" src="scripts/config.js"></script>
-                <script type="text/javascript" data-main="main" src="bower_components/requirejs/require.js"></script>
-                <% } else if (props.loader === 'jspm') { %><script src="jspm_packages/system.js"></script>
+            {% if app.environment == 'node' %}<% if (props.loader === 'jspm') { %><script src="jspm_packages/system.js"></script>
                 <script src="scripts/config.js"></script>
                 <script>
                     System.import('scripts/main');

@@ -88,13 +88,7 @@ module.exports = common.extend({
             }
 
             // js loader
-            if (this.props.loader === 'requirejs') {
-                pkg.devDependencies['grunt-bower-requirejs'] = '^2.0.0';
-                pkg.devDependencies['grunt-contrib-requirejs'] = '^1.0.0';
-                pkg.devDependencies['karma-requirejs'] = '^1.0.0';
-                pkg.devDependencies['grunt-wiredep'] = '^3.0.1';
-                pkg.devDependencies.requirejs = '^2.1.0';
-            } else if (this.props.loader === 'jspm') {
+            if (this.props.loader === 'jspm') {
                 pkg.devDependencies.jspm = '^0.16.19';
                 pkg.devDependencies['grunt-contrib-uglify'] = '^2.0.0';
                 pkg.devDependencies['karma-jspm'] = '^2.0.1';
@@ -244,11 +238,6 @@ module.exports = common.extend({
             this.template('grunt/karma.js', 'grunt/karma.js');
 
             switch (this.options.loader) {
-                case 'requirejs':
-                    this.template('grunt/wiredep.js', 'grunt/wiredep.js');
-                    this.template('grunt/bowerRequirejs.js', 'grunt/bowerRequirejs.js');
-                    this.template('grunt/requirejs.js', 'grunt/requirejs.js');
-                    break;
                 case 'jspm':
                     this.template('grunt/uglify.js', 'grunt/uglify.js');
                     break;

@@ -49,7 +49,6 @@ yo sf
   * [inuitcss](http://inuitcss.com) (sass only)
   * no framework?
 * Choose Javascript module loader
-  * [RequireJS](http://requirejs.org/)
   * [JSPM](http://jspm.io/) + [SystemJS](https://github.com/systemjs/systemjs) (ES6)
   * [Webpack](https://webpack.github.io/) (ES6)
   * [Browserify](http://browserify.org/) (ES6)

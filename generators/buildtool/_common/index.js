@@ -132,9 +132,8 @@ module.exports = generators.Base.extend({
             when: this.options.loader === undefined,
             choices: [
                 {name: 'SystemJS (jspm)', value: 'jspm'},
-                {name: 'Browserify (babel)', value: 'browserify'},
                 {name: 'Webpack (babel)', value: 'webpack'},
-                {name: 'RequireJS', value: 'requirejs'}
+                {name: 'Browserify (babel)', value: 'browserify'}
             ]
         }, {
             type: 'checkbox',

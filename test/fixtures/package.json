@@ -35,8 +35,6 @@
     "grunt-contrib-sass": "^1.0.0",
     "grunt-sass": "^1.0.0",
     "grunt-contrib-less": "^1.0.0",
-    "grunt-bower-requirejs": "^2.0.0",
-    "grunt-contrib-requirejs": "^1.0.0",
     "grunt-contrib-concat": "^1.0.0",
     "grunt-autoprefixer": "^3.0.0",
     "grunt-contrib-watch": "^1.0.0",
@@ -94,13 +92,11 @@
     "systemjs": "^0.19.3",
     "es6-module-loader": "^0.17.6",
     "phantomjs-polyfill": "0.0.2",
-    "karma-requirejs": "^1.0.0",
     "grunt-wiredep": "^3.0.1",
     "time-grunt": "^1.1.0",
     "phantomjs-prebuilt": ">=1.9",
     "slash": "^1.0.0",
-    "fs-extra": "^0.30.0",
-    "requirejs": "^2.1.0"
+    "fs-extra": "^0.30.0"
   },
   "jspm": {
     "directories": {

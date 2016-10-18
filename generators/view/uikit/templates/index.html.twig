@@ -65,8 +65,10 @@
                 <dd>Extracts & inlines critical-path (above-the-fold) CSS from HTML.</dd><% } %>
                 <dt>uikit</dt>
                 <dd>A lightweight and modular front-end framework for developing fast and powerful web interfaces.</dd>
-                <% if (props.loader === 'requirejs') { %><dt>RequireJS</dt>
-                <dd>A JavaScript file and module loader optimized for in-browser use.</dd><% } %>
+                <% if (props.loader === 'browserify') { %><h4>Browserify</h4>
+                <p>Browserify lets you require node modules in the browser by bundling up all of your dependencies.</p><% } %>
+                <% if (props.loader === 'webpack') { %><h4>Webpack</h4>
+                <p>A bundler for javascript and friends. Packs many modules into a few bundled assets. Code Splitting allows to load parts for the application on demand ...</p><% } %>
                 <% if (props.loader === 'jspm') { %><dt>JSPM</dt>
                 <dd>jspm is a package manager for the SystemJS universal module loader, built on top of the dynamic ES6 module loader</dd><% } %>
             </dl>

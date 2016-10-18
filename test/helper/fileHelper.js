@@ -21,17 +21,6 @@ function Base(dir) {
     ];
 }
 
-Base.prototype.addRequirejs = function () {
-    this.files.concat([
-        path.join(this._dir, 'bower.json'),
-        path.join(this._dir, 'app/Resources/public/scripts/main.js'),
-        path.join(this._dir, 'app/Resources/public/scripts/config.js'),
-        path.join(this._dir, 'app/Resources/public/scripts/app.js')
-    ]);
-    return this;
-};
-
-
 Base.prototype.addJspm = function () {
     this.files.concat([
         path.join(this._dir, 'app/Resources/public/scripts/main.js'),

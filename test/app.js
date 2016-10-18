@@ -81,32 +81,7 @@ describe('grunt-symfony generator', function () {
         {loader: 'webpack', framework: 'foundation', preprocessor: 'less'},
         {loader: 'webpack', framework: 'foundation', preprocessor: 'sass', libsass: false},
         {loader: 'webpack', framework: 'foundation', preprocessor: 'sass', libsass: true},
-        {loader: 'webpack', framework: 'foundation', preprocessor: 'stylus'},
-
-        // requirejs no framework
-        {loader: 'requirejs'},
-        {loader: 'requirejs', preprocessor: 'less'},
-        {loader: 'requirejs', preprocessor: 'sass', libsass: false},
-        {loader: 'requirejs', preprocessor: 'sass', libsass: true},
-        {loader: 'requirejs', preprocessor: 'stylus'},
-        // requirejs uikit
-        {loader: 'requirejs', framework: 'uikit'},
-        {loader: 'requirejs', framework: 'uikit', preprocessor: 'less'},
-        {loader: 'requirejs', framework: 'uikit', preprocessor: 'sass', libsass: false},
-        {loader: 'requirejs', framework: 'uikit', preprocessor: 'sass', libsass: true},
-        {loader: 'requirejs', framework: 'uikit', preprocessor: 'stylus'},
-        // requirejs bootstrap
-        {loader: 'requirejs', framework: 'bootstrap'},
-        {loader: 'requirejs', framework: 'bootstrap', preprocessor: 'less'},
-        {loader: 'requirejs', framework: 'bootstrap', preprocessor: 'sass', libsass: false},
-        {loader: 'requirejs', framework: 'bootstrap', preprocessor: 'sass', libsass: true},
-        {loader: 'requirejs', framework: 'bootstrap', preprocessor: 'stylus'},
-        // requirejs foundation
-        {loader: 'requirejs', framework: 'foundation'},
-        {loader: 'requirejs', framework: 'foundation', preprocessor: 'less'},
-        {loader: 'requirejs', framework: 'foundation', preprocessor: 'sass', libsass: false},
-        {loader: 'requirejs', framework: 'foundation', preprocessor: 'sass', libsass: true},
-        {loader: 'requirejs', framework: 'foundation', preprocessor: 'stylus'}
+        {loader: 'webpack', framework: 'foundation', preprocessor: 'stylus'}
     ];
 
     var defaults = {

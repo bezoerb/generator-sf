@@ -46,21 +46,18 @@ module.exports = function (grunt, options) {
                 grunt.task.run(['copy:assets-css']);
             }
         },
-        js: function (<% if (props.loader === 'requirejs' || props.loader === 'jspm' || props.loader === 'browserify') { %>target<% } %>) {
+        js: function (<% if (props.loader === 'jspm' || props.loader === 'browserify') { %>target<% } %>) {
             grunt.task.run([
-                'clean:js'<% if (props.loader === 'requirejs') { %>,
-                'bowerRequirejs:dist'<% } else if (props.loader === 'webpack') { %>,
+                'clean:js'<% if (props.loader === 'webpack') { %>,
                 'webpack'<% } else if (props.loader === 'jspm') { %>,
                 'exec:jspm'<% } %>
-            ]);<% if (props.loader === 'requirejs' || props.loader === 'jspm' || props.loader === 'browserify') { %>
+            ]);<% if (props.loader === 'jspm' || props.loader === 'browserify') { %>
             if (target === 'dist') {
-                grunt.task.run([<% if (props.loader === 'requirejs') {
-                    %>'requirejs:dist'<% } else if (props.loader === 'jspm') {
+                grunt.task.run([<% if (props.loader === 'jspm') {
                     %>'uglify:dist'<% } else if (props.loader === 'browserify') {
                     %>'browserify:dist','uglify:dist'<% } %>]);
             } else {
-                grunt.task.run([<% if (props.loader === 'requirejs') {
-                    %>'requirejs:assets'<% } else if (props.loader === 'jspm'){
+                grunt.task.run([<% if (props.loader === 'jspm'){
                     %>'copy:assets-js'<% } else if (props.loader === 'browserify') {
                     %>'browserify:dev','copy:assets-js'<% } %>]);
             }<% } %>
@@ -110,7 +107,9 @@ module.exports = function (grunt, options) {
             'generate-service-worker'
         ],
         test: [
-            'eslint',<% if (props.loader === 'requirejs') { %>'wiredep:test','bowerRequirejs:test',<% } %>'karma','phpunit'
+            'eslint',
+            'karma',
+            'phpunit'
         ],<% if (props.critical || props.uncss) { %>
         fetch: function(){
             var done = this.async();

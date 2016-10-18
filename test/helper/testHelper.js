@@ -157,10 +157,6 @@ function checkFiles(prompts) {
         }
 
         switch (prompts.loader) {
-            case 'requirejs':
-                usedFiles = usedFiles.addRequirejs();
-
-                break;
             case 'jspm':
                 usedFiles = usedFiles.addJspm();
                 break;
@@ -181,18 +177,7 @@ function checkEslint() {
 function checkKarma(prompts) {
     return function () {
         log('... check karma');
-        if (prompts.loader === 'requirejs') {
-            return runTask('wiredep')
-                .then(function(){
-                    return runTask('bowerRequirejs');
-                })
-                .then(function(){
-                    return runTask('karma');
-                })
-                .then(markDone);
-        } else {
-            return runTask('karma').then(markDone);
-        }
+        return runTask('karma').then(markDone);
     };
 }
 

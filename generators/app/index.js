@@ -118,9 +118,8 @@ module.exports = yeoman.Base.extend({
                 message: 'Which module loader would you like to use?',
                 choices: [
                     {name: 'SystemJS (jspm)', value: 'jspm'},
-                    {name: 'Browserify (babel)', value: 'browserify'},
                     {name: 'Webpack (babel)', value: 'webpack'},
-                    {name: 'RequireJS', value: 'requirejs'}
+                    {name: 'Browserify (babel)', value: 'browserify'}
                 ]
             }, {
                 type: 'checkbox',

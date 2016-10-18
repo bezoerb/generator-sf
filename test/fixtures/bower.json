@@ -10,8 +10,6 @@
         "foundation-sites": "~6.2.0",
         "uikit": "~2.26.2",
         "visionmedia-debug": "~2.2.0",
-        "requirejs": "2.2.0",
-        "almond": "~0.3.0",
         "picturefill": "~3.0.1",
         "modernizr": "~3.3.1",
         "appcache-nanny": "~1.0.3"
