@@ -122,6 +122,7 @@ module.exports = generators.Base.extend({
         this.commonTemplate('editorconfig', '.editorconfig');
         this.commonTemplate('eslintrc', '.eslintrc');
         this.commonTemplate('jscsrc', '.jscsrc');
+        this.commonTemplate('babelrc', '.babelrc');
 
         if (!this.props.noBower) {
             this.commonTemplate('bowerrc', '.bowerrc');

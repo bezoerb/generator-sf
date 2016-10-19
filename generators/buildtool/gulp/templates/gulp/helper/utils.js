@@ -1,7 +1,7 @@
 import parseurl from 'parseurl';
 import path from 'path';
 import php from 'php-proxy-middleware';
-import flatten from 'lodash.flatten';
+import {flatten,first} from 'lodash';
 
 export const paths = {
     app: 'app/Resources/public',
@@ -39,7 +39,9 @@ export function phpMiddleware (target) {
 
 
 export function prefixPaths(source,...rest) {
-    return flatten(rest).map( dir => path.join(source,dir))
+    const paths = flatten(rest).map( dir => path.join(source,dir));
+
+    return paths.length === 1 ? first(paths) : paths;
 }
 
 export function prefixDev(...rest) {

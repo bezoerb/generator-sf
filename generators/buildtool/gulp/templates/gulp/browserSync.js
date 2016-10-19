@@ -1,19 +1,18 @@
 import path from 'path';
 import gulp from 'gulp';
 import browserSync from 'browser-sync';
-import {phpMiddleware,paths, prefixDev} from './helper/utils';
+import {phpMiddleware, paths, prefixDev} from './helper/utils';
 
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import {dev as configDev, dist as configDist} from '../webpack.config.js';
 
-
 const reload = browserSync.reload;
 
 let cache = null;
 
-function bsOptions (target, ...base) {
+function bsOptions(target, ...base) {
     if (cache) {
         return cache;
     }
@@ -49,14 +48,17 @@ function bsOptions (target, ...base) {
 }
 
 // Watch files for changes & reload
-gulp.task('serve', ['scripts', 'styles'], () => {
+export const serveDev = () => {
     browserSync.init(bsOptions('dev', '.tmp', paths.app, './', 'bower_components', paths.dist));
 
     gulp.watch(prefixDev('images/**/*.{jpg,jpeg,gif,png,webp}'), reload);
     gulp.watch(prefixDev('styles/**/*.scss'), ['styles:dev', reload]);
     gulp.watch(prefixDev('../views/**/*.html.twig'), reload);
-});
+};
 
-gulp.task('serve:dist', ['assets'], () => {
+export const serveDist = () => {
     browserSync.init(bsOptions('dist', paths.dist));
-});
+};
+
+export {reload} from 'browser-sync';
+

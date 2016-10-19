@@ -1,21 +1,29 @@
 import gulp from 'gulp';
 import path from 'path';
 import {Server} from 'karma';
-import phpunit from 'gulp-phpunit';
+import browserSync from 'browser-sync';
+import {prefixDev} from './helper/utils';
+import gulpLoadPlugins from 'gulp-load-plugins';
 
-gulp.task('karma', (cb) => {
+const $ = gulpLoadPlugins();
+
+
+export const lint = () =>
+    gulp.src(prefixDev('scripts/**/*.js'))
+        .pipe($.eslint())
+        .pipe($.eslint.format())
+        .pipe($.if(!browserSync.active, $.eslint.failOnError()));
+
+export const karma = (cb) => {
     new Server({
-        configFile: path.join(__dirname, '../test/karma.conf.js'),
+        configFile: path.join(__dirname, '../tests/Frontend/karma.conf.js'),
         singleRun: true
     }, cb).start();
-});
+};
 
-
-gulp.task('phpunit', () =>
+export const phpunit = () =>
     gulp.src('app/phpunit.xml.dist')
-        .pipe(phpunit('bin/phpunit',{
+        .pipe($.phpunit('bin/phpunit',{
             configurationFile: 'app/phpunit.xml.dist',
             colors: false
-        }))
-);
-
+        }));

@@ -1,13 +1,12 @@
-import path from 'path';
 import gulp from 'gulp';
-import {paths} from './helper/utils';
+import {prefixDev,prefixDist} from './helper/utils';
 import gulpLoadPlugins from 'gulp-load-plugins';
 const $ = gulpLoadPlugins();
 
 
 // Optimize images
-gulp.task('images', () =>
-    gulp.src(path.join(paths.app, 'img/**/*.{png,jpg,gif,svg}'))
+export const images = () =>
+    gulp.src(prefixDev('img/**/*.{png,jpg,gif,svg}'))
         .pipe($.if('*.{png,jpg,gif}', $.cache($.imagemin({
             progressive: true,
             interlaced: true
@@ -19,6 +18,5 @@ gulp.task('images', () =>
             ],
             js2svg: {pretty: true}
         }))))
-        .pipe(gulp.dest(path.join(paths.dist, 'img')))
-        .pipe($.size({title: 'images'}))
-);
+        .pipe(gulp.dest(prefixDist('img')))
+        .pipe($.size({title: 'images'}));
