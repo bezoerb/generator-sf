@@ -28,4 +28,4 @@ const scripts = env => cb => {
 };
 
 export const scriptsDev = scripts('dev');
-export const scriptsDist = scripts('prod');
+export const scriptsProd = scripts('prod');

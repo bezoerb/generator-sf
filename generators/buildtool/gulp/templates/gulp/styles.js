@@ -26,9 +26,10 @@ export const stylesDev = () =>
             includePaths: ['node_modules']
         }).on('error', $.sass.logError))
         .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-        .pipe(gulp.dest('.tmp/styles'));
+        .pipe(gulp.dest(prefixDist('styles')));
 
-export const stylesDist = () =>
+
+export const stylesProd = () =>
     // For best performance, don't add Sass partials to `gulp.src`
     gulp.src(prefixDev('styles/main.scss'))
         .pipe($.newer('.tmp/styles'))
@@ -43,4 +44,4 @@ export const stylesDist = () =>
         .pipe($.if('*.css', $.minifyCss()))
         .pipe($.size({title: 'styles'}))
         .pipe($.sourcemaps.write('./'))
-        .pipe(gulp.dest(prefixDist('styles')[0]));
+        .pipe(gulp.dest('.tmp/styles'));

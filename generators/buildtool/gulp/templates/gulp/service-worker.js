@@ -1,4 +1,8 @@
-import { prefixDist} from './helper/utils';
+import path from 'path';
+import gulp from 'gulp';
+import swPrecache from 'sw-precache';
+import {prefixDist} from './helper/utils';
+import pkg from '../package.json';
 
 // Copy over the scripts that are used in importScripts as part of the generate-service-worker task.
 export const copySwScripts = () =>
@@ -24,13 +28,13 @@ export const generateServiceWorker = () => {
         ],
         staticFileGlobs: [
             // Add/remove glob patterns to match your directory setup.
-            `${rootDir}/images/**/*`,
-            `${rootDir}/scripts/**/*.js`,
-            `${rootDir}/styles/**/*.css`,
-            `${rootDir}/*.{html,json}`
+            prefixDist('img/**/*'),
+            prefixDist('scripts/**/*.js'),
+            prefixDist('styles/**/*.css'),
+            prefixDist('*.{html,json}')
         ],
         // Translates a static file path to the relative URL that it's served from.
-        stripPrefix: path.join(rootDir, path.sep)
+        stripPrefix: prefixDist(path.sep)
     });
 };
 

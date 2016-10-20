@@ -48,17 +48,13 @@ function bsOptions(target, ...base) {
 }
 
 // Watch files for changes & reload
-export const serveDev = () => {
+export const serveDev = (cb) => () => {
     browserSync.init(bsOptions('dev', '.tmp', paths.app, './', 'bower_components', paths.dist));
-
-    gulp.watch(prefixDev('images/**/*.{jpg,jpeg,gif,png,webp}'), reload);
-    gulp.watch(prefixDev('styles/**/*.scss'), ['styles:dev', reload]);
-    gulp.watch(prefixDev('../views/**/*.html.twig'), reload);
+    cb && cb(reload);
 };
 
-export const serveDist = () => {
+export const serveProd = (cb) => () => {
     browserSync.init(bsOptions('dist', paths.dist));
+    cb && cb(reload);
 };
-
-export {reload} from 'browser-sync';
 

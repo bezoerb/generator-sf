@@ -1,22 +1,3 @@
-/**
- *
- *  Web Starter Kit
- *  Copyright 2015 Google Inc. All rights reserved.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License
- *
- */
-
 'use strict';
 
 // This gulpfile makes use of new JavaScript features.
@@ -25,84 +6,70 @@
 // https://babeljs.io/docs/learn-es2015/
 import gulp from 'gulp';
 import runSequence from 'run-sequence';
-import browserSync from 'browser-sync';
-import gulpLoadPlugins from 'gulp-load-plugins';
+import del from 'del';
+import {prefixDev, prefixDist} from './gulp/helper/utils';
 
-import {serveDev,serveDist} from './gulp/browserSync';
-import {stylesDev,stylesDist} from './gulp/styles';
-import {scriptsDev, scriptsDist} from './gulp/scripts';
+import {serveDev, serveProd} from './gulp/browserSync';
+import {stylesDev, stylesProd} from './gulp/styles';
+import {scriptsDev, scriptsProd} from './gulp/scripts';
 import {rev, revManifest} from './gulp/rev';
-import {images} from './gulp/images';
+import {imagesDev, imagesProd} from './gulp/images';
 import {connect} from './gulp/connect';
 import {copy} from './gulp/copy';
-import {clean} from './gulp/clean';
 import {critical} from './gulp/critical';
 import {sfcl} from './gulp/exec';
 import {copySwScripts, generateServiceWorker} from './gulp/service-worker';
 import {lint, karma, phpunit} from './gulp/tests';
 
+gulp.task('clean:tmp', () => del(['.tmp'], {dot: true}));
+gulp.task('clean:scripts', () => del([prefixDist('scripts')], {dot: true}));
+gulp.task('clean:images', () => del([prefixDist('img')], {dot: true}));
+gulp.task('clean:styles', () => del([prefixDist('styles')], {dot: true}));
+
 gulp.task('sfcl:node', sfcl('node'));
 gulp.task('sfcl:dev', sfcl('dev'));
 gulp.task('sfcl:prod', sfcl('prod'));
 
-gulp.task('styles', stylesDev);
-gulp.task('styles:dist', stylesDist);
+gulp.task('styles:dev', ['clean:styles'], stylesDev);
+gulp.task('styles:prod', ['clean:styles'], stylesProd);
 
-gulp.task('scripts', scriptsDev);
-gulp.task('scripts:dist', scriptsDist);
+gulp.task('scripts:dev', ['clean:scripts'], scriptsDev);
+gulp.task('scripts:prod', ['clean:scripts'], scriptsProd);
 
-gulp.task('images', images);
+gulp.task('images:dev', ['clean:images'], imagesDev);
+gulp.task('images:prod', ['clean:images'], imagesProd);
 
-gulp.task('rev-files', ['images','styles:dist','scripts:dist'], rev);
+gulp.task('rev-files', rev);
 gulp.task('rev', ['rev-files'], revManifest);
 
 gulp.task('connect', connect);
-gulp.task('critical', ['styles','connect'], critical);
-
-gulp.task('serve', ['scripts', 'styles'], serveDev);
-gulp.task('serve:dist', ['scripts:dist', 'styles:dist'], serveDist);
+gulp.task('critical', ['styles', 'connect'], critical);
 
 gulp.task('copy', copy);
-gulp.task('clean', clean);
 
 gulp.task('copy-sw-scripts', copySwScripts);
 gulp.task('generate-service-worker', ['copy-sw-scripts'], generateServiceWorker);
+
+gulp.task('serve', ['scripts:dev', 'styles:dev', 'images:dev'], serveDev(reload => {
+    gulp.watch(prefixDev('img/**/*.{jpg,jpeg,gif,png,webp}'), ['images:dev', reload]);
+    gulp.watch(prefixDev('styles/**/*.scss'), ['styles:dev', reload]);
+    gulp.watch(prefixDev('../views/**/*.html.twig'), reload);
+}));
+gulp.task('serve:dist', ['build'], serveProd);
 
 gulp.task('lint', lint);
 gulp.task('karma', karma);
 gulp.task('phpunit', phpunit);
 
 gulp.task('test', cb =>
-    runSequence(
-        ['lint', 'karma', 'phpunit'],
-        cb
-    )
+    runSequence(['lint', 'karma', 'phpunit'], cb)
 );
 
-gulp.task('assets', ['clean'], cb =>
-    runSequence(
-        ['styles','scripts', 'images', 'copy'],
-        'rev',
-        'generate-service-worker',
-        cb
-    )
+gulp.task('assets', ['styles:prod', 'scripts:prod', 'images:prod', 'copy'], cb =>
+    runSequence('rev', 'generate-service-worker', cb)
 );
 
-gulp.task('build', ['test'], cb =>
-    runSequence(
-        ['styles:dist', 'scripts:dist', 'images', 'copy'],
-        'rev',
-        'generate-service-worker',
-        cb
-    )
-);
+gulp.task('build', ['test', 'assets']);
 
 // Build production files, the default task
-gulp.task('default', ['clean'], cb =>
-    runSequence(
-        'styles',
-        ['scripts', 'images', 'copy'],
-        'generate-service-worker',
-        cb
-    )
-);
+gulp.task('default', ['clean']);
