@@ -7,24 +7,25 @@ import webpackConfig from '../webpack.config';
 // `.babelrc` file.
 const scripts = env => cb => {
     const wpc = webpackConfig[env];
-    const config = {...wpc, stats: {
-        // Configure the console output
-        colors: true,
-        modules: true,
-        reasons: true,
-        errorDetails: true
-    }};
+    const config = {
+        ...wpc, stats: {
+            // Configure the console output
+            colors: true,
+            modules: true,
+            reasons: true,
+            errorDetails: true
+        }
+    };
 
     webpack(config, (err, stats) => {
         if (err) {
-            throw new gutil.PluginError("webpack:build", err);
+            throw new gutil.PluginError('webpack:build', err);
         }
-        gutil.log("[webpack:build]", stats.toString({
+        gutil.log('[webpack:build]', stats.toString({
             colors: true
         }));
         cb();
     });
-
 };
 
 export const scriptsDev = scripts('dev');

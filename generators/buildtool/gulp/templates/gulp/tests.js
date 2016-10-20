@@ -7,7 +7,6 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 
 const $ = gulpLoadPlugins();
 
-
 export const lint = () =>
     gulp.src(prefixDev('scripts/**/*.js'))
         .pipe($.eslint())
@@ -23,7 +22,7 @@ export const karma = (cb) => {
 
 export const phpunit = () =>
     gulp.src('app/phpunit.xml.dist')
-        .pipe($.phpunit('bin/phpunit',{
+        .pipe($.phpunit('bin/phpunit', {
             configurationFile: 'app/phpunit.xml.dist',
             colors: false
         }));

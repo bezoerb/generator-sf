@@ -1,6 +1,6 @@
 'use strict';
 module.exports = {
-    options: require('../webpack.config').dist,
+    options: require('../webpack.config').prod,
     dist: {
         keepalive: false,
         stats: {

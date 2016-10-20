@@ -1,38 +1,30 @@
 import gulp from 'gulp';
-import {prefixDev,prefixDist} from './helper/utils';
+import {prefixDev} from './helper/utils';
 import gulpLoadPlugins from 'gulp-load-plugins';
 const $ = gulpLoadPlugins();
 
 // copy unoptimized images in dev mode
-export const imagesDev = () =>
-    gulp.src(prefixDev('img/**/*.{png,jpg,gif,svg}'))
-        .pipe($.if('*.{png,jpg,gif}', $.cache($.imagemin({
-            progressive: true,
-            interlaced: true
-        }))))
-        .pipe($.if('*.svg', $.cache($.svgmin({
-            plugins: [
-                {removeViewBox: false},
-                {removeUselessStrokeAndFill: false}
-            ],
-            js2svg: {pretty: true}
-        }))))
-        .pipe(gulp.dest(prefixDist('img')))
-        .pipe($.size({title: 'images'}));
+export const imagecopy = () =>
+    gulp.src(prefixDev('img/**/*', '!img/icons/**/*.svg'))
+        .pipe(gulp.dest('.tmp/img'))
+        .pipe($.size({title: 'imageCopy'}));
 
 // Optimize images
-export const imagesProd = () =>
-    gulp.src(prefixDev('img/**/*.{png,jpg,gif,svg}'))
-        .pipe($.if('*.{png,jpg,gif}', $.cache($.imagemin({
-            progressive: true,
-            interlaced: true
-        }))))
-        .pipe($.if('*.svg', $.cache($.svgmin({
+export const imagemin = () =>
+    gulp.src(prefixDev('img/**/*', '!img/icons/**/*.svg'))
+        .pipe($.cache($.imagemin()))
+        .pipe(gulp.dest('.tmp/img'))
+        .pipe($.size({title: 'imagemin'}));
+
+export const svgstore = () =>
+    gulp.src(prefixDev('img/icons/**/*.svg'))
+        .pipe($.imagemin([$.imagemin.svgo({
             plugins: [
                 {removeViewBox: false},
-                {removeUselessStrokeAndFill: false}
-            ],
-            js2svg: {pretty: true}
-        }))))
+                {removeUselessStrokeAndFill: false},
+                {cleanupIDs: false}
+            ]
+        })]))
+        .pipe($.svgstore())
         .pipe(gulp.dest('.tmp/img'))
-        .pipe($.size({title: 'images'}));
+        .pipe($.size({title: 'svgstore'}));

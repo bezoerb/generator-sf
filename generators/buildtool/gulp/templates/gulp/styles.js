@@ -1,6 +1,6 @@
 import path from 'path';
 import gulp from 'gulp';
-import {prefixDev,prefixDist} from './helper/utils';
+import {prefixDev, prefixDist} from './helper/utils';
 import gulpLoadPlugins from 'gulp-load-plugins';
 const $ = gulpLoadPlugins();
 
@@ -17,7 +17,7 @@ const AUTOPREFIXER_BROWSERS = [
 ];
 
 // Compile and automatically prefix stylesheets
-export const stylesDev = () =>
+export const stylesDev = stream => () =>
     // For best performance, don't add Sass partials to `gulp.src`
     gulp.src(prefixDev('styles/main.scss'))
         .pipe($.newer('.tmp/styles'))
@@ -26,12 +26,13 @@ export const stylesDev = () =>
             includePaths: ['node_modules']
         }).on('error', $.sass.logError))
         .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-        .pipe(gulp.dest(prefixDist('styles')));
-
+        .pipe(gulp.dest(prefixDist('styles')))
+        .pipe($.size({title: 'styles'}))
+        .pipe(stream());
 
 export const stylesProd = () =>
     // For best performance, don't add Sass partials to `gulp.src`
-    gulp.src(prefixDev('styles/main.scss'))
+    gulp.src(prefixDev('styles/main.scss', 'styles/**/*.css'))
         .pipe($.newer('.tmp/styles'))
         .pipe($.sourcemaps.init())
         .pipe($.sass({
@@ -44,4 +45,5 @@ export const stylesProd = () =>
         .pipe($.if('*.css', $.minifyCss()))
         .pipe($.size({title: 'styles'}))
         .pipe($.sourcemaps.write('./'))
+        .pipe($.size({title: 'styles'}))
         .pipe(gulp.dest('.tmp/styles'));

@@ -9,11 +9,11 @@ import runSequence from 'run-sequence';
 import del from 'del';
 import {prefixDev, prefixDist} from './gulp/helper/utils';
 
-import {serveDev, serveProd} from './gulp/browserSync';
+import {serveDev, serveProd, stream} from './gulp/browserSync';
 import {stylesDev, stylesProd} from './gulp/styles';
 import {scriptsDev, scriptsProd} from './gulp/scripts';
 import {rev, revManifest} from './gulp/rev';
-import {imagesDev, imagesProd} from './gulp/images';
+import {imagemin, imagecopy, svgstore} from './gulp/images';
 import {connect} from './gulp/connect';
 import {copy} from './gulp/copy';
 import {critical} from './gulp/critical';
@@ -30,14 +30,17 @@ gulp.task('sfcl:node', sfcl('node'));
 gulp.task('sfcl:dev', sfcl('dev'));
 gulp.task('sfcl:prod', sfcl('prod'));
 
-gulp.task('styles:dev', ['clean:styles'], stylesDev);
+gulp.task('styles:dev', ['clean:styles'], stylesDev(stream));
 gulp.task('styles:prod', ['clean:styles'], stylesProd);
 
 gulp.task('scripts:dev', ['clean:scripts'], scriptsDev);
 gulp.task('scripts:prod', ['clean:scripts'], scriptsProd);
 
-gulp.task('images:dev', ['clean:images'], imagesDev);
-gulp.task('images:prod', ['clean:images'], imagesProd);
+gulp.task('images:copy', imagecopy);
+gulp.task('images:min', imagemin);
+gulp.task('images:svg', svgstore);
+gulp.task('images:prod', ['images:min', 'images:svg']);
+gulp.task('images:dev', ['images:copy', 'images:svg']);
 
 gulp.task('rev-files', rev);
 gulp.task('rev', ['rev-files'], revManifest);
@@ -51,8 +54,8 @@ gulp.task('copy-sw-scripts', copySwScripts);
 gulp.task('generate-service-worker', ['copy-sw-scripts'], generateServiceWorker);
 
 gulp.task('serve', ['scripts:dev', 'styles:dev', 'images:dev'], serveDev(reload => {
-    gulp.watch(prefixDev('img/**/*.{jpg,jpeg,gif,png,webp}'), ['images:dev', reload]);
-    gulp.watch(prefixDev('styles/**/*.scss'), ['styles:dev', reload]);
+    gulp.watch(prefixDev('img/icons/*.svg'), ['images:svg', reload]);
+    gulp.watch(prefixDev('styles/**/*.scss'), ['styles:dev']);
     gulp.watch(prefixDev('../views/**/*.html.twig'), reload);
 }));
 gulp.task('serve:dist', ['build'], serveProd);

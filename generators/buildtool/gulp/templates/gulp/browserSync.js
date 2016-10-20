@@ -1,12 +1,10 @@
-import path from 'path';
-import gulp from 'gulp';
 import browserSync from 'browser-sync';
 import {phpMiddleware, paths, prefixDev} from './helper/utils';
 
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import {dev as configDev, dist as configDist} from '../webpack.config.js';
+import {dev as configDev, prod as configDist} from '../webpack.config.js';
 
 const reload = browserSync.reload;
 
@@ -17,14 +15,15 @@ function bsOptions(target, ...base) {
         return cache;
     }
 
-    let bundler = webpack(target !== 'dist' ? configDev : configDist);
+    const config = target === 'dist' ? configDist : configDev;
+    let bundler = webpack(config);
 
     cache = {
         server: {
             baseDir: base,
             middleware: [
                 webpackDevMiddleware(bundler, {
-                    publicPath: configDev.output.publicPath,
+                    publicPath: config.output.publicPath,
                     noInfo: true,
                     stats: {colors: true}
                 }),
@@ -48,13 +47,15 @@ function bsOptions(target, ...base) {
 }
 
 // Watch files for changes & reload
-export const serveDev = (cb) => () => {
-    browserSync.init(bsOptions('dev', '.tmp', paths.app, './', 'bower_components', paths.dist));
-    cb && cb(reload);
+export const serveDev = cb => () => {
+    browserSync.init(bsOptions('dev', '.tmp', paths.app, './', 'node_modules', paths.dist));
+    return cb && cb(reload, browserSync.ste);
 };
 
-export const serveProd = (cb) => () => {
+export const serveProd = cb => () => {
     browserSync.init(bsOptions('dist', paths.dist));
-    cb && cb(reload);
+    return cb && cb(reload);
 };
+
+export const stream = browserSync.stream;
 
