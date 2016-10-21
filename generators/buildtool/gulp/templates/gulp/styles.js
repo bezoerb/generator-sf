@@ -30,7 +30,7 @@ export const stylesDev = stream => () =>
         .pipe($.size({title: 'styles'}))
         .pipe(stream());
 
-export const stylesProd = () =>
+export const stylesProd = () => () =>
     // For best performance, don't add Sass partials to `gulp.src`
     gulp.src(prefixDev('styles/main.scss', 'styles/**/*.css'))
         .pipe($.newer('.tmp/styles'))

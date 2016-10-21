@@ -31,7 +31,7 @@ module.exports = function(config) {
         browserify: {
             debug: true,
             transform: [
-                ['babelify', {presets: ['es2015'], ignore: /(node_modules|bower_components)/}],
+                ['babelify', {presets: ['es2015', 'stage-2'], ignore: /(node_modules)/}],
                 ['debowerify', {preferNPM: true}],
                 ['deamdify']
             ],

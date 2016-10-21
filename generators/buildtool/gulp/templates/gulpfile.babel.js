@@ -31,10 +31,10 @@ gulp.task('sfcl:dev', sfcl('dev'));
 gulp.task('sfcl:prod', sfcl('prod'));
 
 gulp.task('styles:dev', ['clean:styles'], stylesDev(stream));
-gulp.task('styles:prod', ['clean:styles'], stylesProd);
+gulp.task('styles:prod', ['clean:styles'], stylesProd());
 
-gulp.task('scripts:dev', ['clean:scripts'], scriptsDev);
-gulp.task('scripts:prod', ['clean:scripts'], scriptsProd);
+gulp.task('scripts:dev', ['clean:scripts'], scriptsDev(stream));
+gulp.task('scripts:prod', ['clean:scripts'], scriptsProd());
 
 gulp.task('images:copy', imagecopy);
 gulp.task('images:min', imagemin);

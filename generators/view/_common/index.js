@@ -25,6 +25,7 @@ module.exports = generators.Base.extend({
             devDependencies: {}
         }), {
             dependencies: {
+                debug: '^2.2.0',
                 jquery: '^3.1.1',
                 picturefill: '^3.0.2',
                 svg4everybody: '^2.1.0'
