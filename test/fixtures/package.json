@@ -133,7 +133,7 @@
     "run-sequence": "^1.0.1",
     "sw-precache": "^4.1.0",
     "browser-sync": "^2.9.0",
-    "del": "^2.2.2",
+    "del": "^2.2.2"
   },
   "jspm": {
     "directories": {

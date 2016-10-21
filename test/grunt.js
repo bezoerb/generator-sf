@@ -1,10 +1,9 @@
 'use strict';
-/*jshint expr: true*/
 var testPrompts = require('./helper/testHelper').testPrompts;
 var assign = require('lodash/assign');
 var clone = require('lodash/clone');
 
-describe('grunt-symfony generator', function () {
+describe('symfony generator (grunt)', function () {
     this.timeout(300000);
 
     var tests = [
