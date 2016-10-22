@@ -1,13 +1,11 @@
 import browserSync from 'browser-sync';
 import {phpMiddleware, paths, prefixDev} from './helper/utils';
-
+<% if (props.loader === 'webpack') { %>
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import {dev as configDev, prod as configDist} from '../webpack.config.js';
-
-const reload = browserSync.reload;
-
+<% } %>
 let cache = null;
 
 function bsOptions(target, ...base) {
@@ -21,13 +19,13 @@ function bsOptions(target, ...base) {
     cache = {
         server: {
             baseDir: base,
-            middleware: [
+            middleware: [<% if (props.loader === 'webpack') { %>
                 webpackDevMiddleware(bundler, {
                     publicPath: config.output.publicPath,
                     noInfo: true,
                     stats: {colors: true}
                 }),
-                webpackHotMiddleware(bundler),
+                webpackHotMiddleware(bundler), <% } %>
                 phpMiddleware(target)
             ]
         },
@@ -49,12 +47,12 @@ function bsOptions(target, ...base) {
 // Watch files for changes & reload
 export const serveDev = cb => () => {
     browserSync.init(bsOptions('dev', '.tmp', paths.app, './', 'node_modules', paths.dist));
-    return cb && cb(reload, browserSync.ste);
+    return cb && cb(browserSync);
 };
 
 export const serveProd = cb => () => {
     browserSync.init(bsOptions('dist', paths.dist));
-    return cb && cb(reload);
+    return cb && cb(browserSync);
 };
 
 export const stream = browserSync.stream;

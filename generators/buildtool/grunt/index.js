@@ -207,7 +207,7 @@ module.exports = common.extend({
             this.template('grunt/appcache.js', 'grunt/appcache.js');
 
             // css
-            switch (this.options.preprocessor) {
+            switch (this.props.preprocessor) {
                 case 'none':
                     this.template('grunt/concat.js', 'grunt/concat.js');
                     break;
@@ -224,22 +224,22 @@ module.exports = common.extend({
                     break;
             }
 
-            if (this.options.uncss || this.options.critical) {
+            if (this.props.uncss || this.props.critical) {
                 this.template('grunt/connect.js', 'grunt/connect.js');
                 this.template('grunt/http.js', 'grunt/http.js');
             }
 
-            if (this.options.uncss) {
+            if (this.props.uncss) {
                 this.template('grunt/uncss.js', 'grunt/uncss.js');
             }
-            if (this.options.critical) {
+            if (this.props.critical) {
                 this.template('grunt/critical.js', 'grunt/critical.js');
             }
 
             // js
             this.template('grunt/karma.js', 'grunt/karma.js');
 
-            switch (this.options.loader) {
+            switch (this.props.loader) {
                 case 'jspm':
                     this.template('grunt/uglify.js', 'grunt/uglify.js');
                     break;

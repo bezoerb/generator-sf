@@ -51,10 +51,10 @@ function prompts2String(promts) {
  * @param task
  * @returns {promise}
  */
-function runTask(task) {
+function runTask(tool, task) {
     return new Promise(function (resolve, reject) {
-        debug('grunt ' + task);
-        exec('grunt ' + task + ' --no-color', function (error, stdout, stderr) {
+        debug(tool + ' ' + task);
+        exec(tool + ' ' + task + ' --no-color', function (error, stdout, stderr) {
             debug('stderr:', stderr);
             debug('stdout:', stdout);
             if (error) {
@@ -64,12 +64,11 @@ function runTask(task) {
 
             /*jshint expr: true*/
             expect(error).to.be.null;
-            expect(stdout).to.contain('Done.');
+            expect(stdout).to.contain(tool === 'grunt' ? 'Done.' : 'Finished');
             resolve(stdout);
         });
     });
 }
-
 
 /**
  * Run generator
@@ -79,19 +78,19 @@ function runTask(task) {
  */
 function install(prompts) {
     //return new Promise(function (resolve) {
-        var opts = prompts2String(prompts);
-        process.stdout.write(os.EOL + indentString('running app with ' + opts.join(', '), 4) + os.EOL);
-        debug(path.join(__dirname, '../../generators/app'),target);
-        return helpers.run(path.join(__dirname, '../../generators/app'))
-            .inDir(target)
-            .withOptions({'skip-install': true})
-            .withPrompts(prompts)
-            .toPromise()
-            .then(fixtureHelper.linkDeps(base, target));
-            // .on('end', fixtureHelper.linkDeps(base, target, function () {
-            //     resolve();
-            // }));
-   // });
+    var opts = prompts2String(prompts);
+    process.stdout.write(os.EOL + indentString('running app with ' + opts.join(', '), 4) + os.EOL);
+    debug(path.join(__dirname, '../../generators/app'), target);
+    return helpers.run(path.join(__dirname, '../../generators/app'))
+        .inDir(target)
+        .withOptions({'skip-install': true})
+        .withPrompts(prompts)
+        .toPromise()
+        .then(fixtureHelper.linkDeps(base, target));
+    // .on('end', fixtureHelper.linkDeps(base, target, function () {
+    //     resolve();
+    // }));
+    // });
 }
 
 function installDeps(prompts) {
@@ -162,46 +161,66 @@ function checkFiles(prompts) {
                 break;
         }
 
+        switch (prompts.buildtool) {
+            case 'grunt':
+                usedFiles = usedFiles.addGrunt();
+                break;
+            case 'gulp':
+                usedFiles = usedFiles.addGulp();
+                break;
+        }
+
         assert.file(usedFiles.toArray());
         markDone();
     };
 }
 
-function checkEslint() {
+function checkEslint(prompts) {
     return function () {
         log('... check eslint');
-        return runTask('eslint').then(markDone);
+        return runTask(prompts.buildtool, 'eslint').then(markDone);
     };
 }
 
 function checkKarma(prompts) {
     return function () {
         log('... check karma');
-        return runTask('karma').then(markDone);
+        return runTask(prompts.buildtool, 'karma').then(markDone);
     };
 }
 
-function checkPhpUnit() {
+function checkPhpUnit(prompts) {
     return function () {
         log('... check phpunit');
-        return runTask('phpunit').then(markDone);
+        return runTask(prompts.buildtool, 'phpunit').then(markDone);
     };
 }
 
-function checkJs() {
+function checkJs(prompts) {
     return function () {
         log('... check js build');
-        return runTask('js:dist').then(markDone);
+        let task = '';
+        switch (prompts.buildtool) {
+            case 'grunt': task = 'js:dist'; break;
+            case 'gulp': task = 'scripts:prod'; break;
+        }
+        return runTask(prompts.buildtool, task).then(markDone);
     };
 }
 
 function checkCss(prompts) {
     return function () {
         log('... check css build');
-        return runTask('css:dist').then(function() {
-            if (_.indexOf(prompts.additional,'critical') >= 0) {
+        let task = '';
+        switch (prompts.buildtool) {
+            case 'grunt': task = 'css:dist'; break;
+            case 'gulp': task = 'styles:prod'; break;
+        }
+
+        return runTask(prompts.buildtool, task).then(function () {
+            if (_.indexOf(prompts.additional, 'critical') >= 0) {
                 assert.file(['app/Resources/public/styles/critical/index.css']);
-                var critical = fs.readFileSync('app/Resources/public/styles/critical/index.css','utf8');
+                var critical = fs.readFileSync('app/Resources/public/styles/critical/index.css', 'utf8');
                 expect(critical).to.not.equal('');
             }
             markDone();
@@ -209,10 +228,10 @@ function checkCss(prompts) {
     };
 }
 
-function checkRev() {
+function checkRev(prompts) {
     return function () {
         log('... check rev');
-        return runTask('rev').then(function() {
+        return runTask(prompts.buildtool, 'rev').then(function () {
             assert.file(['app/config/filerev.json']);
             var reved = fs.readJsonSync('app/config/filerev.json');
             _.forEach(reved, function (file) {
@@ -224,15 +243,15 @@ function checkRev() {
     };
 }
 
-function checkServiceWorker() {
+function checkServiceWorker(prompts) {
     // must be called directly after checkRev because it takes the reved file summary
     return function (reved) {
         log('... check service worker');
-        return runTask('generate-service-worker').then(function() {
+        return runTask(prompts.buildtool, 'generate-service-worker').then(function () {
             assert.file(['web/service-worker.js']);
             var workerJs = fs.readFileSync('web/service-worker.js', 'utf8');
             _.forEach(reved, function (file) {
-                expect(workerJs).to.contain(file.replace(/^\//,''));
+                expect(workerJs).to.contain(file.replace(/^\//, ''));
             });
             expect(workerJs).to.contain('scripts/sw/runtime-caching.js');
             expect(workerJs).to.contain('scripts/sw/sw-toolbox.js');
@@ -241,18 +260,17 @@ function checkServiceWorker() {
     };
 }
 
-
 module.exports.testPrompts = function (prompts, done) {
     install(prompts)
         .then(installDeps(prompts))
         .then(checkFiles(prompts))
-        .then(checkEslint())
+        .then(checkEslint(prompts))
         .then(checkKarma(prompts))
-        .then(checkPhpUnit())
-        .then(checkJs())
+        .then(checkPhpUnit(prompts))
+        .then(checkJs(prompts))
         .then(checkCss(prompts))
-        .then(checkRev())
-        .then(checkServiceWorker())
+        .then(checkRev(prompts))
+        .then(checkServiceWorker(prompts))
         .then(function () {
             _.delay(done, 100);
         })

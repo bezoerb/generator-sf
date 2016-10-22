@@ -7,7 +7,7 @@ describe('symfony generator (grunt)', function () {
     this.timeout(300000);
 
     var tests = [
-        // jspm no framework
+        // browserify no framework
         {loader: 'browserify'},
         {loader: 'browserify', preprocessor: 'less'},
         {loader: 'browserify', preprocessor: 'sass', libsass: false},

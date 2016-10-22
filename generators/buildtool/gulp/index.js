@@ -104,6 +104,8 @@ module.exports = common.extend({
                 pkg.devDependencies['gulp-uglify'] = '^2.0.0';
                 pkg.devDependencies['karma-jspm'] = '^2.0.1';
                 pkg.devDependencies['babel-cli'] = '^6.16.0';
+                pkg.devDependencies['babel-preset-es2015'] = '^6.6.0';
+                pkg.devDependencies['babel-preset-stage-2'] = '^6.17.0';
                 pkg.devDependencies['es6-module-loader'] = '^0.17.6';
                 pkg.devDependencies['phantomjs-polyfill'] = '0.0.2';
             } else if (this.props.loader === 'webpack') {
@@ -201,7 +203,6 @@ module.exports = common.extend({
             // first all basic tasks for every configuration
             this.template('gulp/browserSync.js', 'gulp/browserSync.js');
             this.template('gulp/clean.js', 'gulp/clean.js');
-            this.template('gulp/connect.js', 'gulp/connect.js');
             this.template('gulp/copy.js', 'gulp/copy.js');
 
             this.template('gulp/exec.js', 'gulp/exec.js');
@@ -212,11 +213,15 @@ module.exports = common.extend({
             this.template('gulp/tests.js', 'gulp/tests.js');
             this.template('gulp/service-worker.js', 'gulp/service-worker.js');
 
-            if (this.options.critical) {
+            if (this.props.critical) {
                 this.template('gulp/critical.js', 'gulp/critical.js');
             }
 
-            if (this.options.loader === 'webpack') {
+            if (this.props.uncss || this.props.critical) {
+                this.template('gulp/connect.js', 'gulp/connect.js');
+            }
+
+            if (this.props.loader === 'webpack') {
                 this.commonTemplate('webpack.config.js', 'webpack.config.js');
             }
         }

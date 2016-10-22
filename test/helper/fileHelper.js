@@ -9,7 +9,6 @@ function Base(dir) {
     this._dir = dir;
     this.files = [
         path.join(this._dir, 'package.json'),
-        path.join(this._dir, 'Gruntfile.js'),
         path.join(this._dir, '.editorconfig'),
         path.join(this._dir, '.eslintrc'),
         path.join(this._dir, '.jscsrc'),
@@ -46,6 +45,18 @@ Base.prototype.addStylus = function () {
 
 Base.prototype.addSass = function () {
     this.files.concat([path.join(this._dir, 'app/Resources/public/styles/main.sass')]);
+    return this;
+};
+
+Base.prototype.addGrunt = function () {
+    this.files.concat([path.join(this._dir, 'Gruntfile.js')]);
+    return this;
+};
+
+
+Base.prototype.addGulp = function () {
+    this.files.concat([path.join(this._dir, 'gulpfile.babel.js')]);
+    this.files.concat([path.join(this._dir, '.babelrc')]);
     return this;
 };
 

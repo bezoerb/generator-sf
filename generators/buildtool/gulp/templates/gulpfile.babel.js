@@ -14,9 +14,10 @@ import {stylesDev, stylesProd} from './gulp/styles';
 import {scriptsDev, scriptsProd} from './gulp/scripts';
 import {rev, revManifest} from './gulp/rev';
 import {imagemin, imagecopy, svgstore} from './gulp/images';
-import {connect} from './gulp/connect';
 import {copy} from './gulp/copy';
-import {critical} from './gulp/critical';
+<% if (props.uncss || props.critical) { %>import {connect} from './gulp/connect';<% } %>
+<% if (props.critical) { %>import {critical} from './gulp/critical';<% } %>
+<% if (props.uncss) { %>import {uncss} from './gulp/uncss';<% } %>
 import {sfcl} from './gulp/exec';
 import {copySwScripts, generateServiceWorker} from './gulp/service-worker';
 import {lint, karma, phpunit} from './gulp/tests';
@@ -45,22 +46,24 @@ gulp.task('images:dev', ['images:copy', 'images:svg']);
 gulp.task('rev-files', rev);
 gulp.task('rev', ['rev-files'], revManifest);
 
-gulp.task('connect', connect);
-gulp.task('critical', ['styles', 'connect'], critical);
+<% if (props.uncss || props.critical) { %>gulp.task('connect', connect);<% } %>
+<% if (props.critical) { %>gulp.task('critical', ['styles', 'connect'], critical);<% } %>
+<% if (props.uncss) { %>gulp.task('uncss', ['styles', 'connect'], uncss);<% } %>
 
 gulp.task('copy', copy);
 
 gulp.task('copy-sw-scripts', copySwScripts);
 gulp.task('generate-service-worker', ['copy-sw-scripts'], generateServiceWorker);
 
-gulp.task('serve', ['scripts:dev', 'styles:dev', 'images:dev'], serveDev(reload => {
-    gulp.watch(prefixDev('img/icons/*.svg'), ['images:svg', reload]);
-    gulp.watch(prefixDev('styles/**/*.scss'), ['styles:dev']);
-    gulp.watch(prefixDev('../views/**/*.html.twig'), reload);
+gulp.task('serve', ['scripts:dev', 'styles:dev', 'images:dev'], serveDev(bs => {
+    gulp.watch(prefixDev('img/icons/*.svg'), ['images:svg', bs.reload]);
+    gulp.watch(prefixDev('styles/**/*.scss'), ['styles:dev']);<% if (props.loader === 'jspm') { %>
+    gulp.watch(prefixDev('scripts/**/*.js'), bs.reload);<% } %>
+    gulp.watch(prefixDev('../views/**/*.html.twig'), bs.reload);
 }));
 gulp.task('serve:dist', ['build'], serveProd);
 
-gulp.task('lint', lint);
+gulp.task('eslint', lint);
 gulp.task('karma', karma);
 gulp.task('phpunit', phpunit);
 

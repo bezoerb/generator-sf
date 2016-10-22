@@ -8,7 +8,7 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 const $ = gulpLoadPlugins();
 
 export const lint = () =>
-    gulp.src(prefixDev('scripts/**/*.js'))
+    gulp.src(prefixDev('scripts/**/*.js'<% if (props.loader === 'jspm') { %>, '!scripts/config.js'<% } %>))
         .pipe($.eslint())
         .pipe($.eslint.format())
         .pipe($.if(!browserSync.active, $.eslint.failOnError()));

@@ -37,7 +37,7 @@ module.exports.prod = {
     entry: ['./main'],
 
     output: {
-        path: path.join(__dirname, 'web', 'scripts'),
+        path: path.join(__dirname, <% if (props.buildtool === 'grunt') { %>'web'<% } else { %>'.tmp'<% } %>, 'scripts'),
         publicPath: '/scripts/',
         filename: 'main.js'
     },
@@ -56,7 +56,7 @@ module.exports.prod = {
     }
 };
 
-module.exports.dev = assign(module.exports.prod, {
+module.exports.dev = assign({}, module.exports.prod, {
     debug: true,
     devtool: '#cheap-module-source-map',
 
@@ -66,13 +66,13 @@ module.exports.dev = assign(module.exports.prod, {
         'webpack/hot/dev-server',
         'webpack-hot-middleware/client',
         './main'
-    ],
+    ],<% if (props.buildtool === 'grunt') { %>
 
     output: {
         path: path.join(__dirname, '.tmp', 'scripts'),
-        publicPath: '/scripts/',
-        filename: 'main.js'
-    },
+            publicPath: '/scripts/',
+            filename: 'main.js'
+    },<% } %>
 
     plugins: [
         new webpack.optimize.DedupePlugin(),

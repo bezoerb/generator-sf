@@ -46,7 +46,7 @@ export const scriptsProd = compile(false);<% } else if (props.loader === 'webpac
 import webpack from 'webpack';
 import webpackConfig from '../webpack.config';
 
-const compile = env => cb => {
+const compile = env => () => cb => {
     const wpc = webpackConfig[env];
     const config = {
         ...wpc, stats: {
@@ -71,4 +71,13 @@ const compile = env => cb => {
 
 export const scriptsDev = compile('dev');
 export const scriptsProd = compile('prod');<% } else if (props.loader === 'jspm') { %>
+import {exec} from 'child_process';
+
+export const scriptsProd = () => cb =>
+    exec(`node_modules/.bin/jspm bundle-sfx scripts/main .tmp/scripts/main.js`,  (err, stdout, stderr) => {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+export const scriptsDev = () => () => {};
 <% } %>

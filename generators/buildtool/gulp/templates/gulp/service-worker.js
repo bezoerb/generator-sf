@@ -15,8 +15,7 @@ export const copySwScripts = () =>
 // local resources. This should only be done for the 'dist' directory, to allow
 // live reload to work as expected when serving from the 'app' directory.
 export const generateServiceWorker = () => {
-    const rootDir = 'dist';
-    const filepath = path.join(rootDir, 'service-worker.js');
+    const filepath = prefixDist('service-worker.js');
 
     return swPrecache.write(filepath, {
         // Used to avoid cache conflicts when serving on localhost.

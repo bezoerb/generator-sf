@@ -1,4 +1,3 @@
-import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import {paths, phpMiddleware} from './helper/utils';
 
