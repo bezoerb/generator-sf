@@ -160,7 +160,8 @@ module.exports = common.extend({
                     debug: 'npm:debug@^2.2.0',
                     'appcache-nanny': 'npm:appcache-nanny@^1.0.3',
                     jquery: 'npm:jquery@^2.2.1',
-                    picturefill: 'npm:picturefill@^3.0.1'
+                    picturefill: 'npm:picturefill@^3.0.1',
+                    svg4everybody: 'npm:svg4everybody@^2.1.0'
                 },
                 devDependencies: {
                     babel: 'npm:babel-core@^5.8.34',

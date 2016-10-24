@@ -26,6 +26,7 @@ gulp.task('clean:tmp', () => del(['.tmp'], {dot: true}));
 gulp.task('clean:scripts', () => del([prefixDist('scripts')], {dot: true}));
 gulp.task('clean:images', () => del([prefixDist('img')], {dot: true}));
 gulp.task('clean:styles', () => del([prefixDist('styles')], {dot: true}));
+gulp.task('clean', ['clean:tmp', 'clean:scripts', 'clean:styles', 'clean:images']);
 
 gulp.task('sfcl:node', sfcl('node'));
 gulp.task('sfcl:dev', sfcl('dev'));

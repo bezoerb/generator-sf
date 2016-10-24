@@ -23,6 +23,9 @@ module.exports = common.extend({
 
             if (!this.props.noBower) {
                 pkg.devDependencies.bower = '^1.3.12';
+                pkg.devDependencies.lodash = '^4.6.1';
+            } else {
+                pkg.dependencies.lodash = '^4.6.1';
             }
 
             pkg.devDependencies.del = '^2.2.2';
@@ -33,7 +36,6 @@ module.exports = common.extend({
             pkg.devDependencies.mocha = '^3.1.2';
             pkg.devDependencies.slash = '^1.0.0';
             pkg.devDependencies.chalk = '^1.1.1';
-            pkg.devDependencies.lodash = '^4.6.1';
             pkg.devDependencies.parseurl = '^1.3.0';
 
             pkg.devDependencies['browser-sync'] = '^2.9.0';
@@ -172,7 +174,8 @@ module.exports = common.extend({
                     debug: 'npm:debug@^2.2.0',
                     'appcache-nanny': 'npm:appcache-nanny@^1.0.3',
                     jquery: 'npm:jquery@^2.2.1',
-                    picturefill: 'npm:picturefill@^3.0.1'
+                    picturefill: 'npm:picturefill@^3.0.1',
+                    svg4everybody: 'npm:svg4everybody@^2.1.0'
                 },
                 devDependencies: {
                     babel: 'npm:babel-core@^5.8.34',

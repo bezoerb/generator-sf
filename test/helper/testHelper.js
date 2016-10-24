@@ -272,9 +272,9 @@ module.exports.testPrompts = function (prompts, done) {
         .then(checkRev(prompts))
         .then(checkServiceWorker(prompts))
         .then(function () {
-            _.delay(done, 100);
+            _.delay(done, 150);
         })
         .catch(function (err) {
-            _.delay(done, 100, new Error(err.message || err));
+            _.delay(done, 150, new Error(err.message || err));
         });
 };

@@ -12,10 +12,10 @@ function bsOptions(target, ...base) {
     if (cache) {
         return cache;
     }
-
+    <% if (props.loader === 'webpack') { %>
     const config = target === 'dist' ? configDist : configDev;
     let bundler = webpack(config);
-
+    <% } %>
     cache = {
         server: {
             baseDir: base,
