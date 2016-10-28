@@ -1,14 +1,8 @@
-import {critical as crt} from 'critical';
-import {prefixDist, paths} from './helper/utils';
-import {connect,host,port} from './connect';
+import gulp from 'gulp';
+import {stream} from 'critical';
+import {prefixDist} from './helper/utils';
 
 export const critical = () =>
-    crt.generate({
-        base: paths.dist,
-        minify: true,
-        css: prefixDist('styles/main.css'),
-        src: `http://${host}:${port}/`,
-        dest: prefixDist('styles/critical/index.css')
-    }).finally(connect.serverClose);
-
-
+    gulp.src('.tmp/html/**/*.html', {base: '.tmp/html/'})
+        .pipe(stream({base: '.tmp/html', destFolder: prefixDist('/') , minify: true, inline: false, css: ['.tmp/styles/main.css']}))
+        .pipe(gulp.dest(prefixDist('styles/critical')));

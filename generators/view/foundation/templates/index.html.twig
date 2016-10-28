@@ -2,7 +2,7 @@
 <% if (props.critical) { %>
 {% block stylesheetsDist %}
     <style type="text/css">
-        {% include 'public/styles/critical/index.css' ignore missing %}
+        {% include '@web/styles/critical/styles/critical/index.css' ignore missing %}
     </style>
     <link rel="preload" href="{{ asset('styles/main.css') }}" as="style" onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{{ asset('styles/main.css') }}"></noscript>

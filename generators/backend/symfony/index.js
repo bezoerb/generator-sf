@@ -193,7 +193,7 @@ module.exports = generators.Base.extend({
 
             // add filerev bundle
             if (this.props.version >= 2.7) {
-                data.require['zoerb/filerevbundle'] = '^1.0';
+                data.require['zoerb/filerevbundle'] = '^1.1';
             } else {
                 data.require['zoerb/filerevbundle'] = '~0.1.2';
             }
@@ -218,6 +218,11 @@ module.exports = generators.Base.extend({
             // remove assetic from config.yml
             var conf = yaml.safeLoad(read('app/config/config.yml'));
             delete conf.assetic;
+            // add twig path
+            conf.twig = _.assign({}, conf.twig, {paths: {
+                '%kernel.root_dir%/../web': 'web'
+            }});
+
             var newConf = yaml.dump(conf, {indent: 4});
             fs.writeFileSync('app/config/config.yml', newConf);
 

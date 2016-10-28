@@ -122,9 +122,9 @@ module.exports = function (grunt, options) {
             });
         },<% } %>
         revdump: function(){
-            var file = 'app/config/filerev.json';
+            var file = 'app/config/rev-manifest.json';
             fs.outputJsonSync(file, reduce(grunt.filerev.summary, function(acc,val,key){
-                acc[slash(key.replace('web',''))] = slash(val.replace('web',''));
+                acc[slash(key.replace('web/',''))] = slash(val.replace('web/',''));
                 return acc;
             },{}));
         },

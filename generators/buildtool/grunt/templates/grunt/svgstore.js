@@ -5,7 +5,7 @@ module.exports = {
     },
     icons: {
         files: {
-            '.tmp/views/common/svg-icons.html.twig': ['<%%= paths.app %>/img/svg-icons/*.svg']
+            '.tmp/img/icons.svg': ['<%%= paths.app %>/img/svg-icons/*.svg']
         }
     }
 };

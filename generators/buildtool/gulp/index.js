@@ -21,11 +21,11 @@ module.exports = common.extend({
         pkgDev: function () {
             var pkg = this._readPkg();
 
-            if (!this.props.noBower) {
+            if (this.props.noBower) {
+                pkg.dependencies.lodash = '^4.6.1';
+            } else {
                 pkg.devDependencies.bower = '^1.3.12';
                 pkg.devDependencies.lodash = '^4.6.1';
-            } else {
-                pkg.dependencies.lodash = '^4.6.1';
             }
 
             pkg.devDependencies.del = '^2.2.2';
@@ -65,6 +65,7 @@ module.exports = common.extend({
             pkg.devDependencies['gulp-if'] = '^2.0.1';
             pkg.devDependencies['gulp-imagemin'] = '^3.0.3';
             pkg.devDependencies['gulp-svgstore'] = '^6.1.0';
+            pkg.devDependencies['gulp-rename'] = '^1.2.2';
             pkg.devDependencies['gulp-newer'] = '^1.3.0';
             pkg.devDependencies['gulp-size'] = '^2.1.0';
 
@@ -150,9 +151,7 @@ module.exports = common.extend({
                 pkg.devDependencies.critical = '^0.8.0';
             }
             if (this.props.uncss || this.props.critical) {
-                pkg.devDependencies['gulp-connect'] = '^5.0.0';
-                pkg.devDependencies['get-port'] = '^2.1.0';
-                pkg.devDependencies.got = '^2.5.0';
+                pkg.devDependencies['gulp-twig'] = '^0.5.0';
             }
 
             this._writePkg(pkg);
@@ -220,8 +219,12 @@ module.exports = common.extend({
                 this.template('gulp/critical.js', 'gulp/critical.js');
             }
 
+            if (this.props.uncss) {
+                this.template('gulp/uncss.js', 'gulp/uncss.js');
+            }
+
             if (this.props.uncss || this.props.critical) {
-                this.template('gulp/connect.js', 'gulp/connect.js');
+                this.template('gulp/twig.js', 'gulp/twig.js');
             }
 
             if (this.props.loader === 'webpack') {

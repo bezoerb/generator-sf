@@ -57,8 +57,5 @@
             {% endif %}<% } else { %>
             <script type="text/javascript" src="{{ asset('scripts/main.js') }}"></script><% } %>
         {% endblock %}
-        <div class="<% if (props.view === 'bootstrap') { %>text-hide<% } else if (props.view === 'foundation') { %>show-for-sr<% } else { %>u-hiddenVisually<% } %>">
-            {% include 'common/svg-icons.html.twig' ignore missing %}
-        </div>
     </body>
 </html>

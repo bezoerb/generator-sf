@@ -15,12 +15,13 @@ import {scriptsDev, scriptsProd} from './gulp/scripts';
 import {rev, revManifest} from './gulp/rev';
 import {imagemin, imagecopy, svgstore} from './gulp/images';
 import {copy} from './gulp/copy';
-<% if (props.uncss || props.critical) { %>import {connect} from './gulp/connect';<% } %>
+<% if (props.uncss || props.critical) { %>import {twig} from './gulp/twig';<% } %>
 <% if (props.critical) { %>import {critical} from './gulp/critical';<% } %>
 <% if (props.uncss) { %>import {uncss} from './gulp/uncss';<% } %>
 import {sfcl} from './gulp/exec';
 import {copySwScripts, generateServiceWorker} from './gulp/service-worker';
 import {lint, karma, phpunit} from './gulp/tests';
+
 
 gulp.task('clean:tmp', () => del(['.tmp'], {dot: true}));
 gulp.task('clean:scripts', () => del([prefixDist('scripts')], {dot: true}));
@@ -47,9 +48,9 @@ gulp.task('images:dev', ['images:copy', 'images:svg']);
 gulp.task('rev-files', rev);
 gulp.task('rev', ['rev-files'], revManifest);
 
-<% if (props.uncss || props.critical) { %>gulp.task('connect', connect);<% } %>
-<% if (props.critical) { %>gulp.task('critical', ['styles', 'connect'], critical);<% } %>
-<% if (props.uncss) { %>gulp.task('uncss', ['styles', 'connect'], uncss);<% } %>
+<% if (props.uncss || props.critical) { %>gulp.task('twig', twig);<% } %>
+<% if (props.critical) { %>gulp.task('critical', critical);<% } %>
+<% if (props.uncss) { %>gulp.task('uncss', uncss);<% } %>
 
 gulp.task('copy', copy);
 
@@ -73,6 +74,13 @@ gulp.task('test', cb =>
 );
 
 gulp.task('assets', ['styles:prod', 'scripts:prod', 'images:prod', 'copy'], cb =>
+    runSequence(<% if (props.uncss || props.critical) { %>
+        'twig',<% } if (props.uncss) { %>
+        'uncss',<% } if (props.critical) { %>
+        'critical',<% } %>
+        'rev',
+        'generate-service-worker',
+        cb)
     runSequence('rev', 'generate-service-worker', cb)
 );
 

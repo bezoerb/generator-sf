@@ -5,9 +5,9 @@ const $ = gulpLoadPlugins();
 
 export const rev = () =>
     gulp.src([
-        '.tmp/img/**/*.{jpg,jpeg,gif,png,webp}',
-        '.tmp/styles/*.css',
-        '.tmp/scripts/*.js'
+        '.tmp/img/**/*.{jpg,jpeg,gif,png,webp,svg}',
+        '.tmp/styles/**/*.css',
+        '.tmp/scripts/**/*.js'
     ], {base: '.tmp'})
         .pipe($.rev())
         .pipe(gulp.dest(paths.dist))
@@ -22,6 +22,6 @@ export const revManifest = () => {
         'styles/*.css',
         'scripts/*.js'
     ), {base: paths.dist})
-     .pipe($.revReplace({manifest: manifest, replaceInExtensions: ['.js', '.css']}))
-     .pipe(gulp.dest(paths.dist));
+        .pipe($.revReplace({manifest: manifest, replaceInExtensions: ['.js', '.css']}))
+        .pipe(gulp.dest(paths.dist));
 };

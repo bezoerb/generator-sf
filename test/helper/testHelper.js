@@ -24,6 +24,7 @@ var fs = require('fs-extra');
 
 var base = path.join(__dirname, '..', 'fixtures');
 var target = path.join(__dirname, '..', 'temp');
+var removeDir = Promise.promisify(fs.remove);
 
 function log(text) {
     process.stdout.write(indentString(chalk.grey(text), 6));
@@ -32,6 +33,10 @@ function log(text) {
 function markDone(data) {
     process.stdout.write(os.EOL);
     return data;
+}
+
+function cleanup() {
+    return removeDir(target);
 }
 
 function prompts2String(promts) {
@@ -201,8 +206,12 @@ function checkJs(prompts) {
         log('... check js build');
         let task = '';
         switch (prompts.buildtool) {
-            case 'grunt': task = 'js:dist'; break;
-            case 'gulp': task = 'scripts:prod'; break;
+            case 'grunt':
+                task = 'js:dist';
+                break;
+            case 'gulp':
+                task = 'scripts:prod';
+                break;
         }
         return runTask(prompts.buildtool, task).then(markDone);
     };
@@ -213,8 +222,12 @@ function checkCss(prompts) {
         log('... check css build');
         let task = '';
         switch (prompts.buildtool) {
-            case 'grunt': task = 'css:dist'; break;
-            case 'gulp': task = 'styles:prod'; break;
+            case 'grunt':
+                task = 'css:dist';
+                break;
+            case 'gulp':
+                task = 'styles:prod';
+                break;
         }
 
         return runTask(prompts.buildtool, task).then(function () {
@@ -260,8 +273,8 @@ function checkServiceWorker(prompts) {
     };
 }
 
-module.exports.testPrompts = function (prompts, done) {
-    install(prompts)
+module.exports.testPrompts = function (prompts) {
+    return install(prompts)
         .then(installDeps(prompts))
         .then(checkFiles(prompts))
         .then(checkEslint(prompts))
@@ -271,10 +284,5 @@ module.exports.testPrompts = function (prompts, done) {
         .then(checkCss(prompts))
         .then(checkRev(prompts))
         .then(checkServiceWorker(prompts))
-        .then(function () {
-            _.delay(done, 150);
-        })
-        .catch(function (err) {
-            _.delay(done, 150, new Error(err.message || err));
-        });
+        .then(cleanup);
 };

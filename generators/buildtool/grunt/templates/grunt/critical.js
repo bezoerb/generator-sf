@@ -10,7 +10,7 @@ module.exports = {
     },
     all: {
         files: [
-            {expand: true, dot: true, cwd: '.tmp', dest: '<%%= paths.app %>/styles/critical/', src: ['**/*.html'], ext: '.css'}
+            {expand: true, dot: true, cwd: '.tmp', dest: '<%%= paths.dist %>/styles/critical/', src: ['**/*.html'], ext: '.css'}
         ]
     }
 };

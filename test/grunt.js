@@ -40,7 +40,7 @@ describe('symfony generator (grunt)', function () {
         // {loader: 'jspm', preprocessor: 'stylus'},
         // // jspm uikit
         // {loader: 'jspm', framework: 'uikit'},
-        // {loader: 'jspm', framework: 'uikit', preprocessor: 'less'},
+        {loader: 'jspm', framework: 'uikit', preprocessor: 'less'},
         // {loader: 'jspm', framework: 'uikit', preprocessor: 'sass', libsass: false},
         // {loader: 'jspm', framework: 'uikit', preprocessor: 'sass', libsass: true},
         // {loader: 'jspm', framework: 'uikit', preprocessor: 'stylus'},
@@ -72,7 +72,7 @@ describe('symfony generator (grunt)', function () {
         // // webpack bootstrap
         // {loader: 'webpack', framework: 'bootstrap'},
         // {loader: 'webpack', framework: 'bootstrap', preprocessor: 'less'},
-        // {loader: 'webpack', framework: 'bootstrap', preprocessor: 'sass', libsass: false},
+        {loader: 'webpack', framework: 'bootstrap', preprocessor: 'sass', libsass: false},
         // {loader: 'webpack', framework: 'bootstrap', preprocessor: 'sass', libsass: true},
         // {loader: 'webpack', framework: 'bootstrap', preprocessor: 'stylus'},
         // // webpack foundation
@@ -96,8 +96,8 @@ describe('symfony generator (grunt)', function () {
     };
 
     tests.forEach(function (test) {
-        it('', function (done) {
-            testPrompts(assign(clone(defaults), test), done);
+        it('', function () {
+            return testPrompts(assign(clone(defaults), test));
         });
     });
 });
