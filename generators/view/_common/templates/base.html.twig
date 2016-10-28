@@ -46,15 +46,16 @@
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}<% if (props.loader !== 'webpack' && props.loader ) { %>
-            {% if app.environment == 'node' %}<% if (props.loader === 'jspm') { %><script src="jspm_packages/system.js"></script>
+        {% block javascripts %}<% if (props.loader === 'jspm') { %>
+            {% if app.environment == 'node' %}
                 <script src="scripts/config.js"></script>
                 <script>
                     System.import('scripts/main');
-                </script><% } %>
+                </script>
             {% else %}
                 <script type="text/javascript" src="{{ asset('scripts/main.js') }}"></script>
-            {% endif %}<% } else { %>
+            {% endif %}
+        <% } else { %>
             <script type="text/javascript" src="{{ asset('scripts/main.js') }}"></script><% } %>
         {% endblock %}
     </body>
