@@ -1,12 +1,12 @@
 import path from 'path';
 import gulp from 'gulp';
 import swPrecache from 'sw-precache';
-import {prefixDist} from './helper/utils';
+import {prefixDist, prefixDev} from './helper/utils';
 import pkg from '../package.json';
 
 // Copy over the scripts that are used in importScripts as part of the generate-service-worker task.
 export const copySwScripts = () =>
-    gulp.src(['node_modules/sw-toolbox/sw-toolbox.js', 'app/scripts/sw/runtime-caching.js'])
+    gulp.src(['node_modules/sw-toolbox/sw-toolbox.js', prefixDev('scripts/sw/runtime-caching.js')])
         .pipe(gulp.dest(prefixDist('scripts/sw')));
 
 // See http://www.html5rocks.com/en/tutorials/service-worker/introduction/ for

@@ -2,20 +2,19 @@ import parseurl from 'parseurl';
 import path from 'path';
 import php from 'php-proxy-middleware';
 import {flatten, first} from 'lodash';
+import {getenv} from './env';
 
 export const paths = {
     app: 'app/Resources/public',
     dist: 'web'
 };
 
-function getMiddleware(target) {
-    if (target === 'dist') {
-        process.env['SYMFONY_ENV'] = 'prod';
-        process.env['SYMFONY_DEBUG'] = 0;
-    } else {
-        process.env['SYMFONY_ENV'] = 'node';
-        process.env['SYMFONY_DEBUG'] = 1;
-    }
+function getMiddleware() {
+    const env = getenv('env');
+
+    process.env.SYMFONY_ENV = env;
+    process.env.SYMFONY_DEBUG = env !== 'prod';
+
     return php({
         address: '127.0.0.1', // which interface to bind to
         ini: {max_execution_time: 60, variables_order: 'EGPCS'},
@@ -24,8 +23,8 @@ function getMiddleware(target) {
     });
 }
 
-export function phpMiddleware(target) {
-    var middleware = getMiddleware(target);
+export function phpMiddleware() {
+    var middleware = getMiddleware();
 
     return function (req, res, next) {
         var obj = parseurl(req);

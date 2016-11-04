@@ -8,10 +8,11 @@ import gulp from 'gulp';
 import runSequence from 'run-sequence';
 import del from 'del';
 import {prefixDev, prefixDist} from './gulp/helper/utils';
+import {ENV} from './gulp/helper/env';
 
-import {serveDev, serveProd, stream} from './gulp/browserSync';
-import {stylesDev, stylesProd} from './gulp/styles';
-import {scriptsDev, scriptsProd} from './gulp/scripts';
+import {serve, bs} from './gulp/browserSync';
+import {styles} from './gulp/styles';
+import {scripts} from './gulp/scripts';
 import {rev, revManifest} from './gulp/rev';
 import {imagemin, imagecopy, svgstore} from './gulp/images';
 import {copy} from './gulp/copy';
@@ -29,51 +30,47 @@ gulp.task('clean:images', () => del([prefixDist('img')], {dot: true}));
 gulp.task('clean:styles', () => del([prefixDist('styles')], {dot: true}));
 gulp.task('clean', ['clean:tmp', 'clean:scripts', 'clean:styles', 'clean:images']);
 
-gulp.task('sfcl:node', sfcl('node'));
-gulp.task('sfcl:dev', sfcl('dev'));
-gulp.task('sfcl:prod', sfcl('prod'));
+gulp.task('sfcl', sfcl());
 
-gulp.task('styles:dev', ['clean:styles'], stylesDev(stream));
-gulp.task('styles:prod', ['clean:styles'], stylesProd());
+gulp.task('styles', ['clean:styles'], styles(bs));
 
-gulp.task('scripts:dev', ['clean:scripts'], scriptsDev(stream));
-gulp.task('scripts:prod', ['clean:scripts'], scriptsProd());
+gulp.task('scripts', ['clean:scripts'], scripts(bs));
 
 gulp.task('images:copy', imagecopy);
 gulp.task('images:min', imagemin);
 gulp.task('images:svg', svgstore);
-gulp.task('images:prod', ['images:min', 'images:svg']);
-gulp.task('images:dev', ['images:copy', 'images:svg']);
+gulp.task('images', ENV === 'prod' ? ['images:min', 'images:svg'] : ['images:copy', 'images:svg']);
 
 gulp.task('rev-files', rev);
 gulp.task('rev', ['rev-files'], revManifest);
 
 <% if (props.uncss || props.critical) { %>gulp.task('twig', twig);<% } %>
-<% if (props.critical) { %>gulp.task('critical', critical);<% } %>
-<% if (props.uncss) { %>gulp.task('uncss', uncss);<% } %>
+<% if (props.critical) { %>gulp.task('critical', ['twig'], critical);<% } %>
+<% if (props.uncss) { %>gulp.task('uncss', ['twig'], uncss);<% } %>
 
 gulp.task('copy', copy);
 
 gulp.task('copy-sw-scripts', copySwScripts);
 gulp.task('generate-service-worker', ['copy-sw-scripts'], generateServiceWorker);
 
-gulp.task('serve', ['scripts:dev', 'styles:dev', 'images:dev'], serveDev(bs => {
-    gulp.watch(prefixDev('img/icons/*.svg'), ['images:svg', bs.reload]);
-    gulp.watch(prefixDev('styles/**/*.scss'), ['styles:dev']);<% if (props.loader === 'jspm') { %>
-    gulp.watch(prefixDev('scripts/**/*.js'), bs.reload);<% } %>
-    gulp.watch(prefixDev('../views/**/*.html.twig'), bs.reload);
+gulp.task('serve', ENV  === 'prod'? ['build'] : ['scripts', 'styles', 'images'], serve(bs => {
+    if (ENV  !== 'prod') {
+        gulp.watch(prefixDev('img/icons/*.svg'), ['images:svg', bs.reload]);
+        gulp.watch(prefixDev('styles/**/*.scss'), ['styles']);<% if (props.loader === 'jspm') { %>
+        gulp.watch(prefixDev('scripts/**/*.js'), bs.reload);<% } %>
+        gulp.watch(prefixDev('../views/**/*.html.twig'), bs.reload);
+    }
 }));
-gulp.task('serve:dist', ['build'], serveProd);
 
 gulp.task('eslint', lint);
 gulp.task('karma', karma);
 gulp.task('phpunit', phpunit);
 
 gulp.task('test', cb =>
-    runSequence(['lint', 'karma', 'phpunit'], cb)
+    runSequence(['eslint', 'karma', 'phpunit'], cb)
 );
 
-gulp.task('assets', ['styles:prod', 'scripts:prod', 'images:prod', 'copy'], cb =>
+gulp.task('assets', ['styles', 'scripts', 'images', 'copy'], cb =>
     runSequence(<% if (props.uncss || props.critical) { %>
         'twig',<% } if (props.uncss) { %>
         'uncss',<% } if (props.critical) { %>
@@ -81,10 +78,9 @@ gulp.task('assets', ['styles:prod', 'scripts:prod', 'images:prod', 'copy'], cb =
         'rev',
         'generate-service-worker',
         cb)
-    runSequence('rev', 'generate-service-worker', cb)
 );
 
 gulp.task('build', ['test', 'assets']);
 
 // Build production files, the default task
-gulp.task('default', ['clean']);
+gulp.task('default', ['serve']);

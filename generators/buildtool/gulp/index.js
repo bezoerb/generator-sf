@@ -37,6 +37,9 @@ module.exports = common.extend({
             pkg.devDependencies.slash = '^1.0.0';
             pkg.devDependencies.chalk = '^1.1.1';
             pkg.devDependencies.parseurl = '^1.3.0';
+            pkg.devDependencies.dotenv = '^2.0.0';
+            pkg.devDependencies.minimist = '^1.2.0';
+            pkg.devDependencies.getport = '^0.1.0';
 
             pkg.devDependencies['browser-sync'] = '^2.9.0';
             pkg.devDependencies['gulp-autoprefixer'] = '^3.1.1';
@@ -151,7 +154,7 @@ module.exports = common.extend({
                 pkg.devDependencies.critical = '^0.8.0';
             }
             if (this.props.uncss || this.props.critical) {
-                pkg.devDependencies['gulp-twig'] = '^0.5.0';
+                pkg.devDependencies['gulp-twig'] = '^0.7.0';
             }
 
             this._writePkg(pkg);

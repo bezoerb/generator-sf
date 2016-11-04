@@ -8,8 +8,10 @@ import buffer from 'vinyl-buffer';
 import sourcemaps from 'gulp-sourcemaps';
 import {first} from 'lodash';
 import {prefixDev} from './helper/utils';
+import {ENV} from './helper/env';
 
-const compile = watch => stream => {
+export const scripts = bs => () => {
+    const watch = ENV === 'node';
     let bundler = browserify(prefixDev('scripts/main.js'), {debug: watch});
     if (watch) {
         bundler = watchify(bundler);
@@ -35,19 +37,17 @@ const compile = watch => stream => {
             .pipe(gulp.dest('.tmp/scripts'));
 
     if (watch) {
-        bundler.on('update', () => rebundle().pipe(stream({once: true})));
+        bundler.on('update', () => rebundle().pipe(bs.stream({once: true})));
     }
 
     return rebundle;
-};
-
-export const scriptsDev = compile(true);
-export const scriptsProd = compile(false);<% } else if (props.loader === 'webpack') { %>import gutil from 'gulp-util';
+};<% } else if (props.loader === 'webpack') { %>import gutil from 'gulp-util';
 import webpack from 'webpack';
 import webpackConfig from '../webpack.config';
+import {ENV} from './helper/env';
 
-const compile = env => () => cb => {
-    const wpc = webpackConfig[env];
+export const scripts = cb => () => {
+    const wpc = ENV === 'node' && webpackConfig.dev || webpackConfig.prod;
     const config = {
         ...wpc, stats: {
             // Configure the console output
@@ -67,17 +67,14 @@ const compile = env => () => cb => {
         }));
         cb();
     });
-};
-
-export const scriptsDev = compile('dev');
-export const scriptsProd = compile('prod');<% } else if (props.loader === 'jspm') { %>
+};<% } else if (props.loader === 'jspm') { %>
 import {exec} from 'child_process';
+import {ENV} from './helper/env';
 
-export const scriptsProd = () => cb =>
-    exec(`node_modules/.bin/jspm bundle-sfx scripts/main .tmp/scripts/main.js`,  (err, stdout, stderr) => {
+export const scripts = cb => () =>
+    (ENV !== 'node' && exec(`node_modules/.bin/jspm bundle-sfx scripts/main .tmp/scripts/main.js`, (err, stdout, stderr) => {
         console.log(stdout);
         console.log(stderr);
         cb(err);
-    });
-export const scriptsDev = () => () => {};
+    })) || cb();
 <% } %>

@@ -1,58 +1,48 @@
 import browserSync from 'browser-sync';
 import {phpMiddleware, paths, prefixDev} from './helper/utils';
+import {ENV} from './helper/env';
+import getport from 'getport';
+import pkg from '../package.json';
 <% if (props.loader === 'webpack') { %>
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import {dev as configDev, prod as configDist} from '../webpack.config.js';
 <% } %>
-let cache = null;
+const nodeEnv = ENV !== 'prod';
 
-function bsOptions(target, ...base) {
-    if (cache) {
-        return cache;
+export const bs = browserSync.create(pkg.name || 'generator-sf');
+
+const options = {
+    server: {
+        baseDir: nodeEnv ? ['.tmp', paths.app, './', 'node_modules', paths.dist] : paths.dist
+    },
+    watchTask: nodeEnv,
+    notify: nodeEnv,
+    open: true,
+    ghostMode: {
+        clicks: true,
+        scroll: true,
+        links: true,
+        forms: true
     }
-    <% if (props.loader === 'webpack') { %>
-    const config = target === 'dist' ? configDist : configDev;
-    let bundler = webpack(config);
-    <% } %>
-    cache = {
-        server: {
-            baseDir: base,
-            middleware: [<% if (props.loader === 'webpack') { %>
-                webpackDevMiddleware(bundler, {
-                    publicPath: config.output.publicPath,
-                    noInfo: true,
-                    stats: {colors: true}
-                }),
-                webpackHotMiddleware(bundler), <% } %>
-                phpMiddleware(target)
-            ]
-        },
-        port: 8888,
-        watchTask: target !== 'dist',
-        notify: true,
-        open: true,
-        ghostMode: {
-            clicks: true,
-            scroll: true,
-            links: true,
-            forms: true
-        }
-    };
-
-    return cache;
-}
-
-// Watch files for changes & reload
-export const serveDev = cb => () => {
-    browserSync.init(bsOptions('dev', '.tmp', paths.app, './', 'node_modules', paths.dist));
-    return cb && cb(browserSync);
 };
 
-export const serveProd = cb => () => {
-    browserSync.init(bsOptions('dist', paths.dist));
-    return cb && cb(browserSync);
+export const serve = cb => done => {<% if (props.loader === 'webpack') { %>
+    const config = nodeEnv ? configDev : configDist;
+    const bundler = webpack(config);
+    const middleware = [
+        webpackDevMiddleware(bundler, {
+            publicPath: config.output.publicPath,
+            stats: {colors: true}
+        }),
+        webpackHotMiddleware(bundler)
+    ];<% } %>
+    getport(8000, 8999, (err, port) => {
+        bs.init({...options, port, middleware: [<% if (props.loader === 'webpack') { %>...middleware, <% } %>phpMiddleware()]}, (err, bs) => {
+            return cb && cb(bs, done);
+        });
+    });
 };
 
 export const stream = browserSync.stream;

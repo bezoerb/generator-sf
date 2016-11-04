@@ -11,7 +11,7 @@ export const rev = () =>
     ], {base: '.tmp'})
         .pipe($.rev())
         .pipe(gulp.dest(paths.dist))
-        .pipe($.rev.manifest('filerev.json'))
+        .pipe($.rev.manifest('rev-manifest.json'))
         .pipe(gulp.dest('app/config'))
         .pipe($.size({title: 'rev'}));
 
