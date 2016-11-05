@@ -43,11 +43,11 @@ gulp.task('images', ENV === 'prod' ? ['images:min', 'images:svg'] : ['images:cop
 
 gulp.task('rev-files', rev);
 gulp.task('rev', ['rev-files'], revManifest);
-
-<% if (props.uncss || props.critical) { %>gulp.task('twig', twig);<% } %>
-<% if (props.critical) { %>gulp.task('critical', ['twig'], critical);<% } %>
-<% if (props.uncss) { %>gulp.task('uncss', ['twig'], uncss);<% } %>
-
+<% if (props.uncss || props.critical) { %>
+gulp.task('twig', twig);<% } if (props.critical) { %>
+gulp.task('critical', ['twig'], critical);<% } if (props.uncss) { %>
+gulp.task('uncss', ['twig'], uncss);
+<% } %>
 gulp.task('copy', copy);
 
 gulp.task('copy-sw-scripts', copySwScripts);

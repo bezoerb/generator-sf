@@ -10,8 +10,8 @@ import {first} from 'lodash';
 import {prefixDev} from './helper/utils';
 import {ENV} from './helper/env';
 
-export const scripts = bs => () => {
-    const watch = ENV === 'node';
+export const scripts = bs => {
+    const watch = ENV !== 'prod';
     let bundler = browserify(prefixDev('scripts/main.js'), {debug: watch});
     if (watch) {
         bundler = watchify(bundler);
@@ -46,8 +46,8 @@ import webpack from 'webpack';
 import webpackConfig from '../webpack.config';
 import {ENV} from './helper/env';
 
-export const scripts = cb => () => {
-    const wpc = ENV === 'node' && webpackConfig.dev || webpackConfig.prod;
+export const scripts = () => cb => {
+    const wpc = ENV !== 'prod' && webpackConfig.dev || webpackConfig.prod;
     const config = {
         ...wpc, stats: {
             // Configure the console output
@@ -71,7 +71,7 @@ export const scripts = cb => () => {
 import {exec} from 'child_process';
 import {ENV} from './helper/env';
 
-export const scripts = cb => () =>
+export const scripts = () => cb =>
     (ENV !== 'node' && exec(`node_modules/.bin/jspm bundle-sfx scripts/main .tmp/scripts/main.js`, (err, stdout, stderr) => {
         console.log(stdout);
         console.log(stderr);

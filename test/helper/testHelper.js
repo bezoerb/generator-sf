@@ -210,7 +210,7 @@ function checkJs(prompts) {
                 task = 'js:dist';
                 break;
             case 'gulp':
-                task = 'scripts:prod';
+                task = 'scripts --env prod';
                 break;
         }
         return runTask(prompts.buildtool, task).then(markDone);
@@ -226,7 +226,7 @@ function checkCss(prompts) {
                 task = 'css:dist';
                 break;
             case 'gulp':
-                task = 'styles:prod';
+                task = 'styles  --env prod';
                 break;
         }
 
