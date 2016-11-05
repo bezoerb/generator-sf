@@ -1,4 +1,7 @@
+dist: trusty
 sudo: false
+group: beta
+
 language: node_js
 node_js:
   - "4"
@@ -33,4 +36,3 @@ cache:
     - test/fixtures/bower_components
     - test/fixtures/jspm_packages
     - test/fixtures/node_modules
-    - test/fixtures/vendor

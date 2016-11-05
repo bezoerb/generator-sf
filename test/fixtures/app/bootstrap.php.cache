@@ -1041,6 +1041,10 @@ public function isMethodSafe()
 {
 return in_array($this->getMethod(), array('GET','HEAD','OPTIONS','TRACE'));
 }
+public function isMethodCacheable()
+{
+return in_array($this->getMethod(), array('GET','HEAD'));
+}
 public function getContent($asResource = false)
 {
 $currentContentIsResource = is_resource($this->content);
@@ -1779,7 +1783,7 @@ return $this;
 }
 public function isNotModified(Request $request)
 {
-if (!$request->isMethodSafe()) {
+if (!$request->isMethodCacheable()) {
 return false;
 }
 $notModified = false;
@@ -2399,11 +2403,11 @@ protected $booted = false;
 protected $name;
 protected $startTime;
 protected $loadClassCache;
-const VERSION ='2.7.19';
-const VERSION_ID = 20719;
+const VERSION ='2.7.20';
+const VERSION_ID = 20720;
 const MAJOR_VERSION = 2;
 const MINOR_VERSION = 7;
-const RELEASE_VERSION = 19;
+const RELEASE_VERSION = 20;
 const EXTRA_VERSION ='';
 const END_OF_MAINTENANCE ='05/2018';
 const END_OF_LIFE ='05/2019';

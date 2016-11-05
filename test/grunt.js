@@ -86,7 +86,7 @@ describe('symfony generator (grunt)', function () {
     var defaults = {
         // need to inject symfony 2.8.12 to tests as travis node does not support min php version for symfony 3.0
         symfonyStandard: false,
-        symfonyCommit: '2.8.12',
+        symfonyCommit: '3.1.6',
         continue: true,
         buildtool: 'grunt',
         view: 'plain',

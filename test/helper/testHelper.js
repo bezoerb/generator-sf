@@ -245,8 +245,8 @@ function checkRev(prompts) {
     return function () {
         log('... check rev');
         return runTask(prompts.buildtool, 'rev').then(function () {
-            assert.file(['app/config/filerev.json']);
-            var reved = fs.readJsonSync('app/config/filerev.json');
+            assert.file(['app/config/rev-manifest.json']);
+            var reved = fs.readJsonSync('app/config/rev-manifest.json');
             _.forEach(reved, function (file) {
                 assert.file([path.join('web', file)]);
             });
