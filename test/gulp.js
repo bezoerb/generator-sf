@@ -8,8 +8,8 @@ describe('symfony generator (gulp)', function () {
 
     var tests = [
         // browserify no framework
-        // {loader: 'browserify'},
-        // {loader: 'browserify', preprocessor: 'less'},
+        {loader: 'browserify'},
+        {loader: 'browserify', preprocessor: 'less'},
         {loader: 'browserify', preprocessor: 'sass', libsass: false},
         {loader: 'browserify', preprocessor: 'sass', libsass: true},
         {loader: 'browserify', preprocessor: 'stylus'},
