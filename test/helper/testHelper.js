@@ -82,20 +82,15 @@ function runTask(tool, task) {
  * @returns {Promise}
  */
 function install(prompts) {
-    //return new Promise(function (resolve) {
     var opts = prompts2String(prompts);
     process.stdout.write(os.EOL + indentString('running app with ' + opts.join(', '), 4) + os.EOL);
     debug(path.join(__dirname, '../../generators/app'), target);
-    return helpers.run(path.join(__dirname, '../../generators/app'))
+    return Promise.resolve(helpers.run(path.join(__dirname, '../../generators/app'))
         .inDir(target)
         .withOptions({'skip-install': true})
         .withPrompts(prompts)
         .toPromise()
-        .then(fixtureHelper.linkDeps(base, target));
-    // .on('end', fixtureHelper.linkDeps(base, target, function () {
-    //     resolve();
-    // }));
-    // });
+        .then(fixtureHelper.linkDeps(base, target)));
 }
 
 function installDeps(prompts) {
@@ -103,36 +98,36 @@ function installDeps(prompts) {
         log('... install dependencies');
         return new Promise(function (resolve) {
 
-            withComposer(function (error, stdout) {
+            // withComposer(function (error, stdout) {
+            //     if (error) {
+            //         log(os.EOL + stdout + os.EOL);
+            //     }
+            //
+            //     debug(os.EOL + stdout);
+            //     /*jshint expr: true*/
+            //     //noinspection BadExpressionStatementJS
+            //     expect(error).to.be.null;
+            //     process.stdout.write(chalk.green(' composer'));
+
+            if (prompts.loader !== 'jspm') {
+                markDone();
+                return resolve();
+            }
+
+            withJspm(function (error, stdout) {
                 if (error) {
                     log(os.EOL + stdout + os.EOL);
                 }
-
                 debug(os.EOL + stdout);
                 /*jshint expr: true*/
                 //noinspection BadExpressionStatementJS
                 expect(error).to.be.null;
-                process.stdout.write(chalk.green(' composer'));
-
-                if (prompts.loader !== 'jspm') {
-                    markDone();
-                    return resolve();
-                }
-
-                withJspm(function (error, stdout) {
-                    if (error) {
-                        log(os.EOL + stdout + os.EOL);
-                    }
-                    debug(os.EOL + stdout);
-                    /*jshint expr: true*/
-                    //noinspection BadExpressionStatementJS
-                    expect(error).to.be.null;
-                    process.stdout.write(', ' + chalk.green('jspm'));
-                    markDone();
-                    resolve();
-                });
+                process.stdout.write(', ' + chalk.green('jspm'));
+                markDone();
+                resolve();
             });
-        });
+            // });
+         });
     };
 }
 
@@ -284,5 +279,5 @@ module.exports.testPrompts = function (prompts) {
         .then(checkCss(prompts))
         .then(checkRev(prompts))
         .then(checkServiceWorker(prompts))
-        .then(cleanup);
+        .finally(cleanup);
 };

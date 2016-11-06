@@ -96,8 +96,9 @@ describe('symfony generator (grunt)', function () {
     };
 
     tests.forEach(function (test) {
-        it('', function () {
-            return testPrompts(assign(clone(defaults), test));
+        var promts = assign(clone(defaults), test);
+        it('everything fine', function () {
+            return testPrompts(promts);
         });
     });
 });

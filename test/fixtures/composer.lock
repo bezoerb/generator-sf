@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "63811cf8b5db96707ee4056be7e4c4bf",
-    "content-hash": "e9720060d78700b8e275bf9771e8e5be",
+    "hash": "e322d8851bf9f3c03fee9154bce11833",
+    "content-hash": "3bf52e3914eedfab6bf24da588f17d16",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1308,20 +1308,20 @@
         },
         {
             "name": "symfony/monolog-bundle",
-            "version": "2.11.1",
+            "version": "2.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/monolog-bundle.git",
-                "reference": "e7caf4936c7be82bc6d68df87f1d23a0d5bf6e00"
+                "reference": "d156f625dc3ce04f44e6d0ce36ae19cc35f51a97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/monolog-bundle/zipball/e7caf4936c7be82bc6d68df87f1d23a0d5bf6e00",
-                "reference": "e7caf4936c7be82bc6d68df87f1d23a0d5bf6e00",
+                "url": "https://api.github.com/repos/symfony/monolog-bundle/zipball/d156f625dc3ce04f44e6d0ce36ae19cc35f51a97",
+                "reference": "d156f625dc3ce04f44e6d0ce36ae19cc35f51a97",
                 "shasum": ""
             },
             "require": {
-                "monolog/monolog": "~1.18",
+                "monolog/monolog": "~1.12",
                 "php": ">=5.3.2",
                 "symfony/config": "~2.3|~3.0",
                 "symfony/dependency-injection": "~2.3|~3.0",
@@ -1364,7 +1364,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2016-04-13 16:21:01"
+            "time": "2016-04-12 18:48:21"
         },
         {
             "name": "symfony/polyfill-apcu",
@@ -2962,16 +2962,16 @@
         },
         {
             "name": "sensio/generator-bundle",
-            "version": "v3.0.11",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "b9be7f1b3b2e8bcfc1debefc901b71da923a5e5c"
+                "reference": "c46c729089b3b14f3a3743508518dad4e5f7aaf4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/b9be7f1b3b2e8bcfc1debefc901b71da923a5e5c",
-                "reference": "b9be7f1b3b2e8bcfc1debefc901b71da923a5e5c",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/c46c729089b3b14f3a3743508518dad4e5f7aaf4",
+                "reference": "c46c729089b3b14f3a3743508518dad4e5f7aaf4",
                 "shasum": ""
             },
             "require": {
@@ -2988,7 +2988,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0.x-dev"
+                    "dev-master": "3.1.x-dev"
                 }
             },
             "autoload": {
@@ -3010,7 +3010,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2016-10-10 14:17:42"
+            "time": "2016-11-06 19:25:27"
         },
         {
             "name": "symfony/phpunit-bridge",
