@@ -19,7 +19,13 @@ const AUTOPREFIXER_BROWSERS = [
 ];
 
 // Compile and automatically prefix stylesheets
-export const styles = bs => () => {
+export const styles = bs => () => {<% if (props.preprocessor === 'sass' && !props.libsass) { %>
+    const stream = $.rubySass(prefixDev('styles/main.scss'), {
+            sourcemap: true,
+            precision: 10,
+            loadPath: ['node_modules']
+        })
+    <% } else { %>
     const stream = gulp.src(prefixDev('styles/main.<% if (props.preprocessor === 'sass') { %>scss<% } else if (props.preprocessor === 'less') { %>less<% } else if (props.preprocessor === 'stylus') { %>styl<% } else { %>css<% } %>'))
         .pipe($.sourcemaps.init())
         <% if (props.preprocessor === 'sass') { %>.pipe($.sass({
@@ -33,6 +39,7 @@ export const styles = bs => () => {
             'include css':true,
             use: [nib]
         }))<% } %>
+    <% } %>
         .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
         // Concatenate and minify styles
         .pipe($.if('*.css', $.minifyCss()))
