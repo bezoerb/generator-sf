@@ -2,8 +2,8 @@
 
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependency Status][depstat-image]][depstat-url] [![Download][dlcounter-image]][dlcounter-url]
 
-This [Yeoman](http://yeoman.io) generator scaffolds a symfony app with full featured frontend tooling. 
-Just scaffold your app, run `grunt serve` and you are ready to go. 
+This [Yeoman](http://yeoman.io) generator scaffolds a symfony app with full featured frontend `grunt`/`gulp` tooling. 
+Just scaffold your app and you are ready to go. 
 
 
 ## Installation
@@ -12,7 +12,7 @@ First, install [Yeoman](http://yeoman.io) and generator-sf using [npm](https://w
 
 Install dependencies
 ```bash
-npm install -g yo grunt
+npm install -g yo grunt gulp
 ```
 To install generator-sf from npm, run:
 ```bash
@@ -74,7 +74,7 @@ The directory structure is based on the [Symfony Best Practices](http://symfony.
 
 #### Production
 * All production assets are located in the `web` folder.
-* Run `grunt build` to compile, optimize and rev your assets for production.
+* Run `grunt build` or `gulp build` to compile, optimize and rev your assets for production.
 
 
 ### Changelog
