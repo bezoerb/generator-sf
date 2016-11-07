@@ -9,6 +9,7 @@ var Promise = require('bluebird');
 var glob = require('glob');
 var path = require('path');
 var exec = require('child_process').exec;
+var execSync = require('child_process').execSync;
 var debug = require('debug')('yeoman:generator-sf');
 
 function inArray(arr) {
@@ -35,6 +36,12 @@ function prepareNpmDeps(configFile, baseConfigFile, base, target) {
         var module = path.basename(fp);
         if (drop.indexOf(module) === -1) {
             fs.ensureSymlinkSync(fp, path.join(target, module));
+            if (module === 'node-sass') {
+                var cwd = process.cwd();
+                process.chdir(path.dirname(target));
+                execSync('npm rebuild node-sass');
+                process.chdir(cwd);
+            }
         }
     });
 }
