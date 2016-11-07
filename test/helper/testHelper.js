@@ -278,7 +278,7 @@ module.exports.cleanup = function() {
     return cleanup();
 };
 
-module.exports.testPrompts = function (prompts) {
+module.exports.testAll = function (prompts) {
     var args = assign({}, {
         // need to inject symfony 2.8.12 to tests as travis node does not support min php version for symfony 3.0
         symfonyStandard: false,
@@ -301,5 +301,25 @@ module.exports.testPrompts = function (prompts) {
             .then(checkCss(args))
             .then(checkRev(args))
             .then(checkServiceWorker(args));
+    };
+};
+
+module.exports.testSome = function (prompts) {
+    var args = assign({}, {
+        // need to inject symfony 2.8.12 to tests as travis node does not support min php version for symfony 3.0
+        symfonyStandard: false,
+        symfonyCommit: '3.1.6',
+        continue: true,
+        view: 'plain',
+        preprocessor: 'none',
+        loader: 'jspm',
+        additional: []
+    }, prompts);
+
+    return function () {
+        return install(args)
+            .then(installDeps(args))
+            .then(checkFiles(args))
+            .then(checkKarma(args));
     };
 };
