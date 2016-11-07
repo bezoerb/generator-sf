@@ -280,7 +280,6 @@ module.exports.testPrompts = function (prompts) {
         symfonyStandard: false,
         symfonyCommit: '3.1.6',
         continue: true,
-        buildtool: 'gulp',
         view: 'plain',
         preprocessor: 'none',
         loader: 'jspm',
