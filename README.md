@@ -34,6 +34,9 @@ yo sf
 * Twig templating engine
 * Assetic removed
 * Browsersync dev/prod server with livereload
+* Choose the build tool which fits your needs
+  - [Gulp](http://gulpjs.com/)
+  - [Grunt](http://gruntjs.com/)
 * Choose the CSS preprocessor which fits your needs
   - [Sass](http://sass-lang.com/)
   - [Less](http://lesscss.org)
