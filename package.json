@@ -30,7 +30,7 @@
     "decompress": "^4.0.0",
     "download": "^5.0.2",
     "find-up": "^2.0.0",
-    "fs-extra": "^0.30.0",
+    "fs-extra": "^1.0.0",
     "globby": "^6.0.0",
     "got": "^6.3.0",
     "js-yaml": "^3.6.1",
@@ -58,7 +58,7 @@
     "run-sequence": "^1.2.2",
     "shelljs": "^0.7.4",
     "vinyl-source-stream": "^1.1.0",
-    "yarn": "^0.15.1",
+    "yarn": "^0.16.1",
     "yeoman-assert": "^2.0.0",
     "yeoman-test": "^1.0.0"
   },

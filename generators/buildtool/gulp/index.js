@@ -87,7 +87,7 @@ module.exports = common.extend({
             pkg.devDependencies['karma-mocha-reporter'] = '^2.0.0';
             pkg.devDependencies['karma-phantomjs-launcher'] = '^1.0.0';
             pkg.devDependencies['phantomjs-prebuilt'] = '>=1.9';
-            pkg.devDependencies['fs-extra'] = '^0.30.0';
+            pkg.devDependencies['fs-extra'] = '^1.0.0';
 
             // css preprocessors
             if (this.props.preprocessor === 'sass' && !this.props.libsass) {
@@ -111,7 +111,7 @@ module.exports = common.extend({
                 pkg.devDependencies['karma-jspm'] = '^2.0.1';
                 pkg.devDependencies['babel-cli'] = '^6.16.0';
                 pkg.devDependencies['babel-preset-es2015'] = '^6.6.0';
-                pkg.devDependencies['babel-preset-stage-2'] = '^6.17.0';
+                pkg.devDependencies['babel-preset-stage-2'] = '^6.18.0';
                 pkg.devDependencies['es6-module-loader'] = '^0.17.6';
                 pkg.devDependencies['phantomjs-polyfill'] = '0.0.2';
             } else if (this.props.loader === 'webpack') {
@@ -121,7 +121,7 @@ module.exports = common.extend({
                 pkg.devDependencies['babel-loader'] = '^6.2.4';
                 pkg.devDependencies['babel-runtime'] = '^6.6.1';
                 pkg.devDependencies['babel-preset-es2015'] = '^6.6.0';
-                pkg.devDependencies['babel-preset-stage-2'] = '^6.17.0';
+                pkg.devDependencies['babel-preset-stage-2'] = '^6.18.0';
                 pkg.devDependencies['webpack-dev-server'] = '^1.12.1';
                 pkg.devDependencies['webpack-dev-middleware'] = '^1.2.0';
                 pkg.devDependencies['webpack-hot-middleware'] = '^2.4.1';
@@ -140,7 +140,7 @@ module.exports = common.extend({
                 pkg.devDependencies['babel-cli'] = '^6.16.0';
                 pkg.devDependencies['babel-core'] = '^6.6.5';
                 pkg.devDependencies['babel-preset-es2015'] = '^6.6.0';
-                pkg.devDependencies['babel-preset-stage-2'] = '^6.17.0';
+                pkg.devDependencies['babel-preset-stage-2'] = '^6.18.0';
                 pkg.devDependencies['babel-runtime'] = '^6.6.1';
                 pkg.devDependencies['karma-browserify'] = '^5.0.2';
                 pkg.devDependencies['karma-babel-preprocessor'] = '^6.0.1';
