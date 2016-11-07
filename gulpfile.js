@@ -26,14 +26,11 @@ gulp.task('nsp', function (cb) {
 });
 
 gulp.task('npm-fixtures', function (cb) {
-    exec('yarn', {cwd: 'test/fixtures'}, function (err) {
-        if (err) {
-            exec('npm install', {cwd: 'test/fixtures'}, function () {
-                cb();
-            });
-        } else {
+    exec('yarn', {cwd: 'test/fixtures'}, function () {
+        // npm install again to ensure all bin's are added as well
+        exec('npm install', {cwd: 'test/fixtures'}, function () {
             cb();
-        }
+        });
     });
 });
 
