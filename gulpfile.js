@@ -37,12 +37,6 @@ gulp.task('npm-fixtures', function (cb) {
     });
 });
 
-gulp.task('bower-fixtures', function (cb) {
-    exec('bower install', {cwd: 'test/fixtures'}, function () {
-        cb();
-    });
-});
-
 gulp.task('jspm-fixtures', function (cb) {
     exec('node_modules/.bin/jspm install', {cwd: 'test/fixtures'}, function () {
         cb();
@@ -62,7 +56,7 @@ gulp.task('composer-fixtures', function (cb) {
 gulp.task('fixtures', function (cb) {
     runSequence(
         'npm-fixtures',
-        ['jspm-fixtures', 'bower-fixtures', 'composer-fixtures'],
+        ['jspm-fixtures', 'composer-fixtures'],
         cb
     );
 });

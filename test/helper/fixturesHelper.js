@@ -40,37 +40,6 @@ function prepareNpmDeps(configFile, baseConfigFile, base, target) {
 }
 
 /**
- * symlink bower dependencies
- */
-function prepareBowerDeps(configFile, base, target) {
-    if (!pathExists.sync(configFile)) {
-        return;
-    }
-    var config = fs.readJsonSync(configFile);
-    var dependencies = _.keys(_.merge(config.dependencies || {}, config.devDependencies));
-
-    // add dependencies from dependencies as bower has a flat directory structure
-    var modules = _.reduce(dependencies, function (res, item) {
-        try {
-            var configPath = path.join(base, item, 'bower.json');
-            var config = fs.readJsonSync(configPath);
-            return res.concat(_.keys(config.dependencies || {}));
-        } catch (err) {
-            return res;
-        }
-    }, dependencies);
-
-    fs.removeSync(target);
-
-    // link deps
-    return _.chain(glob.sync(base + '/*'))
-        .filter(inArray(_.uniq(modules)))
-        .forEach(function (fp) {
-            fs.ensureSymlinkSync(fp, path.join(target, path.basename(fp)));
-        }).value();
-}
-
-/**
  * link dependencies
  */
 function linkDeps(base, target) {
@@ -78,7 +47,6 @@ function linkDeps(base, target) {
         return new Promise(function (resolve, reject) {
             try {
                 prepareNpmDeps(path.join(target, 'package.json'), path.join(base, 'package.json'), path.join(base, 'node_modules'), path.join(target, 'node_modules'));
-                prepareBowerDeps(path.join(target, 'bower.json'), path.join(base, 'bower_components'), path.join(target, 'bower_components'));
                 fs.ensureSymlinkSync(path.join(base, 'node_modules', '.bin'), path.join(target, 'node_modules', '.bin'));
                 fs.ensureSymlinkSync(path.join(base, 'vendor'), path.join(target, 'vendor'));
                 fs.removeSync(path.join(target, 'composer.lock'));
