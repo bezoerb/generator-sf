@@ -21,6 +21,7 @@ var expect = chai.expect;
 var exec = require('child_process').exec;
 var os = require('os');
 var fs = require('fs-extra');
+var assign = require('lodash/assign');
 
 var base = path.join(__dirname, '..', 'fixtures');
 var target = path.join(__dirname, '..', 'temp');
@@ -268,16 +269,34 @@ function checkServiceWorker(prompts) {
     };
 }
 
+
+module.exports.cleanup = function() {
+    return cleanup();
+};
+
 module.exports.testPrompts = function (prompts) {
-    return install(prompts)
-        .then(installDeps(prompts))
-        .then(checkFiles(prompts))
-        .then(checkEslint(prompts))
-        .then(checkKarma(prompts))
-        .then(checkPhpUnit(prompts))
-        .then(checkJs(prompts))
-        .then(checkCss(prompts))
-        .then(checkRev(prompts))
-        .then(checkServiceWorker(prompts))
-        .finally(cleanup);
+    var args = assign({}, {
+        // need to inject symfony 2.8.12 to tests as travis node does not support min php version for symfony 3.0
+        symfonyStandard: false,
+        symfonyCommit: '3.1.6',
+        continue: true,
+        buildtool: 'gulp',
+        view: 'plain',
+        preprocessor: 'none',
+        loader: 'jspm',
+        additional: []
+    }, prompts);
+
+    return function () {
+        return install(args)
+            .then(installDeps(args))
+            .then(checkFiles(args))
+            .then(checkEslint(args))
+            .then(checkKarma(args))
+            .then(checkPhpUnit(args))
+            .then(checkJs(args))
+            .then(checkCss(args))
+            .then(checkRev(args))
+            .then(checkServiceWorker(args));
+    };
 };
