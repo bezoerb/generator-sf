@@ -27,6 +27,9 @@ before_install:
   - if [ "$currentfolder" != 'generator-sf' ]; then cd .. && eval "mv $currentfolder generator-sf" && cd generator-sf; fi
   - yarn
 
+before_script:
+  - phpenv config-rm xdebug.ini
+
 matrix:
   fast_finish: true
 
