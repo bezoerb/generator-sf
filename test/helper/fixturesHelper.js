@@ -45,7 +45,7 @@ function prepareNpmDeps(configFile, baseConfigFile, base, target) {
 
             if (module === 'jspm') {
                 process.chdir(path.dirname(target));
-                execSync('npm install jspm');
+                execSync('npm rebuild jspm');
                 process.chdir(cwd);
             }
         }
