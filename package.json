@@ -1,6 +1,6 @@
 {
   "name": "generator-sf",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Yeoman generator to scaffold Symfony PHP apps with full featured frontend tooling",
   "homepage": "",
   "author": {
