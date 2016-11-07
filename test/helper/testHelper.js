@@ -58,6 +58,9 @@ function prompts2String(promts) {
  * @returns {promise}
  */
 function runTask(tool, task) {
+    if (tool === 'gulp') {
+        tool = 'gulp --cwd ' + path.resolve(__dirname, '..', 'temp');
+    }
     return new Promise(function (resolve, reject) {
         debug(tool + ' ' + task);
         exec(tool + ' ' + task + ' --no-color', function (error, stdout, stderr) {
