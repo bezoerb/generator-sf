@@ -189,7 +189,7 @@ module.exports = generators.Base.extend({
             _.forEach(paths, _.bind(function (file) {
                 this.fs.copyTpl(
                     file,
-                    this.destinationPath(path.join(this.props.base, 'scripts', file.replace(/^.*scripts\/[^\/]+\//, ''))),
+                    this.destinationPath(path.join(this.props.base, 'scripts', file.replace(/^.*scripts\/[^/]+\//, ''))),
                     this
                 );
             }, this));

@@ -241,7 +241,7 @@ module.exports = generators.Base.extend({
          *    @see http://symfony.com/doc/current/cookbook/configuration/external_parameters.html
          */
         updateConfig: function () {
-            var conf = read('app/config/config.yml').replace(/\[([^"']+)\]/igm, '["$1"]');
+            var conf = read('app/config/config.yml').replace(/\[([^"']+)]/igm, '["$1"]');
 
             // change parameter names to use dot notation
             conf = conf.replace(/%(database|mailer)_(.*)%/g, '%$1.$2%');
