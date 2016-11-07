@@ -5,9 +5,6 @@
 This [Yeoman](http://yeoman.io) generator scaffolds a symfony app with full featured frontend tooling. 
 Just scaffold your app, run `grunt serve` and you are ready to go. 
 
-### Work in Progress
-This generqator should replace [`generator-sf`](https://github.com/bezoerb/generator-sf) when it's done.
-The new name should allow more task runner flexibility (e.g. gulp) 
 
 ## Installation
 

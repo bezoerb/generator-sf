@@ -3,7 +3,6 @@ var all = require('./helper/testHelper').testAll;
 var some = require('./helper/testHelper').testSome;
 var cleanup = require('./helper/testHelper').cleanup;
 
-
 describe('symfony generator (gulp)', function () {
     this.timeout(300000);
 

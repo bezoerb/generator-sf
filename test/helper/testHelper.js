@@ -320,6 +320,6 @@ module.exports.testSome = function (prompts) {
         return install(args)
             .then(installDeps(args))
             .then(checkFiles(args))
-            .then(checkKarma(args));
+            .then(checkCss(args));
     };
 };
