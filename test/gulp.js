@@ -5,7 +5,7 @@ var cleanup = require('./helper/testHelper').cleanup;
 describe('symfony generator (gulp)', function () {
     this.timeout(300000);
 
-    afterEach(cleanup);
+   // afterEach(cleanup);
 
     // browserify no framework
     it('', test({buildtool: 'gulp', loader: 'browserify'}));

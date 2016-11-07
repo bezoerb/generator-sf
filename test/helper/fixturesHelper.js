@@ -36,10 +36,16 @@ function prepareNpmDeps(configFile, baseConfigFile, base, target) {
         var module = path.basename(fp);
         if (drop.indexOf(module) === -1) {
             fs.ensureSymlinkSync(fp, path.join(target, module));
+            var cwd = process.cwd();
             if (module === 'node-sass') {
-                var cwd = process.cwd();
                 process.chdir(path.dirname(target));
                 execSync('npm rebuild node-sass');
+                process.chdir(cwd);
+            }
+
+            if (module === 'jspm') {
+                process.chdir(path.dirname(target));
+                execSync('npm rebuild jspm');
                 process.chdir(cwd);
             }
         }

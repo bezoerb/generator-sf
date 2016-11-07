@@ -26,11 +26,15 @@ gulp.task('nsp', function (cb) {
 });
 
 gulp.task('npm-fixtures', function (cb) {
-    exec('yarn', {cwd: 'test/fixtures'}, function () {
-        // npm install again to ensure all bin's are added as well
-        exec('npm install', {cwd: 'test/fixtures'}, function () {
+    exec('yarn', {cwd: 'test/fixtures'}, function (err) {
+        if (err) {
+            // npm install in case yarn errored
+            exec('npm install', {cwd: 'test/fixtures'}, function () {
+                cb();
+            });
+        } else {
             cb();
-        });
+        }
     });
 });
 
@@ -70,7 +74,7 @@ gulp.task('pre-test', function () {
 gulp.task('test', ['pre-test'], function (cb) {
     var mochaErr;
 
-    gulp.src('test/gulp.js')
+    gulp.src('test/*.js')
         .pipe(plumber())
         .pipe(mocha({reporter: 'spec'}))
         .on('error', function (err) {
