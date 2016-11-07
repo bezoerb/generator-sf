@@ -59,7 +59,8 @@ function prompts2String(promts) {
  */
 function runTask(tool, task) {
     if (tool === 'gulp') {
-        tool = 'gulp --cwd ' + path.resolve(__dirname, '..', 'temp');
+        var p = path.resolve(__dirname, '..', 'temp');
+        tool = 'gulp --cwd ' + p + ' --gulpfile ' + path.join(p, 'gulpfile.babel.js');
     }
     return new Promise(function (resolve, reject) {
         debug(tool + ' ' + task);
