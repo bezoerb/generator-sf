@@ -7,7 +7,6 @@ var chalk = require('chalk');
 var fs = require('fs-extra');
 var got = require('got');
 var exec = require('child_process').exec;
-var yaml = require('js-yaml');
 var YAML = require('yamljs');
 var wsfp = require('wsfp');
 var _ = require('lodash');
