@@ -8,6 +8,7 @@ var fs = require('fs-extra');
 var got = require('got');
 var exec = require('child_process').exec;
 var yaml = require('js-yaml');
+var YAML = require('yamljs');
 var wsfp = require('wsfp');
 var _ = require('lodash');
 var xdgBasedir = require('xdg-basedir');
@@ -210,20 +211,16 @@ module.exports = generators.Base.extend({
             }
 
             // remove assetic from config_dev.yml
-            var confDev = yaml.safeLoad(read('app/config/config_dev.yml'));
+            var confDev = YAML.load('app/config/config_dev.yml');
             delete confDev.assetic;
-            var newConfDev = yaml.dump(confDev, {indent: 4});
+            var newConfDev = YAML.stringify(confDev, 2, 4);
             fs.writeFileSync('app/config/config_dev.yml', newConfDev);
 
             // remove assetic from config.yml
-            var conf = yaml.safeLoad(read('app/config/config.yml'));
+            var conf = YAML.load('app/config/config.yml');
             delete conf.assetic;
-            // add twig path
-            conf.twig = _.assign({}, conf.twig, {paths: {
-                '%kernel.root_dir%/../web': 'web'
-            }});
 
-            var newConf = yaml.dump(conf, {indent: 4});
+            var newConf = YAML.stringify(conf, 2, 4);
             fs.writeFileSync('app/config/config.yml', newConf);
 
             // remove assetic from app kernel
@@ -245,6 +242,14 @@ module.exports = generators.Base.extend({
 
             // change parameter names to use dot notation
             conf = conf.replace(/%(database|mailer)_(.*)%/g, '%$1.$2%');
+
+            // add twig namespaces
+            conf = YAML.parse(conf);
+            conf.twig = _.assign({}, conf.twig, {paths: {
+                '%kernel.root_dir%/../web': 'web'
+            }});
+            conf = YAML.stringify(conf, 2, 4);
+
             fs.writeFileSync('app/config/config.yml', conf);
 
             // update routing
