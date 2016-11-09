@@ -117,8 +117,8 @@ module.exports = yeoman.Base.extend({
                 name: 'loader',
                 message: 'Which module loader would you like to use?',
                 choices: [
-                    {name: 'SystemJS (jspm)', value: 'jspm'},
                     {name: 'Webpack (babel)', value: 'webpack'},
+                    {name: 'SystemJS (jspm)', value: 'jspm'},
                     {name: 'Browserify (babel)', value: 'browserify'}
                 ]
             }, {
@@ -146,8 +146,8 @@ module.exports = yeoman.Base.extend({
                 name: 'view',
                 message: 'Would you like to include a CSS framework?',
                 choices: [
-                    {name: 'UIkit', value: 'uikit'},
                     {name: 'Twitter Bootstrap', value: 'bootstrap', checked: true},
+                    {name: 'UIkit', value: 'uikit'},
                     {name: 'Foundation', value: 'foundation'},
                     {name: 'Inuit CSS', value: 'inuit'},
                     {name: 'No Framework', value: 'plain'}
@@ -158,8 +158,8 @@ module.exports = yeoman.Base.extend({
                 name: 'view',
                 message: 'Would you like to include a CSS framework?',
                 choices: [
-                    {name: 'UIkit', value: 'uikit'},
                     {name: 'Twitter Bootstrap', value: 'bootstrap', checked: true},
+                    {name: 'UIkit', value: 'uikit'},
                     {name: 'Foundation', value: 'foundation'},
                     {name: 'No Framework', value: 'plain'}
                 ]
