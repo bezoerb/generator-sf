@@ -39,6 +39,10 @@ gulp.task('scripts', ['clean:scripts'], scripts(bs));
 gulp.task('images:copy', imagecopy);
 gulp.task('images:min', imagemin);
 gulp.task('images:svg', svgstore);
+gulp.task('images:svg:watch', ['images:svg'], done => {
+    bs.reload();
+    done();
+});
 gulp.task('images', ENV === 'prod' ? ['images:min', 'images:svg'] : ['images:copy', 'images:svg']);
 
 gulp.task('rev-files', rev);
@@ -53,13 +57,14 @@ gulp.task('copy', copy);
 gulp.task('copy-sw-scripts', copySwScripts);
 gulp.task('generate-service-worker', ['copy-sw-scripts'], generateServiceWorker);
 
-gulp.task('serve', ENV  === 'prod'? ['build'] : ['scripts', 'styles', 'images'], serve(bs => {
-    if (ENV  !== 'prod') {
-        gulp.watch(prefixDev('img/icons/*.svg'), ['images:svg', bs.reload]);
+gulp.task('serve', ENV  === 'prod'? ['build'] : [<% if (props.loader !== 'webpack') { %>'scripts', <% } %>'styles', 'images'], serve((err, done) => {
+    if (!err && ENV  !== 'prod') {
+        gulp.watch(prefixDev('img/icons/*.svg'), ['images:svg:watch']);
         gulp.watch(prefixDev('styles/**/*.scss'), ['styles']);<% if (props.loader === 'jspm') { %>
         gulp.watch(prefixDev('scripts/**/*.js'), bs.reload);<% } %>
         gulp.watch(prefixDev('../views/**/*.html.twig'), bs.reload);
     }
+    done(err);
 }));
 
 gulp.task('eslint', lint);

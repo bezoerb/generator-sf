@@ -39,8 +39,12 @@ export const serve = cb => done => {<% if (props.loader === 'webpack') { %>
         webpackHotMiddleware(bundler)
     ];<% } %>
     getport(8000, 8999, (err, port) => {
-        bs.init({...options, port, middleware: [<% if (props.loader === 'webpack') { %>...middleware, <% } %>phpMiddleware()]}, (err, bs) => {
-            return cb && cb(bs, done);
+        bs.init({...options, port, middleware: [<% if (props.loader === 'webpack') { %>...middleware, <% } %>phpMiddleware()]}, err => {
+            if (cb) {
+                cb(err, done);
+            } else {
+                done(err);
+            }
         });
     });
 };

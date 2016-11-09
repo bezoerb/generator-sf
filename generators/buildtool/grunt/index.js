@@ -21,6 +21,8 @@ module.exports = common.extend({
         pkgScripts: function () {
             var pkg = this._readPkg();
             pkg.scripts.test = 'grunt test';
+            pkg.scripts.start = 'grunt serve';
+            this._writePkg(pkg);
         },
         pkgDev: function () {
             var pkg = this._readPkg();

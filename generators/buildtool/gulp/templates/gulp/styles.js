@@ -1,6 +1,5 @@
-import path from 'path';
 import gulp from 'gulp';
-import {prefixDev, prefixDist} from './helper/utils';
+import {prefixDev} from './helper/utils';
 import {ENV} from './helper/env';
 import gulpLoadPlugins from 'gulp-load-plugins';<% if (props.preprocessor === 'stylus') { %>
 import nib from 'nib';<% } %>
@@ -48,7 +47,7 @@ export const styles = bs => () => {<% if (props.preprocessor === 'sass' && !prop
         .pipe($.size({title: 'styles'}));
 
     if (ENV !== 'prod') {
-        return stream.pipe(bs.stream());
+        return stream.pipe($.if('*.css', bs.stream()));
     }
 
     return stream;
