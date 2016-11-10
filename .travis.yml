@@ -38,4 +38,3 @@ cache:
     - node_modules
     - test/fixtures/bower_components
     - test/fixtures/jspm_packages
-    - test/fixtures/node_modules
