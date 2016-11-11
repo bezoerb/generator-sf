@@ -11,7 +11,7 @@ if (existsSync(envFile)) {
 const defaultOptions = {
     string: ['env'],
     default: {
-        env: process.env.env || process.env.SYMFONY_ENV || 'node'
+        env: process.env.env || 'node'
     }
 };
 

@@ -11,6 +11,10 @@ $icon-font-path:                                 "../fonts";
 @import "uikit/<% if (props.noBower) { %>dist/<% } %>scss/uikit-mixins";
 @import "uikit/<% if (props.noBower) { %>dist/<% } %>scss/uikit";
 
+img {
+    max-width: 100%;
+}
+
 a {
     transition: all 100ms ease-in-out;
 }

@@ -1,3 +1,7 @@
+img {
+    max-width: 100%;
+}
+
 .yeoman-team {
     max-width: 90%;
     display:block;

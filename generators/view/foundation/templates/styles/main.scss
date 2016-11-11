@@ -2,6 +2,10 @@
 
 @include foundation-everything();
 
+img {
+    max-width: 100%;
+}
+
 .panel {
     background: #eee;
     padding: 2em;

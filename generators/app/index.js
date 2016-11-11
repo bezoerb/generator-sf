@@ -180,8 +180,12 @@ module.exports = yeoman.Base.extend({
 
     install: function () {
         this.log('');
-        this.log('I\'m all done. Running ' + chalk.bold.yellow(this._installCmd()) + ' for you to install the required dependencies.');
-        this.log('If this fails, try running the command yourself.');
+        if (this.options['skip-install']) {
+            this.log('I\'m all done. Run ' + chalk.bold.yellow(this._installCmd()) + ' to install the required dependencies.');
+        } else {
+            this.log('I\'m all done. Running ' + chalk.bold.yellow(this._installCmd()) + ' for you to install the required dependencies.');
+            this.log('If this fails, try running the command yourself.');
+        }
         this.log('');
 
         var cb = function () {

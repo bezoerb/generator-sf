@@ -20,7 +20,19 @@
             <h2>'Allo, 'Allo!</h2>
             <p class="lead">Always a pleasure scaffolding your apps.</p>
         </div>
-        <img class="yeoman-team" src="{{ asset('img/yo-grunt-bower-symfony.png') }}" alt=""/>
+        <img
+            sizes="(max-width: 1178px) 100vw, 1178px"
+            srcset="
+                {{ asset('img/yo-grunt-bower-symfony_w200.png') }} 200w,
+                {{ asset('img/yo-grunt-bower-symfony_w401.png') }} 401w,
+                {{ asset('img/yo-grunt-bower-symfony_w554.png') }} 554w,
+                {{ asset('img/yo-grunt-bower-symfony_w695.png') }} 695w,
+                {{ asset('img/yo-grunt-bower-symfony_w819.png') }} 819w,
+                {{ asset('img/yo-grunt-bower-symfony_w935.png') }} 935w,
+                {{ asset('img/yo-grunt-bower-symfony_w1042.png') }} 1042w,
+                {{ asset('img/yo-grunt-bower-symfony.png') }} 1178w"
+            src="{{ asset('img/yo-grunt-bower-symfony_w200.png') }}"
+            alt="generator-visual">
 
         <pre class="marketing">
              <h4>Symfony</h4>
