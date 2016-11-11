@@ -95,7 +95,7 @@ MIT
 [travis-image]: https://secure.travis-ci.org/bezoerb/generator-sf.svg?branch=master
 
 [depstat-url]: https://david-dm.org/bezoerb/generator-sf
-[depstat-image]: https://david-dm.org/bezoerb/generator-sf.svg
+[depstat-image]: https://david-dm.org/bezoerb/generator-sf/status.svg
 
 [dlcounter-url]: https://www.npmjs.com/package/generator-sf
 [dlcounter-image]: https://img.shields.io/npm/dm/generator-sf.svg
