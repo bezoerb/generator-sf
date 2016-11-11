@@ -146,10 +146,10 @@ module.exports = yeoman.Base.extend({
                 name: 'view',
                 message: 'Would you like to include a CSS framework?',
                 choices: [
-                    {name: 'Twitter Bootstrap', value: 'bootstrap', checked: true},
-                    {name: 'UIkit', value: 'uikit'},
+                    {name: 'Inuit CSS', value: 'inuit', checked: true},
+                    {name: 'Twitter Bootstrap', value: 'bootstrap'},
                     {name: 'Foundation', value: 'foundation'},
-                    {name: 'Inuit CSS', value: 'inuit'},
+                    {name: 'UIkit', value: 'uikit'},
                     {name: 'No Framework', value: 'plain'}
                 ]
             }, {
