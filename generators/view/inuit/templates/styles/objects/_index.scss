@@ -1,12 +1,36 @@
-/*------------------------------------*\
-    Objects
-\*------------------------------------*/
+/* ==========================================================================
+   OBJECTS
+   Objects, abstractions, and design patterns (e.g. .o-layout {}).
+   ========================================================================== */
 
-@import "inuit-layout/objects.layout";
-@import "inuit-media/objects.media";
-@import "inuit-box/objects.box";
-@import "inuit-buttons/objects.buttons";
-@import "inuit-list-inline/objects.list-inline";
-@import "inuit-list-ui/objects.list-ui";
-@import "inuit-flag/objects.flag";
-@import "inuit-tabs/objects.tabs";
+/**
+ * CONTENTS
+ *
+ * Wrapper..............Page constraint object.
+ * Layout...............Generic layout module.
+ * Media................Image- and text-like content side by side. The
+ *                      poster-child of OOCSS.
+ * Flag.................Table-layout-based advancement on the Media object.
+ * List-bare............Lists with no bullets or indents.
+ * List-inline..........A list whose items all site in a line.
+ * Box..................Simple boxing abstraction.
+ * Block................Image-on-top-of-text object.
+ * Ratio................A container for maintaining aspect ratio of content.
+ * Crop.................Provide a cropping context for media (images, etc.).
+ * Tables...............Classes for manipulating `table`s.
+ * Pack.................Pack items into available horizontal space.
+ */
+
+// Uncomment and add to this section as necessary.
+@import "inuitcss/objects/objects.wrapper";
+@import "inuitcss/objects/objects.layout";
+@import "inuitcss/objects/objects.media";
+@import "inuitcss/objects/objects.flag";
+@import "inuitcss/objects/objects.list-bare";
+@import "inuitcss/objects/objects.list-inline";
+@import "inuitcss/objects/objects.box";
+@import "inuitcss/objects/objects.block";
+@import "inuitcss/objects/objects.ratio";
+@import "inuitcss/objects/objects.crop";
+@import "inuitcss/objects/objects.tables";
+@import "inuitcss/objects/objects.pack";

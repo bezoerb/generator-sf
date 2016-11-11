@@ -1,0 +1,18 @@
+///* ========================================================================
+//   #GLOBAL
+//   ======================================================================== */
+// The global settings file contains any project-wide variables; things that
+// need to be made available to the entire codebase.
+
+// Standardise some UI treatments.
+$global-radius: 3px !default;
+$global-transition: (1/3) + s !default;
+
+$global-page-width: 64rem;
+
+$mq-breakpoints: (
+    sm: 544px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px
+)

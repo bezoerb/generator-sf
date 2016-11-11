@@ -1,0 +1,64 @@
+.content {
+    max-width: $global-page-width;
+    margin: 0 auto;
+}
+
+.header {
+    background: rgba(#000,0.1);
+    color: #fff;
+    background: #444;
+}
+
+
+.header__content {
+    max-width: $global-page-width;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5em 0;
+}
+
+.header__title {
+    @include inuit-font-size(30px,1);
+}
+
+.header__description {
+    @include inuit-font-size(14px,1);
+}
+
+.nav {
+    list-style:none;
+    margin-left:0;
+    @include inuit-clearfix();
+
+    > li {
+        display:inline-block;
+        *display:inline;
+        zoom:1;
+    }
+}
+
+.nav__item {
+    color: #fff;
+    text-decoration: none;
+    transition: color 100ms;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+
+    &:hover {
+        color: #bbb;
+    }
+
+    &--first {
+        padding-left: 0;
+    }
+
+    &--last {
+        padding-right: 0;
+    }
+}
+
+.panel {
+    background: #eee;
+}

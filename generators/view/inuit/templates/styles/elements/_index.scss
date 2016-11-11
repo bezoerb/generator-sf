@@ -1,3 +1,20 @@
-/*------------------------------------*\
-    Components
-\*------------------------------------*/
+/* ==========================================================================
+   ELEMENTS
+   Unclassed HTML elements (e.g. a {}, blockquote {}, address {}).
+   ========================================================================== */
+
+/**
+ * CONTENTS
+ *
+ * Page.................Set up our document’s default `font-size` and
+ *                      `line-height`.
+ * Headings.............Very minimal (i.e. only font-size information) for
+ *                      headings 1 through 6.
+ * Images...............Base image styles.
+ * Tables...............Simple table styles.
+ */
+
+@import "inuitcss/elements/elements.page";
+@import "inuitcss/elements/elements.headings";
+@import "inuitcss/elements/elements.images";
+@import "inuitcss/elements/elements.tables";

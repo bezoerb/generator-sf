@@ -1,13 +1,16 @@
-/*------------------------------------*\
-    Settings
-\*------------------------------------*/
-@import "inuit-defaults/settings.defaults";
-@import "inuit-responsive-settings/settings.responsive";
+/* ==========================================================================
+   SETTINGS
+   Global variables, site-wide settings, config switches, etc.
+   ========================================================================== */
 
-$inuit-enable-margins: true;
-$inuit-enable-margins--large: true;
-$inuit-enable-margins--huge: true;
-$inuit-enable-box--flush: true;
+/**
+ * CONTENTS
+ *
+ * Config...............Project-level configuration and feature switches.
+ * Core.................inuitcss’ core and setup settings.
+ * Global...............Project-wide variables and settings.
+ */
 
-
-$page-width: 1024px;
+@import "config";
+@import "inuitcss/settings/settings.core";
+@import "global";

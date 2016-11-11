@@ -1,10 +1,21 @@
-/*------------------------------------*\
-    Components
-\*------------------------------------*/
-@import "header";
-@import "nav";
-@import "content";
-@import "panel";
+/* ==========================================================================
+   COMPONENTS
+   Discrete, complete chunks of UI (e.g. .c-carousel {}).
+   This is the one layer that inuitcss doesn’t provide code for,
+   as this is completely your terrain.
+   ========================================================================== */
 
+/**
+ * CONTENTS
+ *
+ * Buttons..............An example button component, and how it fits into the
+ *                      inuitcss framework.
+ * Icons................Simple default styles svg icons
+ * Demo.................Demo content (feel free to delete ;)
+ */
+
+@import "buttons";
+@import "icons";
+@import "demo";
 
 

@@ -1,55 +1,48 @@
 @charset "utf-8";
-/*
- * This project follows Inverted Triangle CSS (ITCSS) by Harry "CSS Wizardry" Roberts.
- * Files should be organized in groups from:
- *  - Generic to explicit
- *  - Far-reaching to localised
- *  - Low specificity to high specificity
- *
- */
 
+/* ==========================================================================
+   INUITCSS by @csswizardry
+   ========================================================================== */
 
 /*
- * Variables, config switches, etc.
- * Split up into logical sections, the smaller and simpler the better.
+ * Global variables, site-wide settings, config switches, etc.
  */
 @import "settings/index";
 
 /*
- * Tools / mixins
+ * Site-wide mixins and functions.
  */
 @import "tools/index";
 
 /*
- * Generic rules are project-agnostic.
- * These can be copied from any project to the next
+ * Low-specificity, far-reaching rulesets (e.g. resets).
  */
 @import "generic/index";
 
 /*
- * Base are rules for classless HTML tags.
+ * Unclassed HTML elements (e.g. a {}, blockquote {}, address {}).
  */
-@import "base/index";
+@import "elements/index";
 
 /*
- * Objects are "formless", in other words invisible to the user, no cosmetics
- * Eg. wrappers, grid systems, etc.
- * This is the first layer of classes and should be agnostically named
+ * Objects, abstractions, and design patterns (e.g. .o-layout {}).
  */
 @import "objects/index";
 
 /*
- * Components like buttons, teaser, etc.
+ * High-specificity, very explicit selectors.
+ * Overrides and helper classes (e.g. .u-hidden {}).
  */
 @import "components/index";
 
 /*
- * Vendor styles and e.g. theme overwrites
+ * 3rd party resources
  */
 @import "vendor/index";
 
 /*
- * Trumps are overrides, helpers, utilities. They should only affect
- * one piece of DOM at a time and usually carry !important
+ * High-specificity, very explicit selectors.
+ * Overrides and helper classes (e.g. .u-hidden {}).
  */
-@import "trumps/index";
+@import "utilities/index";
+

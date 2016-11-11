@@ -1,0 +1,36 @@
+/* ==========================================================================
+   UTILITIES
+   High-specificity, very explicit selectors.
+   Overrides and helper classes (e.g. .u-hidden {}).
+   ========================================================================== */
+
+/**
+ * CONTENTS
+ *
+ * Clearfix.............Bind our clearfix onto a utility class.
+ * Widths...............Simple width helper classes.
+ * Headings.............Reassigning our heading styles to helper classes.
+ * Spacing..............Nudge bits of the DOM around with these spacing
+ *                      classes.
+ * Print................Reset-like styles taken from the HTML5 Boilerplate.
+ * Hide.................Helper classes to hide content
+ * Align................SUIT CSS utility classes for vertically aligning elements.
+ * Display..............SUIT CSS display utilities.
+ * Layout...............SUIT CSS collection of utility classes for low-level CSS layout traits.
+ * Text.................SUIT CSS text utilities.
+ */
+
+
+// UTILITIES
+@import "inuitcss/utilities/utilities.clearfix";
+
+$inuit-offsets: true;
+@import "inuitcss/utilities/utilities.widths";
+@import "inuitcss/utilities/utilities.headings";
+@import "inuitcss/utilities/utilities.spacing";
+@import "inuitcss/utilities/utilities.print";
+@import "inuitcss/utilities/utilities.hide";
+@import "align";
+@import "display";
+@import "layout";
+@import "text";

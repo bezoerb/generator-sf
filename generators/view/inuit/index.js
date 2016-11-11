@@ -23,51 +23,11 @@ module.exports = common.extend({
     dependencies: function () {
         if (this.props.noBower) {
             this.addNpmDependencies({
-                'inuit-starter-kit': '~0.2.9',
-                'inuit-widths': '~0.4.2',
-                'inuit-clearfix': '~0.2.2',
-                'inuit-layout': '~0.3.2',
-                'inuit-spacing': '~0.7.0',
-                'inuit-images': '~0.3.3',
-                'inuit-reset': '~0.1.1',
-                'inuit-headings': '~0.3.1',
-                'inuit-media': '~0.4.2',
-                'inuit-shared': '~0.1.5',
-                'inuit-box': '~0.4.4',
-                'inuit-buttons': '~0.4.2',
-                'inuit-lists': '~0.1.0',
-                'inuit-responsive-tools': '~0.1.3',
-                'inuit-flag': '~0.3.2',
-                'inuit-widths-responsive': '~0.2.2',
-                'inuit-paragraphs': '~0.1.4',
-                'inuit-tables': '~0.2.1',
-                'inuit-tabs': '~0.2.1',
-                'inuit-list-inline': '~0.3.2',
-                'inuit-list-ui': '~0.4.1'
+                inuitcss: '^6.0.0-beta.4'
             });
         } else {
             this.addBowerDependencies({
-                'inuit-starter-kit': '~0.2.9',
-                'inuit-widths': '~0.4.2',
-                'inuit-clearfix': '~0.2.2',
-                'inuit-layout': '~0.3.2',
-                'inuit-spacing': '~0.7.0',
-                'inuit-images': '~0.3.3',
-                'inuit-reset': '~0.1.1',
-                'inuit-headings': '~0.3.1',
-                'inuit-media': '~0.4.2',
-                'inuit-shared': '~0.1.5',
-                'inuit-box': '~0.4.4',
-                'inuit-buttons': '~0.4.2',
-                'inuit-lists': '~0.1.0',
-                'inuit-responsive-tools': '~0.1.3',
-                'inuit-flag': '~0.3.2',
-                'inuit-widths-responsive': '~0.2.2',
-                'inuit-paragraphs': '~0.1.4',
-                'inuit-tables': '~0.2.1',
-                'inuit-tabs': '~0.2.1',
-                'inuit-list-inline': '~0.3.2',
-                'inuit-list-ui': '~0.4.1'
+                inuitcss: '^6.0.0-beta.4'
             });
         }
     },

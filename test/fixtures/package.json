@@ -10,7 +10,8 @@
     "jspm": "^0.16.34",
     "picturefill": "^3.0.2",
     "svg4everybody": "^2.1.0",
-    "uikit": "^2.25.0"
+    "uikit": "^2.25.0",
+    "inuitcss": "^6.0.0-beta.4"
   },
   "devDependencies": {
     "appcache-nanny": "^1.0.3",

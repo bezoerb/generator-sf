@@ -1,8 +1,19 @@
-/*------------------------------------*\
-    Generic
-\*------------------------------------*/
+/* ==========================================================================
+   GENERIC
+   Low-specificity, far-reaching rulesets (e.g. resets).
+   ========================================================================== */
 
-@import "inuit-normalize/generic.normalize";
-@import "inuit-box-sizing/generic.box-sizing";
-@import "inuit-reset/generic.reset";
-// @import "inuit-shared/generic.shared";
+/**
+ * CONTENTS
+ *
+ * Box-sizing...........Better default `box-sizing`.
+ * Normalize.css........A level playing field using @necolas’ Normalize.css.
+ * Reset................A tiny reset to complement Normalize.css.
+ * Shared...............Sensibly and tersely share some global commonalities
+ *                      (particularly useful when managing vertical rhythm).
+ */
+
+@import "inuitcss/generic/generic.box-sizing";
+@import "inuitcss/generic/generic.normalize";
+@import "inuitcss/generic/generic.reset";
+@import "inuitcss/generic/generic.shared";

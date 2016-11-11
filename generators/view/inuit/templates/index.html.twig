@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-<% if (props.critical) { %>
+
 {% block stylesheetsDist %}
     <style type="text/css">
         {% include '@web/styles/critical/styles/critical/index.css' ignore missing %}
@@ -11,12 +11,12 @@
         <link rel="stylesheet" href="{{ asset('styles/main.css') }}">
     </noscript>
 {% endblock stylesheetsDist %}
-<% } %>
+
 {% block body %}
-    <header  role="banner" class="header u-mb+">
+    <header  role="banner" class="header u-padding-left u-padding-right">
         <div class="header__content">
             <div itemscope itemtype="http://schema.org/WPHeader">
-                <h1 class="header__title" itemprop="headline"><%= appname %></h1>
+                <h1 class="header__title" itemprop="headline">gulp</h1>
                 <div class="header__description" itemprop="description">Site Description</div>
             </div>
             <nav role="navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">
@@ -31,44 +31,51 @@
             </nav>
         </div>
     </header>
-    <main role="main" class="content">
-        <div class="panel flag flag--rev u-mb+">
-            <div class="flag__body">
-                <h2>'Allo, 'Allo!</h2>
-                <p class="u-mb">Always a pleasure scaffolding your apps.</p>
-                <button class="btn">Splendit
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon"><use xlink:href="{{ asset('img/icons.svg') }}#icon-check"></use></svg>
-                </button>
-            </div>
-            <div class="flag__image">
-                <img class="yeoman-team" src="{{ asset('img/yo-grunt-bower-symfony.png') }}" width="600" alt=""/>
+    <main role="main">
+        <div class="panel u-margin-bottom-large u-padding-left u-padding-right u-padding-top-large">
+            <div class="content">
+                <div class="o-layout">
+                    <div class="o-layout__item u-1/2@md">
+                        <h2>'Allo, 'Allo!</h2>
+                        <p class="u-margin-bottom">Always a pleasure scaffolding your apps.</p>
+                        <button class="c-btn c-btn--primary u-margin-bottom-large">Splendit
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon"><use xlink:href="{{ asset('img/icons.svg') }}#icon-check"></use></svg>
+                        </button>
+                    </div>
+                    <div class="o-layout__item  u-1/2@md">
+                        <img
+                            sizes="(max-width: 47.9375em) 100vw, (max-width: 64em) calc(50vw - 62px), calc(32em - 62px)"
+                            srcset="
+                                {{ asset('img/yo-grunt-bower-symfony_w200.png') }} 200w,
+                                {{ asset('img/yo-grunt-bower-symfony_w401.png') }} 401w,
+                                {{ asset('img/yo-grunt-bower-symfony_w554.png') }} 554w,
+                                {{ asset('img/yo-grunt-bower-symfony_w695.png') }} 695w,
+                                {{ asset('img/yo-grunt-bower-symfony_w819.png') }} 819w,
+                                {{ asset('img/yo-grunt-bower-symfony_w935.png') }} 935w,
+                                {{ asset('img/yo-grunt-bower-symfony_w1042.png') }} 1042w,
+                                {{ asset('img/yo-grunt-bower-symfony.png') }} 1178w"
+                            src="{{ asset('img/yo-grunt-bower-symfony_w200.png') }}"
+                            alt="generator-visual">
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="box box--flush">
-            <h3 class="u-mb">Here's what you got</h3>
-            <b>Symfony</b>
-            <p>High Performance PHP Framework for Web Development</p>
-            <b>Browsersync</b>
-            <p>Keep multiple browsers & devices in sync when building websites.</p>
-
-            <% if (props.preprocessor === 'less') { %><b>Less</b>
-            <p>Less is a mature, stable, and powerful professional grade CSS extension language.</p>
-            <% } else if (props.preprocessor === 'sass') { %><b>Sass</b>
-            <p>Sass is a mature, stable, and powerful professional grade CSS extension language.</p>
-            <% } else if (props.preprocessor === 'stylus') { %><b>Stylus</b>
-            <p>Stylus is a revolutionary new language, providing an efficient, dynamic, and expressive way to generate CSS. Supporting both an indented syntax and regular CSS style.</p>
-            <% } %>
-            <% if (props.critical) { %><b>Critical</b>
-            <p>Extracts & inlines critical-path (above-the-fold) CSS from HTML.</p><% } %>
-            <b>Bootstrap</b>
-            <p>Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.</p>
-            <% if (props.loader === 'browserify') { %><h4>Browserify</h4>
-            <p>Browserify lets you require node modules in the browser by bundling up all of your dependencies.</p><% } %>
-            <% if (props.loader === 'webpack') { %><h4>Webpack</h4>
-            <p>A bundler for javascript and friends. Packs many modules into a few bundled assets. Code Splitting allows to load parts for the application on demand ...</p><% } %>
-            <% if (props.loader === 'jspm') { %><b>JSPM</b>
-            <p>jspm is a package manager for the SystemJS universal module loader, built on top of the dynamic ES6 module loader</p><% } %>
+        <div class="u-padding">
+            <div class="content box box--flush ">
+                <h3 class="u-margin-bottom">Here's what you got</h3>
+                <ul class="o-list-bare">
+                    <li><b>Symfony</b><br>High Performance PHP Framework for Web Development</li>
+                    <li><b>Browsersync</b><br>Keep multiple browsers & devices in sync when building websites.</li>
+                    <% if (props.preprocessor === 'sass') { %><li><b>Sass</b><br>Sass is a mature, stable, and powerful professional grade CSS extension language.</li><% } %>
+                    <% if (props.preprocessor === 'less') { %><li><b>Less</b><br>Less is a mature, stable, and powerful professional grade CSS extension language.</li><% } %>
+                    <% if (props.preprocessor === 'stylus') { %><li><b>Stylus</b><br>Stylus is a revolutionary new language, providing an efficient, dynamic, and expressive way to generate CSS. Supporting both an indented syntax and regular CSS style.</li><% } %>
+                    <% if (props.critical) { %><li><b>Critical</b><br>Extracts & inlines critical-path (above-the-fold) CSS from HTML.</li><% } %>
+                    <li><b>inuitcss</b><br>Extensible, scalable, Sass-based, OOCSS framework for large and long-lasting UI projects.</li>
+                    <% if (props.loader === 'browserify') { %><li><b>Browserify</b><br>Browserify lets you require node modules in the browser by bundling up all of your dependencies.</li><% } %>
+                    <% if (props.loader === 'webpack') { %><li><b>Webpack</b><br>A bundler for javascript and friends. Packs many modules into a few bundled assets. Code Splitting allows to load parts for the application on demand ...</li><% } %>
+                    <% if (props.loader === 'jspm') { %><li><b>JSPM</b><br>jspm is a package manager for the SystemJS universal module loader, built on top of the dynamic ES6 module loader</li><% } %>
+                </ul>
+            </div>
         </div>
     </main>
 {% endblock %}
