@@ -9,7 +9,8 @@
     "url": "http://sommerlaune.com"
   },
   "files": [
-    "generators"
+    "generators",
+    "lib"
   ],
   "main": "generators/index.js",
   "keywords": [
