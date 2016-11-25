@@ -1,5 +1,5 @@
 import browserSync from 'browser-sync';
-import {phpMiddleware, paths, prefixDev} from './helper/utils';
+import {phpMiddleware, paths} from './helper/utils';
 import {ENV} from './helper/env';
 import getport from 'getport';
 import pkg from '../package.json';

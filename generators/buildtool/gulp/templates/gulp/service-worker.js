@@ -9,6 +9,12 @@ export const copySwScripts = () =>
     gulp.src(['node_modules/sw-toolbox/sw-toolbox.js', prefixDev('scripts/sw/runtime-caching.js')])
         .pipe(gulp.dest(prefixDist('scripts/sw')));
 
+// Copy html for appcache fallback based on the "Offline IFRAME Hack" 
+// by the awesome Financial Times Labs team: http://labs.ft.com/category/tutorial/
+export const appcacheNanny = () =>
+    gulp.src([require.resolve('appcache-nanny/appcache-loader.html')])
+        .pipe(gulp.dest(prefixDist('')));
+
 // See http://www.html5rocks.com/en/tutorials/service-worker/introduction/ for
 // an in-depth explanation of what service workers are and why you should care.
 // Generate a service worker file that will provide offline functionality for

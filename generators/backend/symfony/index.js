@@ -349,5 +349,9 @@ module.exports = generators.Base.extend({
 
     end: function () {
         return this._setPermissions();
+
+        // cleanup 
+        fs.removeSync(this.destinationPath('web/apple-touch-icon.png'));
+        fs.removeSync(this.destinationPath('web/favicon.ico'));
     }
 });

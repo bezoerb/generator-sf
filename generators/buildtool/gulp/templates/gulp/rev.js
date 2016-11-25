@@ -16,7 +16,7 @@ export const rev = () =>
         .pipe($.size({title: 'rev'}));
 
 export const revManifest = () => {
-    var manifest = gulp.src('./app/config/filerev.json');
+    var manifest = gulp.src('app/config/rev-manifest.json');
 
     return gulp.src(prefixDist(
         'styles/*.css',
