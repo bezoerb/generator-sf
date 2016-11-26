@@ -76,17 +76,17 @@ module.exports = generators.Base.extend({
 
         generators.Base.apply(this, arguments);
 
-    //     this.option('symfonyStandard', {
-    //         type: Boolean,
-    //         desc: 'Would you like to use the Symfony "Standard Edition"'
-    //     });
-    //
-    //     this.option('symfonyCommit', {
-    //         type: String,
-    //         desc: 'Which commit'
-    //     });
-    //
-    //     this.props = _.merge({}, this.options);
+        //     this.option('symfonyStandard', {
+        //         type: Boolean,
+        //         desc: 'Would you like to use the Symfony "Standard Edition"'
+        //     });
+        //
+        //     this.option('symfonyCommit', {
+        //         type: String,
+        //         desc: 'Which commit'
+        //     });
+        //
+        //     this.props = _.merge({}, this.options);
     },
 
     initializing: function () {
@@ -244,9 +244,11 @@ module.exports = generators.Base.extend({
 
             // add twig namespaces
             conf = YAML.parse(conf);
-            conf.twig = _.assign({}, conf.twig, {paths: {
-                '%kernel.root_dir%/../web': 'web'
-            }});
+            conf.twig = _.assign({}, conf.twig, {
+                paths: {
+                    '%kernel.root_dir%/../web': 'web'
+                }
+            });
             conf = YAML.stringify(conf, 2, 4);
 
             fs.writeFileSync('app/config/config.yml', conf);
@@ -348,10 +350,10 @@ module.exports = generators.Base.extend({
     },
 
     end: function () {
-        return this._setPermissions();
-
-        // cleanup 
+        // cleanup
         fs.removeSync(this.destinationPath('web/apple-touch-icon.png'));
         fs.removeSync(this.destinationPath('web/favicon.ico'));
+
+        return this._setPermissions();
     }
 });
