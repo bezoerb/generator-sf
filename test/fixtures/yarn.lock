@@ -182,7 +182,7 @@ apartment@^1.1.1:
     lodash "3.10.1"
     minimist "1.2.0"
 
-appcache-nanny@^1.0.3:
+appcache-nanny@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/appcache-nanny/-/appcache-nanny-1.1.0.tgz#a573ef5433e0dacfbe2e2d824a320925d23143a3"
 
@@ -5988,6 +5988,12 @@ intersect@~0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/intersect/-/intersect-0.0.3.tgz#c1a4a5e5eac6ede4af7504cc07e0ada7bc9f4920"
 
+inuitcss@^6.0.0-beta.4:
+  version "6.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/inuitcss/-/inuitcss-6.0.0-beta.4.tgz#34b8e3b11e2fd31dee5d0c695b052c907bdd9346"
+  dependencies:
+    sass-mq "^3.2.9"
+
 invariant@^2.2.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.1.tgz#b097010547668c7e337028ebe816ebe36c8a8d54"
@@ -9786,6 +9792,10 @@ sass-graph@^2.1.1:
     glob "^7.0.0"
     lodash "^4.0.0"
     yargs "^4.7.1"
+
+sass-mq@^3.2.9:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/sass-mq/-/sass-mq-3.3.1.tgz#1199f5a43b549f5cbb67bc81f5f495ebf96250ce"
 
 sax@^1.1.4, sax@~1.2.1:
   version "1.2.1"

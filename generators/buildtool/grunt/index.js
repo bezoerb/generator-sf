@@ -45,7 +45,7 @@ module.exports = common.extend({
             pkg.devDependencies['grunt-contrib-cssmin'] = '^1.0.0';
             pkg.devDependencies['grunt-sw-precache'] = '^1.0.3';
             pkg.devDependencies['sw-toolbox'] = '^3.0.1';
-            pkg.devDependencies['appcache-nanny'] = '^1.0.3';
+            pkg.devDependencies['appcache-nanny'] = '^1.1.0';
             pkg.devDependencies['grunt-appcache'] = '^0.2.0';
             pkg.devDependencies['grunt-contrib-imagemin'] = '^1.0.0';
             pkg.devDependencies['grunt-autoprefixer'] = '^3.0.0';
@@ -160,7 +160,7 @@ module.exports = common.extend({
                 configFile: 'app/Resources/public/scripts/config.js',
                 dependencies: {
                     debug: 'npm:debug@^2.2.0',
-                    'appcache-nanny': 'npm:appcache-nanny@^1.0.3',
+                    'appcache-nanny': 'npm:appcache-nanny@^1.1.0',
                     jquery: 'npm:jquery@^2.2.1',
                     picturefill: 'npm:picturefill@^3.0.1',
                     svg4everybody: 'npm:svg4everybody@^2.1.0'

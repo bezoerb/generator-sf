@@ -14,7 +14,7 @@
     "inuitcss": "^6.0.0-beta.4"
   },
   "devDependencies": {
-    "appcache-nanny": "^1.0.3",
+    "appcache-nanny": "^1.1.0",
     "babel-cli": "^6.16.0",
     "babel-core": "^6.6.5",
     "babel-loader": "^6.2.4",
