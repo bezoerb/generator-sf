@@ -208,7 +208,7 @@ module.exports = common.extend({
             fs.copySync(this.templatePath('gulp/helper'), this.destinationPath('gulp/helper'));
 
             // first all basic tasks for every configuration
-            this.template('gulp/browserSync.js', 'gulp/browserSync.js');
+            this.template('gulp/server.js', 'gulp/server.js');
             this.template('gulp/clean.js', 'gulp/clean.js');
             this.template('gulp/copy.js', 'gulp/copy.js');
 
