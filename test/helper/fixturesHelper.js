@@ -158,23 +158,25 @@ module.exports.withJspm = function (cb) {
         if (error) {
             debug('stderr: jspm config -> ', stderr);
         }
-        exec('node_modules/.bin/jspm init -y', function (error, stdout, stderr) {
-            debug('stdout: jspm init -> ', stdout);
-            debug('stderr: jspm init -> ', stderr);
-
-            if (error) {
-                debug('error: jspm init -> ', error);
-            }
-            exec('node_modules/.bin/jspm install', function (error, stdout, stderr) {
-                debug('stdout: jspm install -> ', stdout);
-                debug('stderr: jspm install -> ', stderr);
+        exec('node_modules/.bin/jspm cc', function (error, stdout, stderr) {
+            exec('node_modules/.bin/jspm init -y', function (error, stdout, stderr) {
+                debug('stdout: jspm init -> ', stdout);
+                debug('stderr: jspm init -> ', stderr);
 
                 if (error) {
-                    debug('error: jspm install -> ', error);
-                    cb(error);
-                    return;
+                    debug('error: jspm init -> ', error);
                 }
-                cb(error, stdout);
+                exec('node_modules/.bin/jspm install', function (error, stdout, stderr) {
+                    debug('stdout: jspm install -> ', stdout);
+                    debug('stderr: jspm install -> ', stderr);
+
+                    if (error) {
+                        debug('error: jspm install -> ', error);
+                        cb(error);
+                        return;
+                    }
+                    cb(error, stdout);
+                });
             });
         });
     });
