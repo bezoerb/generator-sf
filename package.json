@@ -59,7 +59,7 @@
     "run-sequence": "^1.2.2",
     "shelljs": "^0.7.4",
     "vinyl-source-stream": "^1.1.0",
-    "yarn": "^0.17.9",
+    "yarn": "^0.18.0",
     "yeoman-assert": "^2.0.0",
     "yeoman-test": "^1.0.0"
   },
