@@ -41,7 +41,7 @@ export const styles = bs => () => {<% if (props.preprocessor === 'sass' && !prop
     <% } %>
         .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
         // Concatenate and minify styles
-        .pipe($.if('*.css', $.minifyCss()))
+        .pipe($.if('*.css', $.cssnano({safe: true})))
         .pipe($.sourcemaps.write('./'))
         .pipe(gulp.dest('.tmp/styles'))
         .pipe($.size({title: 'styles'}));
