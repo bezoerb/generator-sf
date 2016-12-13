@@ -4,13 +4,14 @@
  */
 module.exports = {
     options: {
-        base: '<%%= paths.dist %>',
+        base: '.tmp/html',
+        targetFolder: '<%%= paths.dist %>',
         minify: true,
         css: ['.tmp/styles/main.css']
     },
     all: {
         files: [
-            {expand: true, dot: true, cwd: '.tmp', dest: '<%%= paths.dist %>/styles/critical/', src: ['**/*.html'], ext: '.css'}
+            {expand: true, dot: true, cwd: '.tmp/html', dest: '<%%= paths.dist %>/styles/critical/', src: ['**/*.html'], ext: '.css'}
         ]
     }
 };

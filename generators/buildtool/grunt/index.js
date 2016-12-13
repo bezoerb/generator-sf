@@ -138,9 +138,7 @@ module.exports = common.extend({
                 pkg.devDependencies['grunt-critical'] = '^0.2.0';
             }
             if (this.props.uncss || this.props.critical) {
-                pkg.devDependencies['grunt-contrib-connect'] = '^1.0.0';
-                pkg.devDependencies['get-port'] = '^2.1.0';
-                pkg.devDependencies['grunt-http'] = '^2.0.1';
+                pkg.devDependencies['grunt-twig-render'] = '^1.8.0';
             }
 
             this._writePkg(pkg);
@@ -228,8 +226,7 @@ module.exports = common.extend({
             }
 
             if (this.props.uncss || this.props.critical) {
-                this.template('grunt/connect.js', 'grunt/connect.js');
-                this.template('grunt/http.js', 'grunt/http.js');
+                this.template('grunt/twigRender.js', 'grunt/twigRender.js');
             }
 
             if (this.props.uncss) {

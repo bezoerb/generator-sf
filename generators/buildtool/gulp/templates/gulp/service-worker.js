@@ -9,7 +9,7 @@ export const copySwScripts = () =>
     gulp.src(['node_modules/sw-toolbox/sw-toolbox.js', prefixDev('scripts/sw/runtime-caching.js')])
         .pipe(gulp.dest(prefixDist('scripts/sw')));
 
-// Copy html for appcache fallback based on the "Offline IFRAME Hack" 
+// Copy html for appcache fallback based on the "Offline IFRAME Hack"
 // by the awesome Financial Times Labs team: http://labs.ft.com/category/tutorial/
 export const appcacheNanny = () =>
     gulp.src([require.resolve('appcache-nanny/appcache-loader.html')])
@@ -33,9 +33,10 @@ export const generateServiceWorker = () => {
         ],
         staticFileGlobs: [
             // Add/remove glob patterns to match your directory setup.
-            prefixDist('img/**/*'),
+            prefixDist('img/**/*.{svg,png,jpg,gif}'),
             prefixDist('scripts/**/*.js'),
             prefixDist('styles/**/*.css'),
+            prefixDist('fonts/**/*.{woff,woff2,ttf,svg,eot}'),
             prefixDist('*.{html,json}')
         ],
         // Translates a static file path to the relative URL that it's served from.

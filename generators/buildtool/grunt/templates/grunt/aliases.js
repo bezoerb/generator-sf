@@ -4,9 +4,7 @@ module.exports = function (grunt, options) {
     var fs = require('fs-extra');
     var path = require('path');
     var slash = require('slash');
-    var php = require('php-proxy-middleware');<% if (props.critical || props.uncss) { %>
-    var getPort = require('get-port');
-    <% } %>
+    var php = require('php-proxy-middleware');
 
     // helper
     function getMiddleware(target) {
@@ -39,8 +37,8 @@ module.exports = function (grunt, options) {
                 'autoprefixer'
             ]);
             if (target === 'dist') {
-                <% if (props.uncss || props.critical) { %>// configure routes inside gruntfile if you'd like to use <% if (props.critical) { %>critical <% } if (props.critical && props.uncss) { %>and <% } if (props.uncss) { %>uncss<% } %>
-                grunt.task.run(size(options.routes) ? ['fetch',<% if (props.critical) { %> 'critical',<% } if (props.uncss) { %> 'uncss',<% } %> 'cssmin'] : ['cssmin']);<% } else {
+                <% if (props.uncss || props.critical) { %>
+                grunt.task.run(['twigRender',<% if (props.critical) { %> 'critical',<% } if (props.uncss) { %> 'uncss',<% } %> 'cssmin']);<% } else {
                 %>grunt.task.run('cssmin');<% } %>
             } else if (target === 'assets') {
                 grunt.task.run(['copy:assets-css']);
@@ -110,17 +108,7 @@ module.exports = function (grunt, options) {
             'eslint',
             'karma',
             'phpunit'
-        ],<% if (props.critical || props.uncss) { %>
-        fetch: function(){
-            var done = this.async();
-
-            getPort().then(function(port){
-                grunt.connectMiddleware = getMiddleware();
-                grunt.config.set('connect.fetch.options.port', port);
-                grunt.task.run(['connect', 'http']);
-                done();
-            });
-        },<% } %>
+        ],
         revdump: function(){
             var file = 'app/config/rev-manifest.json';
             fs.outputJsonSync(file, reduce(grunt.filerev.summary, function(acc,val,key){

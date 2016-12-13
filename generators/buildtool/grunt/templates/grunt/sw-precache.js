@@ -14,7 +14,8 @@ module.exports = {
             'styles/**/*.css',
             'fonts/**/*.{woff,woff2,ttf,svg,eot}',
             'img/**/*.{gif,png,jpg,svg}',
-            'scripts/**/*.js'
+            'scripts/**/*.js',
+            '*.{html,json}'
         ]
     },
     dist: {

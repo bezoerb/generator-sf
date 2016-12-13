@@ -6,7 +6,7 @@
 module.exports = {
     dist: {
         options: {
-            stylesheets: ['../.tmp/styles/main.css'],
+            stylesheets: ['../../styles/main.css'],
             ignore: [
                 /* ignore classes which are not present at dom load */<% if (props.view === 'bootstrap') { %>
                 /\.fade/,
