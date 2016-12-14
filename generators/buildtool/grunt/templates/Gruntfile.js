@@ -29,8 +29,7 @@ module.exports = function(grunt) {
         // data passed into config.
         data: {
             paths: paths,
-            env: env,
-            routes: routes
+            env: env
         },
 
         jitGrunt: true
