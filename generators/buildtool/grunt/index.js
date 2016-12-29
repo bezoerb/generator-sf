@@ -79,7 +79,7 @@ module.exports = common.extend({
             if (this.props.preprocessor === 'sass' && !this.props.libsass) {
                 pkg.devDependencies['grunt-contrib-sass'] = '^1.0.0';
             } else if (this.props.preprocessor === 'sass') {
-                pkg.devDependencies['grunt-sass'] = '^1.0.0';
+                pkg.devDependencies['grunt-sass'] = '^2.0.0';
             } else if (this.props.preprocessor === 'less') {
                 pkg.devDependencies['grunt-contrib-less'] = '^1.0.0';
             } else if (this.props.preprocessor === 'stylus') {

@@ -95,7 +95,7 @@ module.exports = common.extend({
             if (this.props.preprocessor === 'sass' && !this.props.libsass) {
                 pkg.devDependencies['gulp-ruby-sass'] = '^2.1.0';
             } else if (this.props.preprocessor === 'sass') {
-                pkg.devDependencies['gulp-sass'] = '^2.3.2';
+                pkg.devDependencies['gulp-sass'] = '^3.0.0';
             } else if (this.props.preprocessor === 'less') {
                 pkg.devDependencies['gulp-less'] = '^3.1.0';
             } else if (this.props.preprocessor === 'stylus') {
