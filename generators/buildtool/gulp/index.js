@@ -208,32 +208,32 @@ module.exports = common.extend({
             fs.copySync(this.templatePath('gulp/helper'), this.destinationPath('gulp/helper'));
 
             // first all basic tasks for every configuration
-            this.template('gulp/server.js', 'gulp/server.js');
-            this.template('gulp/clean.js', 'gulp/clean.js');
-            this.template('gulp/copy.js', 'gulp/copy.js');
+            this.template('gulp/server.js');
+            this.template('gulp/clean.js');
+            this.template('gulp/copy.js');
 
-            this.template('gulp/exec.js', 'gulp/exec.js');
-            this.template('gulp/images.js', 'gulp/images.js');
-            this.template('gulp/rev.js', 'gulp/rev.js');
-            this.template('gulp/scripts.js', 'gulp/scripts.js');
-            this.template('gulp/styles.js', 'gulp/styles.js');
-            this.template('gulp/tests.js', 'gulp/tests.js');
-            this.template('gulp/service-worker.js', 'gulp/service-worker.js');
+            this.template('gulp/exec.js');
+            this.template('gulp/images.js');
+            this.template('gulp/rev.js');
+            this.template('gulp/scripts.js');
+            this.template('gulp/styles.js');
+            this.template('gulp/tests.js');
+            this.template('gulp/service-worker.js');
 
             if (this.props.critical) {
-                this.template('gulp/critical.js', 'gulp/critical.js');
+                this.template('gulp/critical.js');
             }
 
             if (this.props.uncss) {
-                this.template('gulp/uncss.js', 'gulp/uncss.js');
+                this.template('gulp/uncss.js');
             }
 
             if (this.props.uncss || this.props.critical) {
-                this.template('gulp/twig.js', 'gulp/twig.js');
+                this.template('gulp/twig.js');
             }
 
             if (this.props.loader === 'webpack') {
-                this.commonTemplate('webpack.config.js', 'webpack.config.js');
+                this.template('webpack.config.js', 'webpack.config.js');
             }
         }
     }

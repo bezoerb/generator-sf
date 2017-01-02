@@ -5,11 +5,11 @@ var Promise = require('bluebird');
 var pathIsAbsolute = require('path-is-absolute');
 var fs = require('fs-extra');
 var _ = require('lodash');
-var generators = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 
 Promise.promisifyAll(fs);
 
-module.exports = generators.Base.extend({
+module.exports = Generator.extend({
 
     /**
      * Re-read the content because a composed generator might modify it.
@@ -77,7 +77,7 @@ module.exports = generators.Base.extend({
     },
 
     constructor: function () {
-        generators.Base.apply(this, arguments);
+        Generator.apply(this, arguments);
 
         this.option('base', {
             type: String,
@@ -101,19 +101,31 @@ module.exports = generators.Base.extend({
         return filepath;
     },
 
-    commonTemplate: function (source, dest, data, options) {
+    template: function (source, dest, data, options) {
         if (typeof dest !== 'string') {
             options = data;
             data = dest;
             dest = source;
         }
 
-        this.fs.copyTpl(
-            path.join(this.commonTemplatePath(), source),
-            this.destinationPath(dest),
-            data || this,
-            options
-        );
+        if (fs.existsSync(this.templatePath(source))) {
+            this.fs.copyTpl(
+                this.templatePath(source),
+                this.destinationPath(dest),
+                data || this,
+                options
+            );
+        } else if (fs.existsSync(this.commonTemplatePath(source))) {
+            this.fs.copyTpl(
+                this.commonTemplatePath(source),
+                this.destinationPath(dest),
+                data || this,
+                options
+            );
+        } else {
+            this.env.error('Invalid filepath: "' + source + '"!');
+        }
+
         return this;
     },
 
@@ -121,13 +133,13 @@ module.exports = generators.Base.extend({
      * Saving configurations and configure the project (creating .editorconfig files and other metadata files)
      */
     addConfigFiles: function () {
-        this.commonTemplate('editorconfig', '.editorconfig');
-        this.commonTemplate('eslintrc', '.eslintrc');
-        this.commonTemplate('jscsrc', '.jscsrc');
-        this.commonTemplate('babelrc', '.babelrc');
+        this.template('editorconfig', '.editorconfig');
+        this.template('eslintrc', '.eslintrc');
+        this.template('jscsrc', '.jscsrc');
+        this.template('babelrc', '.babelrc');
 
         if (!this.props.noBower) {
-            this.commonTemplate('bowerrc', '.bowerrc');
+            this.template('bowerrc', '.bowerrc');
         }
     },
 
@@ -135,18 +147,18 @@ module.exports = generators.Base.extend({
      * Add Service worker config
      */
     addServiceWorker: function () {
-        this.commonTemplate('public/service-worker.js', path.join(this.props.base, 'service-worker.js'));
-        this.commonTemplate('public/appcache-loader.html', path.join(this.props.base, 'appcache-loader.html'));
+        this.template('public/service-worker.js', path.join(this.props.base, 'service-worker.js'));
+        this.template('public/appcache-loader.html', path.join(this.props.base, 'appcache-loader.html'));
     },
 
     /**
      * Add Favicon
      */
     addFavicon: function () {
-        this.commonTemplate('public/browserconfig.xml', path.join(this.props.base, 'browserconfig.xml'));
-        this.commonTemplate('public/favicon.ico', path.join(this.props.base, 'favicon.ico'));
-        this.commonTemplate('public/manifest.json', path.join(this.props.base, 'manifest.json'));
-        this.commonTemplate('public/manifest.webapp', path.join(this.props.base, 'manifest.webapp'));
+        this.template('public/browserconfig.xml', path.join(this.props.base, 'browserconfig.xml'));
+        this.template('public/favicon.ico', path.join(this.props.base, 'favicon.ico'));
+        this.template('public/manifest.json', path.join(this.props.base, 'manifest.json'));
+        this.template('public/manifest.webapp', path.join(this.props.base, 'manifest.webapp'));
 
         return fs.copyAsync(this.commonTemplatePath('img', 'touch'), path.join(this.props.base, 'img/touch'));
     },
@@ -196,7 +208,7 @@ module.exports = generators.Base.extend({
         }, this));
 
         var file = path.join('scripts', 'sw', 'runtime-caching.js');
-        this.commonTemplate(file, path.join(this.props.base, file));
+        this.template(file, path.join(this.props.base, file));
 
         // testfiles
         var dest = 'tests/Frontend';
@@ -225,7 +237,7 @@ module.exports = generators.Base.extend({
         fs.mkdirsSync(this.destinationPath('app/Resources/views/controller/default'));
 
         // copy base template
-        this.commonTemplate('base.html.twig', path.join(this.props.base, '..', 'views', 'base.html.twig'));
+        this.template('base.html.twig', path.join(this.props.base, '..', 'views', 'base.html.twig'));
 
         // copy default action template
         this.template('index.html.twig', path.join(this.props.base, '..', 'views', 'controller', 'default', 'index.html.twig'));

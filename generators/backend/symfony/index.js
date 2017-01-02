@@ -11,7 +11,7 @@ var YAML = require('yamljs');
 var wsfp = require('wsfp');
 var _ = require('lodash');
 var xdgBasedir = require('xdg-basedir');
-var generators = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 var commands = require('../../../lib/commands');
 
 Promise.promisifyAll(fs);
@@ -20,7 +20,7 @@ function read(file) {
     return fs.readFileSync(file, 'utf-8');
 }
 
-module.exports = generators.Base.extend({
+module.exports = Generator.extend({
     /**
      * Get available symfony tags
      *
@@ -74,7 +74,7 @@ module.exports = generators.Base.extend({
     constructor: function () {
         this.props = {};
 
-        generators.Base.apply(this, arguments);
+        Generator.apply(this, arguments);
 
         //     this.option('symfonyStandard', {
         //         type: Boolean,
@@ -276,7 +276,11 @@ module.exports = generators.Base.extend({
          */
         updateApp: function () {
             fs.unlinkSync(this.destinationPath('web/app.php'));
-            this.template('app.php', 'web/app.php');
+            this.fs.copyTpl(
+                this.templatePath('app.php'),
+                this.destinationPath('web/app.php'),
+                this
+            );
 
             var htaccess = [
                 read(this.destinationPath('web/.htaccess'), 'utf8'),
@@ -337,7 +341,11 @@ module.exports = generators.Base.extend({
                 fs.unlinkSync(controllerPath);
             }
 
-            this.template('DefaultControllerTest.php', controllerPath);
+            this.fs.copyTpl(
+                this.templatePath('DefaultControllerTest.php'),
+                this.destinationPath(controllerPath),
+                this
+            );
         }
     },
 

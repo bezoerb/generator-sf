@@ -184,72 +184,72 @@ module.exports = common.extend({
         grunt: function () {
             this.pkg = this._readPkg();
 
-            this.template('Gruntfile.js', 'Gruntfile.js');
+            this.template('Gruntfile.js');
             fs.mkdirsSync(this.destinationPath('grunt'));
 
             // first all basic tasks for every configuration
-            this.template('grunt/aliases.js', 'grunt/aliases.js');
-            this.template('grunt/clean.js', 'grunt/clean.js');
-            this.template('grunt/watch.js', 'grunt/watch.js');
-            this.template('grunt/autoprefixer.js', 'grunt/autoprefixer.js');
-            this.template('grunt/cssmin.js', 'grunt/cssmin.js');
-            this.template('grunt/copy.js', 'grunt/copy.js');
-            this.template('grunt/exec.js', 'grunt/exec.js');
-            this.template('grunt/filerev.js', 'grunt/filerev.js');
-            this.template('grunt/usemin.js', 'grunt/usemin.js');
-            this.template('grunt/eslint.js', 'grunt/eslint.js');
-            this.template('grunt/imagemin.js', 'grunt/imagemin.js');
-            this.template('grunt/svgmin.js', 'grunt/svgmin.js');
-            this.template('grunt/svgstore.js', 'grunt/svgstore.js');
-            this.template('grunt/browserSync.js', 'grunt/browserSync.js');
-            this.template('grunt/phpunit.js', 'grunt/phpunit.js');
-            this.template('grunt/availabletasks.js', 'grunt/availabletasks.js');
-            this.template('grunt/sw-precache.js', 'grunt/sw-precache.js');
-            this.template('grunt/appcache.js', 'grunt/appcache.js');
+            this.template('grunt/aliases.js');
+            this.template('grunt/clean.js');
+            this.template('grunt/watch.js');
+            this.template('grunt/autoprefixer.js');
+            this.template('grunt/cssmin.js');
+            this.template('grunt/copy.js');
+            this.template('grunt/exec.js');
+            this.template('grunt/filerev.js');
+            this.template('grunt/usemin.js');
+            this.template('grunt/eslint.js');
+            this.template('grunt/imagemin.js');
+            this.template('grunt/svgmin.js');
+            this.template('grunt/svgstore.js');
+            this.template('grunt/browserSync.js');
+            this.template('grunt/phpunit.js');
+            this.template('grunt/availabletasks.js');
+            this.template('grunt/sw-precache.js');
+            this.template('grunt/appcache.js');
 
             // css
             switch (this.props.preprocessor) {
                 case 'none':
-                    this.template('grunt/concat.js', 'grunt/concat.js');
+                    this.template('grunt/concat.js');
                     break;
                 case 'sass':
-                    this.template('grunt/sass.js', 'grunt/sass.js');
+                    this.template('grunt/sass.js');
                     break;
                 case 'less':
-                    this.template('grunt/less.js', 'grunt/less.js');
+                    this.template('grunt/less.js');
                     break;
                 case 'stylus':
-                    this.template('grunt/stylus.js', 'grunt/stylus.js');
+                    this.template('grunt/stylus.js');
                     break;
                 default:
                     break;
             }
 
             if (this.props.uncss || this.props.critical) {
-                this.template('grunt/twigRender.js', 'grunt/twigRender.js');
+                this.template('grunt/twigRender.js');
             }
 
             if (this.props.uncss) {
-                this.template('grunt/uncss.js', 'grunt/uncss.js');
+                this.template('grunt/uncss.js');
             }
             if (this.props.critical) {
-                this.template('grunt/critical.js', 'grunt/critical.js');
+                this.template('grunt/critical.js');
             }
 
             // js
-            this.template('grunt/karma.js', 'grunt/karma.js');
+            this.template('grunt/karma.js');
 
             switch (this.props.loader) {
                 case 'jspm':
-                    this.template('grunt/uglify.js', 'grunt/uglify.js');
+                    this.template('grunt/uglify.js');
                     break;
                 case 'webpack':
-                    this.template('grunt/webpack.js', 'grunt/webpack.js');
-                    this.commonTemplate('webpack.config.js', 'webpack.config.js');
+                    this.template('grunt/webpack.js');
+                    this.template('webpack.config.js');
                     break;
                 case 'browserify':
-                    this.template('grunt/browserify.js', 'grunt/browserify.js');
-                    this.template('grunt/uglify.js', 'grunt/uglify.js');
+                    this.template('grunt/browserify.js');
+                    this.template('grunt/uglify.js');
                     break;
                 default:
                     break;

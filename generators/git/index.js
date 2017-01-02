@@ -2,12 +2,12 @@
 var path = require('path');
 var Buffer = require('buffer').Buffer;
 var _ = require('lodash');
-var generators = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 var spawn = require('cross-spawn');
 var Promise = require('bluebird');
 var fs = Promise.promisifyAll(require('fs-extra'));
 
-module.exports = generators.Base.extend({
+module.exports = Generator.extend({
     /**
      * Check for installed git
      */
@@ -48,7 +48,7 @@ module.exports = generators.Base.extend({
 
     constructor: function () {
         this.props = {git: false};
-        generators.Base.apply(this, arguments);
+        Generator.apply(this, arguments);
     },
 
     prompting: function () {

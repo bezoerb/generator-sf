@@ -1,13 +1,17 @@
 'use strict';
 var os = require('os');
+var fs = require('fs-extra');
 var path = require('path');
 var _ = require('lodash');
 var chalk = require('chalk');
 var pathIsAbsolute = require('path-is-absolute');
-var generators = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 
-module.exports = generators.Base.extend({
-    /**
+module.exports = Generator.extend({
+
+
+
+/**
      * Re-read the content because a composed generator might modify it.
      * @returns {*}
      * @private
@@ -32,7 +36,7 @@ module.exports = generators.Base.extend({
     },
 
     constructor: function () {
-        generators.Base.apply(this, arguments);
+        Generator.apply(this, arguments);
 
         this.option('preprocessor', {
             type: String,
@@ -74,19 +78,31 @@ module.exports = generators.Base.extend({
         return filepath;
     },
 
-    commonTemplate: function (source, dest, data, options) {
+    template: function (source, dest, data, options) {
         if (typeof dest !== 'string') {
             options = data;
             data = dest;
             dest = source;
         }
 
-        this.fs.copyTpl(
-            this.commonTemplatePath(source),
-            this.destinationPath(dest),
-            data || this,
-            options
-        );
+        if (fs.existsSync(this.templatePath(source))) {
+            this.fs.copyTpl(
+                this.templatePath(source),
+                this.destinationPath(dest),
+                data || this,
+                options
+            );
+        } else if (fs.existsSync(this.commonTemplatePath(source))) {
+            this.fs.copyTpl(
+                this.commonTemplatePath(source),
+                this.destinationPath(dest),
+                data || this,
+                options
+            );
+        } else {
+            this.env.error('Invalid filepath: "' + source + '"!');
+        }
+
         return this;
     },
 

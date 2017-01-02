@@ -1,23 +1,18 @@
 'use strict';
 var os = require('os');
-var yeoman = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var _ = require('lodash');
 
 var commands = require('../../lib/commands');
 
-module.exports = yeoman.Base.extend({
+module.exports = Generator.extend({
 
-    _invoke: function (generatorName, generatorPath) {
-        return this.composeWith(generatorName, {
-            arguments: ['app'],
-            options: _.assign(this.props, {
-                skipInstall: true
-            })
-        }, {
-            local: require.resolve(generatorPath)
-        });
+    _invoke: function ( generatorPath) {
+        return this.composeWith(require.resolve(generatorPath), _.assign(this.props, {
+            skipInstall: true
+        }));
     },
 
     /**
@@ -54,8 +49,8 @@ module.exports = yeoman.Base.extend({
             safeProjectName: _.camelCase(this.appname)
         };
 
-        this._invoke('generator:symfony', '../backend/symfony');
-        this._invoke('generator:git', '../git');
+        this._invoke('../backend/symfony');
+        this._invoke('../git');
 
         return this._yarnAvailable()
             .then(function () {
@@ -174,8 +169,8 @@ module.exports = yeoman.Base.extend({
     configuring: function () {
         this.props.symfony = this.env.symfony;
 
-        this._invoke('generator:' + this.props.buildtool, '../buildtool/' + this.props.buildtool);
-        this._invoke('generator:' + this.props.view, '../view/' + this.props.view);
+        this._invoke('../buildtool/' + this.props.buildtool);
+        this._invoke('../view/' + this.props.view);
     },
 
     install: function () {
