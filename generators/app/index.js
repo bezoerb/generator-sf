@@ -9,7 +9,7 @@ var commands = require('../../lib/commands');
 
 module.exports = Generator.extend({
 
-    _invoke: function ( generatorPath) {
+    _invoke: function (generatorPath) {
         return this.composeWith(require.resolve(generatorPath), _.assign(this.props, {
             skipInstall: true
         }));

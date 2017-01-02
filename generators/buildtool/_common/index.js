@@ -8,10 +8,7 @@ var pathIsAbsolute = require('path-is-absolute');
 var Generator = require('yeoman-generator');
 
 module.exports = Generator.extend({
-
-
-
-/**
+    /**
      * Re-read the content because a composed generator might modify it.
      * @returns {*}
      * @private
