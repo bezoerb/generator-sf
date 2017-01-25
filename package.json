@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "chai": "3.5.0",
-    "eslint": "3.12.2",
+    "eslint": "3.14.1",
     "eslint-config-xo-space": "0.15.0",
     "gulp": "3.9.1",
     "gulp-coveralls": "0.1.4",
