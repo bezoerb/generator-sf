@@ -9,7 +9,7 @@ describe('symfony generator (grunt)', function () {
     afterEach(cleanup);
 
     // browserify no framework
-    it('', all({buildtool: 'grunt', loader: 'browserify'}));
+    it('', some({buildtool: 'grunt', loader: 'browserify'}));
     it('', some({buildtool: 'grunt', loader: 'browserify', preprocessor: 'less'}));
     // it('', all({buildtool: 'grunt', loader: 'browserify', preprocessor: 'sass', libsass: false}));
     it('', some({buildtool: 'grunt', loader: 'browserify', preprocessor: 'sass', libsass: true}));
@@ -61,7 +61,7 @@ describe('symfony generator (grunt)', function () {
     it('', some({buildtool: 'grunt', loader: 'jspm', framework: 'foundation'}));
     it('', some({buildtool: 'grunt', loader: 'jspm', framework: 'foundation', preprocessor: 'less'}));
     // it('', all({buildtool: 'grunt', loader: 'jspm', framework: 'foundation', preprocessor: 'sass', libsass: false}));
-    it('', all({buildtool: 'grunt', loader: 'jspm', framework: 'foundation', preprocessor: 'sass', libsass: true}));
+    it('', some({buildtool: 'grunt', loader: 'jspm', framework: 'foundation', preprocessor: 'sass', libsass: true}));
     it('', some({buildtool: 'grunt', loader: 'jspm', framework: 'foundation', preprocessor: 'stylus'}));
 
     // webpack no framework
@@ -80,7 +80,7 @@ describe('symfony generator (grunt)', function () {
 
     // webpack bootstrap
     it('', some({buildtool: 'grunt', loader: 'webpack', framework: 'bootstrap'}));
-    it('', all({buildtool: 'grunt', loader: 'webpack', framework: 'bootstrap', preprocessor: 'less'}));
+    it('', some({buildtool: 'grunt', loader: 'webpack', framework: 'bootstrap', preprocessor: 'less'}));
     // it('', all({buildtool: 'grunt', loader: 'webpack', framework: 'bootstrap', preprocessor: 'sass', libsass: false}));
     it('', some({buildtool: 'grunt', loader: 'webpack', framework: 'bootstrap', preprocessor: 'sass', libsass: true}));
     it('', some({buildtool: 'grunt', loader: 'webpack', framework: 'bootstrap', preprocessor: 'stylus'}));

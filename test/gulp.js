@@ -16,7 +16,7 @@ describe('symfony generator (gulp)', function () {
     it('', some({buildtool: 'gulp', loader: 'browserify', preprocessor: 'stylus'}));
 
     // browserify uikit
-    it('', all({buildtool: 'gulp', loader: 'browserify', framework: 'uikit'}));
+    it('', some({buildtool: 'gulp', loader: 'browserify', framework: 'uikit'}));
     it('', some({buildtool: 'gulp', loader: 'browserify', framework: 'uikit', preprocessor: 'less'}));
     it('', some({buildtool: 'gulp', loader: 'browserify', framework: 'uikit', preprocessor: 'sass', libsass: false}));
     // it('', all({buildtool: 'gulp', loader: 'browserify', framework: 'uikit', preprocessor: 'sass', libsass: true}));
@@ -37,7 +37,7 @@ describe('symfony generator (gulp)', function () {
     it('', all({buildtool: 'gulp', loader: 'browserify', framework: 'foundation', preprocessor: 'stylus'}));
 
     // jspm no framework
-    it('', all({buildtool: 'gulp', loader: 'jspm'}));
+    it('', some({buildtool: 'gulp', loader: 'jspm'}));
     it('', some({buildtool: 'gulp', loader: 'jspm', preprocessor: 'less'}));
     // it('', all({buildtool: 'gulp', loader: 'jspm', preprocessor: 'sass', libsass: false}));
     it('', some({buildtool: 'gulp', loader: 'jspm', preprocessor: 'sass', libsass: true}));
@@ -86,7 +86,7 @@ describe('symfony generator (gulp)', function () {
     it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'bootstrap', preprocessor: 'stylus'}));
 
     // webpack foundation
-    it('', all({buildtool: 'gulp', loader: 'webpack', framework: 'foundation'}));
+    it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'foundation'}));
     it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'foundation', preprocessor: 'less'}));
     it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'foundation', preprocessor: 'sass', libsass: false}));
     // it('', all({buildtool: 'gulp', loader: 'webpack', framework: 'foundation', preprocessor: 'sass', libsass: true}));
