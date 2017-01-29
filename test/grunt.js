@@ -9,7 +9,7 @@ describe('symfony generator (grunt)', function () {
     afterEach(cleanup);
 
     // browserify no framework
-    it('', some({buildtool: 'grunt', loader: 'browserify'}));
+    it('', all({buildtool: 'grunt', loader: 'browserify'}));
     it('', some({buildtool: 'grunt', loader: 'browserify', preprocessor: 'less'}));
     // it('', all({buildtool: 'grunt', loader: 'browserify', preprocessor: 'sass', libsass: false}));
     it('', some({buildtool: 'grunt', loader: 'browserify', preprocessor: 'sass', libsass: true}));
