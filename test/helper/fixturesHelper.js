@@ -122,7 +122,6 @@ module.exports.withComposer = function (cb) {
 
                 process.env.SYMFONY_ENV = 'dev';
 
-                //exec('php composer.phar run-script post-install-cmd --no-interaction', function (error, stdout, stderr) {
                 exec('php composer.phar install --prefer-dist --no-interaction --dev', function (error, stdout, stderr) {
                     debug('error: composer install -> ', error);
                     debug('stdout: composer install -> ', stdout);

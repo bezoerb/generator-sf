@@ -102,35 +102,34 @@ function installDeps(prompts) {
     return function () {
         log('... install dependencies');
         return new Promise(function (resolve) {
-            // withComposer(function (error, stdout) {
-            //     if (error) {
-            //         log(os.EOL + stdout + os.EOL);
-            //     }
-
-            // debug(os.EOL + stdout);
-            // /*jshint expr: true*/
-            // //noinspection BadExpressionStatementJS
-            // expect(error).to.be.null;
-            // process.stdout.write(chalk.green(' composer'));
-
-            if (prompts.loader !== 'jspm') {
-                markDone();
-                return resolve();
-            }
-
-            withJspm(function (error, stdout) {
+            withComposer(function (error, stdout) {
                 if (error) {
                     log(os.EOL + stdout + os.EOL);
                 }
+
                 debug(os.EOL + stdout);
                 // noinspection BadExpressionStatementJS
-                /* jshint expr: true */
                 expect(error).to.be.null;
-                process.stdout.write(', ' + chalk.green('jspm'));
-                markDone();
-                resolve();
+                process.stdout.write(chalk.green(' composer'));
+
+                if (prompts.loader !== 'jspm') {
+                    markDone();
+                    return resolve();
+                }
+
+                withJspm(function (error, stdout) {
+                    if (error) {
+                        log(os.EOL + stdout + os.EOL);
+                    }
+                    debug(os.EOL + stdout);
+                    // noinspection BadExpressionStatementJS
+                    /* jshint expr: true */
+                    expect(error).to.be.null;
+                    process.stdout.write(', ' + chalk.green('jspm'));
+                    markDone();
+                    resolve();
+                });
             });
-            // });
         });
     };
 }
@@ -273,7 +272,7 @@ function checkServiceWorker(prompts) {
 }
 
 
-module.exports.cleanup = function() {
+module.exports.cleanup = function () {
     return cleanup();
 };
 
