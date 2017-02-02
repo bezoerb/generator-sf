@@ -5,7 +5,7 @@ module.exports = {
         transform: [
             ['rollupify'],
             [babelify.configure({
-                presets: ['es2015'],
+                presets: ['env'],
                 ignore: /(node_modules|bower_components)/,
                 sourceMaps: true
             })],

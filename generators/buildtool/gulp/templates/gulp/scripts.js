@@ -19,7 +19,7 @@ export const scripts = bs => {
 
     bundler.transform(rollupify)
         .transform(babelify.configure({
-            presets: ['es2015', 'stage-2'],
+            presets: ['env'],
             ignore: /(node_modules)/,
             sourceMaps: true
         }));
