@@ -39,7 +39,7 @@ module.exports = common.extend({
             pkg.devDependencies.slash = '^1.0.0';
             pkg.devDependencies.chalk = '^1.1.1';
             pkg.devDependencies.parseurl = '^1.3.0';
-            pkg.devDependencies.dotenv = '^2.0.0';
+            pkg.devDependencies.dotenv = '^4.0.0';
             pkg.devDependencies.minimist = '^1.2.0';
             pkg.devDependencies.getport = '^0.1.0';
 
@@ -56,7 +56,7 @@ module.exports = common.extend({
             pkg.devDependencies['gulp-cssnano'] = '^2.1.2';
             pkg.devDependencies['gulp-minify-html'] = '^1.0.6';
             pkg.devDependencies['gulp-newer'] = '^1.3.0';
-            pkg.devDependencies['gulp-phpunit'] = '^0.21.4';
+            pkg.devDependencies['gulp-phpunit'] = '^0.22.1';
             pkg.devDependencies['gulp-remote-src'] = '^0.4.0';
             pkg.devDependencies['gulp-rev'] = '^7.1.2';
             pkg.devDependencies['gulp-rev-replace'] = '^0.4.2';
@@ -89,7 +89,7 @@ module.exports = common.extend({
             pkg.devDependencies['karma-mocha-reporter'] = '^2.0.0';
             pkg.devDependencies['karma-phantomjs-launcher'] = '^1.0.0';
             pkg.devDependencies['phantomjs-prebuilt'] = '>=1.9';
-            pkg.devDependencies['fs-extra'] = '^1.0.0';
+            pkg.devDependencies['fs-extra'] = '^2.0.0';
 
             // css preprocessors
             if (this.props.preprocessor === 'sass' && !this.props.libsass) {
@@ -108,27 +108,27 @@ module.exports = common.extend({
             // js loader
             if (this.props.loader === 'jspm') {
                 pkg.devDependencies.jspm = '^0.16.19';
-                pkg.devDependencies.systemjs = '^0.19.3';
+                pkg.devDependencies.systemjs = '^0.20.5';
                 pkg.devDependencies['gulp-uglify'] = '^2.0.0';
                 pkg.devDependencies['karma-jspm'] = '^2.0.1';
                 pkg.devDependencies['babel-cli'] = '^6.16.0';
-                pkg.devDependencies['babel-preset-es2015'] = '^6.6.0';
-                pkg.devDependencies['babel-preset-stage-2'] = '^6.18.0';
+                pkg.devDependencies['babel-plugin-transform-object-rest-spread'] = '^6.22.0';
+                pkg.devDependencies['babel-preset-env'] = '^1.1.8"';
                 pkg.devDependencies['es6-module-loader'] = '^0.17.6';
                 pkg.devDependencies['phantomjs-polyfill'] = '0.0.2';
             } else if (this.props.loader === 'webpack') {
-                pkg.devDependencies.webpack = '^1.12.2';
+                pkg.devDependencies.webpack = '^2.2.1';
                 pkg.devDependencies['babel-cli'] = '^6.16.0';
                 pkg.devDependencies['babel-core'] = '^6.6.5';
                 pkg.devDependencies['babel-loader'] = '^6.2.4';
                 pkg.devDependencies['babel-runtime'] = '^6.6.1';
-                pkg.devDependencies['babel-preset-es2015'] = '^6.6.0';
-                pkg.devDependencies['babel-preset-stage-2'] = '^6.18.0';
+                pkg.devDependencies['babel-plugin-transform-object-rest-spread'] = '^6.22.0';
+                pkg.devDependencies['babel-preset-env'] = '^1.1.8"';
                 pkg.devDependencies['webpack-dev-server'] = '^1.12.1';
                 pkg.devDependencies['webpack-dev-middleware'] = '^1.2.0';
                 pkg.devDependencies['webpack-hot-middleware'] = '^2.4.1';
                 pkg.devDependencies['json-loader'] = '^0.5.3';
-                pkg.devDependencies['karma-webpack'] = '^1.7.0';
+                pkg.devDependencies['karma-webpack'] = '^2.0.2';
                 pkg.devDependencies['monkey-hot-loader'] = '0.0.3';
             } else if (this.props.loader === 'browserify') {
                 pkg.devDependencies.babelify = '^7.2.0';
@@ -141,8 +141,8 @@ module.exports = common.extend({
                 pkg.devDependencies['vinyl-source-stream'] = '^1.1.0';
                 pkg.devDependencies['babel-cli'] = '^6.16.0';
                 pkg.devDependencies['babel-core'] = '^6.6.5';
-                pkg.devDependencies['babel-preset-es2015'] = '^6.6.0';
-                pkg.devDependencies['babel-preset-stage-2'] = '^6.18.0';
+                pkg.devDependencies['babel-plugin-transform-object-rest-spread'] = '^6.22.0';
+                pkg.devDependencies['babel-preset-env'] = '^1.1.8"';
                 pkg.devDependencies['babel-runtime'] = '^6.6.1';
                 pkg.devDependencies['karma-browserify'] = '^5.0.2';
                 pkg.devDependencies['karma-babel-preprocessor'] = '^6.0.1';
