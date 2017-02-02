@@ -132,7 +132,7 @@ module.exports = common.extend({
                 pkg.devDependencies['monkey-hot-loader'] = '0.0.3';
             } else if (this.props.loader === 'browserify') {
                 pkg.devDependencies.babelify = '^7.2.0';
-                pkg.devDependencies.browserify = '^13.0.0';
+                pkg.devDependencies.browserify = '^14.0.0';
                 pkg.devDependencies.watchify = '^3.7.0';
                 pkg.devDependencies.deamdify = '^0.2.0';
                 pkg.devDependencies.debowerify = '^1.4.1';
