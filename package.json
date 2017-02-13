@@ -37,7 +37,7 @@
     "lodash": "4.17.4",
     "resolve": "1.2.0",
     "wsfp": "0.0.7",
-    "xdg-basedir": "2.0.0",
+    "xdg-basedir": "3.0.0",
     "yamljs": "0.2.8",
     "yeoman-generator": "1.1.0",
     "yosay": "1.2.1"
