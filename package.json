@@ -40,7 +40,7 @@
     "xdg-basedir": "2.0.0",
     "yamljs": "0.2.8",
     "yeoman-generator": "1.1.0",
-    "yosay": "1.2.1"
+    "yosay": "2.0.0"
   },
   "devDependencies": {
     "chai": "3.5.0",
