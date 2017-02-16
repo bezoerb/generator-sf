@@ -7,7 +7,7 @@ import pkg from '../package.json';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import {dev as configDev, prod as configDist} from '../webpack.config.js';
+import config from '../webpack.config.js';
 <% } %>
 const nodeEnv = ENV !== 'prod';
 
@@ -29,7 +29,6 @@ const options = {
 };
 
 export const serve = cb => done => {<% if (props.loader === 'webpack') { %>
-    const config = nodeEnv ? configDev : configDist;
     const bundler = webpack(config);
     const middleware = [
         webpackDevMiddleware(bundler, {

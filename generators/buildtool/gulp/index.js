@@ -1,4 +1,4 @@
-'use strict';
+
 var common = require('../_common');
 var fs = require('fs-extra');
 
@@ -121,6 +121,8 @@ module.exports = common.extend({
                 pkg.devDependencies['babel-cli'] = '^6.16.0';
                 pkg.devDependencies['babel-core'] = '^6.6.5';
                 pkg.devDependencies['babel-loader'] = '^6.2.4';
+                pkg.devDependencies['babel-polyfill'] = '^6.23.0';
+                pkg.devDependencies['babel-register'] = '^6.23.0';
                 pkg.devDependencies['babel-runtime'] = '^6.6.1';
                 pkg.devDependencies['babel-plugin-transform-object-rest-spread'] = '^6.22.0';
                 pkg.devDependencies['babel-preset-env'] = '^1.1.8';

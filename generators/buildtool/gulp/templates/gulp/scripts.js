@@ -43,11 +43,9 @@ export const scripts = bs => {
     return rebundle;
 };<% } else if (props.loader === 'webpack') { %>import gutil from 'gulp-util';
 import webpack from 'webpack';
-import webpackConfig from '../webpack.config';
-import {ENV} from './helper/env';
+import wpc from '../webpack.config';
 
 export const scripts = () => cb => {
-    const wpc = ENV !== 'prod' && webpackConfig.dev || webpackConfig.prod;
     const config = {
         ...wpc, stats: {
             // Configure the console output
