@@ -2,29 +2,29 @@
 require('babel-polyfill');
 require('babel-register');
 
-var path = require('path');
-var webpack = require('webpack');
-var assign = require('lodash/assign');
-var ENV = require('./gulp/helper/env');
-var DEV = ENV === 'dev' || ENV === 'node';
+const path = require('path');
+const webpack = require('webpack');
+const assign = require('lodash/assign');
+const ENV = require('./gulp/helper/env');
+const DEV = ENV === 'dev' || ENV === 'node';
 
-var resolveNpmPath = function (componentPath) {
+const resolveNpmPath = function (componentPath) {
     return path.resolve(path.join(__dirname, 'node_modules', componentPath));
 };
 
-var provide = {
+const provide = {
     $: 'jquery',
     jQuery: 'jquery',
     'window.jQuery': 'jquery'
 };
 
-var aliases = {
+const aliases = {
     'jquery': resolveNpmPath('jquery/dist/jquery')<% if (props.preprocessor === 'sass' && props.view === 'bootstrap') { %>,
     'bootstrap': resolveNpmPath('bootstrap-sass/assets/javascripts/bootstrap')<% } %>
 };
 
 
-var config = {
+const config = {
     context: path.join(__dirname, 'app', 'Resources', 'public', 'scripts'),
     resolve: {
         modules: [
@@ -83,6 +83,7 @@ if (!DEV) {
         ]
     });
 
+    config.plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 
 module.exports = config;
