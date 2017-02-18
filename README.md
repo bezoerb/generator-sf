@@ -25,10 +25,6 @@ Then generate your new project:
 yo sf
 ```
 
-
-
-![The Team](https://raw.github.com/bezoerb/generator-sf/master/generators/view/_common/templates/img/yo-grunt-bower-symfony.png)
-
 ## Features
 * Symfony framework
 * Twig templating engine
