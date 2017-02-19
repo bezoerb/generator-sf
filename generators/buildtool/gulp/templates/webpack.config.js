@@ -5,7 +5,7 @@ require('babel-register');
 const path = require('path');
 const webpack = require('webpack');
 const assign = require('lodash/assign');
-const ENV = require('./gulp/helper/env');
+const {ENV} = require('./gulp/helper/env');
 const DEV = ENV === 'dev' || ENV === 'node';
 
 const resolveNpmPath = function (componentPath) {
