@@ -35,7 +35,7 @@
     "globby": "6.1.0",
     "got": "6.7.1",
     "lodash": "4.17.4",
-    "resolve": "1.2.0",
+    "resolve": "1.2.1",
     "wsfp": "0.0.7",
     "xdg-basedir": "3.0.0",
     "yamljs": "0.2.8",
