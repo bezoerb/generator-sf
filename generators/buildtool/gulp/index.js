@@ -75,7 +75,7 @@ module.exports = common.extend({
             pkg.devDependencies['gulp-size'] = '^2.1.0';
 
             pkg.devDependencies['run-sequence'] = '^1.0.1';
-            pkg.devDependencies['sw-precache'] = '^4.1.0';
+            pkg.devDependencies['sw-precache'] = '^5.0.0';
 
             pkg.devDependencies['eslint-config-xo'] = '^0.17.0';
 
@@ -126,7 +126,7 @@ module.exports = common.extend({
                 pkg.devDependencies['babel-runtime'] = '^6.6.1';
                 pkg.devDependencies['babel-plugin-transform-object-rest-spread'] = '^6.22.0';
                 pkg.devDependencies['babel-preset-env'] = '^1.1.8';
-                pkg.devDependencies['webpack-dev-server'] = '^1.12.1';
+                pkg.devDependencies['webpack-dev-server'] = '^2.4.1';
                 pkg.devDependencies['webpack-dev-middleware'] = '^1.2.0';
                 pkg.devDependencies['webpack-hot-middleware'] = '^2.4.1';
                 pkg.devDependencies['json-loader'] = '^0.5.3';
