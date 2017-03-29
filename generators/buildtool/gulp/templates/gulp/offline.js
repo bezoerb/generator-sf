@@ -2,6 +2,7 @@ import path from 'path';
 import gulp from 'gulp';
 import swPrecache from 'sw-precache';
 import {prefixDist, prefixDev} from './helper/utils';
+import gulpLoadPlugins from 'gulp-load-plugins';
 import pkg from '../package.json';
 
 const baseDir = prefixDist(path.sep);
