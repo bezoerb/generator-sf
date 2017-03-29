@@ -21,7 +21,7 @@ import {clean} from './gulp/clean';
 <% if (props.critical) { %>import {critical} from './gulp/critical';<% } %>
 <% if (props.uncss) { %>import {uncss} from './gulp/uncss';<% } %>
 import {sfcl} from './gulp/exec';
-import {appcacheNanny, copySwScripts, generateServiceWorker} from './gulp/service-worker';
+import {appcache, appcacheNanny, copySwScripts, generateServiceWorker} from './gulp/offline';
 import {lint, karma, phpunit} from './gulp/tests';
 
 // Clean output directory
@@ -77,8 +77,12 @@ gulp.task('copy', copy);
 // See http://www.html5rocks.com/en/tutorials/service-worker/introduction/ for
 // an in-depth explanation of what service workers are and why you should care.
 gulp.task('copy-appcache-nanny', appcacheNanny);
+gulp.task('appcache', ['copy-appcache-nanny'], appcache)
 gulp.task('copy-sw-scripts', copySwScripts);
-gulp.task('generate-service-worker', ['copy-appcache-nanny', 'copy-sw-scripts'], generateServiceWorker);
+gulp.task('generate-service-worker', ['copy-sw-scripts'], generateServiceWorker);
+gulp.task('offline', cb =>
+    runSequence(['appcache', 'generate-service-worker'], cb)
+);
 
 // Browsersync dev server with a php middleware. It watches files for changes & reload.
 gulp.task('serve', ENV  === 'prod'? ['build'] : [<% if (props.loader !== 'webpack') { %>'scripts', <% } %>'styles', 'images'], serve((err, done) => {
@@ -108,7 +112,7 @@ gulp.task('assets', ['styles', 'scripts', 'images', 'copy'], cb =>
         'uncss',<% } if (props.critical) { %>
         'critical',<% } %>
         'rev',
-        'generate-service-worker',
+        'offline',
         cb)
 );
 

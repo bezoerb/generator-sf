@@ -55,6 +55,7 @@ module.exports = common.extend({
             pkg.devDependencies['gulp-load-plugins'] = '^1.3.0';
             pkg.devDependencies['gulp-cssnano'] = '^2.1.2';
             pkg.devDependencies['gulp-minify-html'] = '^1.0.6';
+            pkg.devDependencies['gulp-manifest'] = '^0.1.1';
             pkg.devDependencies['gulp-newer'] = '^1.3.0';
             pkg.devDependencies['gulp-phpunit'] = '^0.22.1';
             pkg.devDependencies['gulp-remote-src'] = '^0.4.0';
@@ -220,7 +221,7 @@ module.exports = common.extend({
             this.template('gulp/scripts.js');
             this.template('gulp/styles.js');
             this.template('gulp/tests.js');
-            this.template('gulp/service-worker.js');
+            this.template('gulp/offline.js');
 
             if (this.props.critical) {
                 this.template('gulp/critical.js');
