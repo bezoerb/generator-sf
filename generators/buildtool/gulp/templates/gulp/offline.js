@@ -5,6 +5,7 @@ import {prefixDist, prefixDev} from './helper/utils';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import pkg from '../package.json';
 
+const $ = gulpLoadPlugins();
 const baseDir = prefixDist(path.sep);
 
   // Static file globs for appcache & service worker
