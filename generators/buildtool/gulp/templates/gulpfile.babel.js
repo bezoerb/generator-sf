@@ -6,7 +6,7 @@
 // https://babeljs.io/docs/learn-es2015/
 import gulp from 'gulp';
 import runSequence from 'run-sequence';
-import {prefixDev} from './gulp/helper/utils';
+import {prefixDev,prefixDist} from './gulp/helper/utils';
 import {ENV} from './gulp/helper/env';
 
 // require the tasks
@@ -90,7 +90,10 @@ gulp.task('serve', ENV  === 'prod'? ['build'] : [<% if (props.loader !== 'webpac
         gulp.watch(prefixDev('img/icons/*.svg'), ['images:svg:watch']);
         gulp.watch(prefixDev('styles/**/*.scss'), ['styles']);<% if (props.loader === 'jspm') { %>
         gulp.watch(prefixDev('scripts/**/*.js'), bs.reload);<% } %>
-        gulp.watch(prefixDev('../views/**/*.html.twig'), bs.reload);
+        gulp.watch([
+                prefixDev('../views/**/*.html.twig'),
+                prefixDist('../src/**/Resources/views/**/*.html.twig')]
+        , bs.reload);
     }
     done(err);
 }));
