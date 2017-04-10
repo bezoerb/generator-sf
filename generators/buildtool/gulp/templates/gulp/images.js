@@ -1,23 +1,23 @@
 import gulp from 'gulp';
-import {prefixDev} from './helper/utils';
+import {src, tmp} from './helper/dir';
 import gulpLoadPlugins from 'gulp-load-plugins';
 const $ = gulpLoadPlugins();
 
 // copy unoptimized images in dev mode
 export const imagecopy = () =>
-    gulp.src(prefixDev('img/**/*', '!img/icons/**/*.svg'))
-        .pipe(gulp.dest('.tmp/img'))
+    gulp.src(src('img/**/*', '!img/icons/**/*.svg'))
+        .pipe(gulp.dest(tmp('img')))
         .pipe($.size({title: 'imageCopy'}));
 
 // Optimize images
 export const imagemin = () =>
-    gulp.src(prefixDev('img/**/*', '!img/icons/**/*.svg'))
+    gulp.src(src('img/**/*', '!img/icons/**/*.svg'))
         .pipe($.cache($.imagemin()))
-        .pipe(gulp.dest('.tmp/img'))
+        .pipe(gulp.dest(tmp('img')))
         .pipe($.size({title: 'imagemin'}));
 
 export const svgstore = () =>
-    gulp.src(prefixDev('img/icons/**/*.svg'))
+    gulp.src(src('img/icons/**/*.svg'))
         .pipe($.imagemin([$.imagemin.svgo({
             plugins: [
                 {removeViewBox: false},
@@ -26,5 +26,5 @@ export const svgstore = () =>
             ]
         })]))
         .pipe($.svgstore())
-        .pipe(gulp.dest('.tmp/img'))
+        .pipe(gulp.dest(tmp('img')))
         .pipe($.size({title: 'svgstore'}));

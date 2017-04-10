@@ -7,12 +7,12 @@ import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 import sourcemaps from 'gulp-sourcemaps';
 import {first} from 'lodash';
-import {prefixDev} from './helper/utils';
+import {src, tmp} from './helper/dir';
 import {ENV} from './helper/env';
 
 export const scripts = bs => {
     const watch = ENV !== 'prod';
-    let bundler = browserify(prefixDev('scripts/main.js'), {debug: watch});
+    let bundler = browserify(src('scripts/main.js'), {debug: watch});
     if (watch) {
         bundler = watchify(bundler);
     }
@@ -34,7 +34,7 @@ export const scripts = bs => {
             .pipe(buffer())
             .pipe(sourcemaps.init({loadMaps: true}))
             .pipe(sourcemaps.write('./'))
-            .pipe(gulp.dest('.tmp/scripts'));
+            .pipe(gulp.dest(tmp('scripts')));
 
     if (watch) {
         bundler.on('update', () => rebundle().pipe(bs.stream({once: true})));

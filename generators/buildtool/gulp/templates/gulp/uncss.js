@@ -1,13 +1,14 @@
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
+import {tmp} from './helper/dir';
 const $ = gulpLoadPlugins();
 
 export const uncss = () =>
-    gulp.src('.tmp/styles/**/*.css')
-        .pipe(gulp.dest('.tmp/no-uncss'))
+    gulp.src(tmp('styles/**/*.css'))
+        .pipe(gulp.dest(tmp('no-uncss')))
         .pipe($.sourcemaps.init())
         .pipe($.uncss({
-            html: ['.tmp/html/**/*.html'],
+            html: [tmp('html/**/*.html')],
             ignore: [
             /* ignore classes which are not present at dom load */<% if (props.view === 'bootstrap') { %>
             /\.fade/,
@@ -31,4 +32,4 @@ export const uncss = () =>
         }))
         .pipe($.sourcemaps.write('./'))
         .pipe($.size({title: 'uncss'}))
-        .pipe(gulp.dest('.tmp/styles'));
+        .pipe(gulp.dest(tmp('.tmp')));

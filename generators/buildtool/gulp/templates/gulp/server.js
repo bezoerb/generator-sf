@@ -1,5 +1,6 @@
 import browserSync from 'browser-sync';
-import {phpMiddleware, paths} from './helper/utils';
+import {php} from './helper/middleware';
+import {tmp, src, dist} from './helper/dir';
 import {ENV} from './helper/env';
 import getport from 'getport';
 import pkg from '../package.json';
@@ -15,7 +16,7 @@ export const bs = browserSync.create(pkg.name || 'generator-sf');
 
 const options = {
     server: {
-        baseDir: nodeEnv ? ['.tmp', paths.app, './', 'node_modules', paths.dist] : paths.dist
+        baseDir: nodeEnv ? [tmp(), src(), './', 'node_modules', dist()] : dist()
     },
     watchTask: nodeEnv,
     notify: nodeEnv,
@@ -38,7 +39,7 @@ export const serve = cb => done => {<% if (props.loader === 'webpack') { %>
         webpackHotMiddleware(bundler)
     ];<% } %>
     getport(8000, 8999, (err, port) => {
-        bs.init({...options, port, middleware: [<% if (props.loader === 'webpack') { %>...middleware, <% } %>phpMiddleware()]}, err => {
+        bs.init({...options, port, middleware: [<% if (props.loader === 'webpack') { %>...middleware, <% } %>php()]}, err => {
             if (cb) {
                 cb(err, done);
             } else {

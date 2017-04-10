@@ -6,7 +6,7 @@
 // https://babeljs.io/docs/learn-es2015/
 import gulp from 'gulp';
 import runSequence from 'run-sequence';
-import {prefixDev} from './gulp/helper/utils';
+import {src, view} from './gulp/helper/utils';
 import {ENV} from './gulp/helper/env';
 
 // require the tasks
@@ -87,10 +87,10 @@ gulp.task('offline', cb =>
 // Browsersync dev server with a php middleware. It watches files for changes & reload.
 gulp.task('serve', ENV  === 'prod'? ['build'] : [<% if (props.loader !== 'webpack') { %>'scripts', <% } %>'styles', 'images'], serve((err, done) => {
     if (!err && ENV  !== 'prod') {
-        gulp.watch(prefixDev('img/icons/*.svg'), ['images:svg:watch']);
-        gulp.watch(prefixDev('styles/**/*.scss'), ['styles']);<% if (props.loader === 'jspm') { %>
-        gulp.watch(prefixDev('scripts/**/*.js'), bs.reload);<% } %>
-        gulp.watch(prefixDev('../views/**/*.html.twig'), bs.reload);
+        gulp.watch(src('img/icons/*.svg'), ['images:svg:watch']);
+        gulp.watch(src('styles/**/*.scss'), ['styles']);<% if (props.loader === 'jspm') { %>
+        gulp.watch(src('scripts/**/*.js'), bs.reload);<% } %>
+        gulp.watch(view('**/*.html.twig'), bs.reload);
     }
     done(err);
 }));

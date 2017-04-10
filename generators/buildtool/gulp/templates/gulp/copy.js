@@ -1,9 +1,9 @@
 import gulp from 'gulp';
-import {paths, prefixDev} from './helper/utils';
+import {dist, src} from './helper/dir';
 import gulpLoadPlugins from 'gulp-load-plugins';
 const $ = gulpLoadPlugins();
 
 export const copy = () =>
-    gulp.src(prefixDev( '**/*.{ico,txt,web,json,webapp,xml}'), {dot: true})
-        .pipe(gulp.dest(paths.dist))
+    gulp.src(src('**/*.{ico,txt,web,json,webapp,xml}'), {dot: true})
+        .pipe(gulp.dest(dist()))
         .pipe($.size({title: 'copy'}));

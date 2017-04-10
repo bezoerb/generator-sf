@@ -1,18 +1,18 @@
-import {prefixDev, prefixDist} from './helper/utils';
+import {dist, config} from './helper/dir';
 import del from 'del';
 
 const mapping = {
     tmp: ['.tmp'],
-    scripts: [prefixDist('scripts')],
-    styles: [prefixDist('styles')],
-    images: [prefixDist('img')],
+    scripts: [dist('scripts')],
+    styles: [dist('styles')],
+    images: [dist('img')],
     build: [
-        prefixDev('../../config/filerev.json'),
-        prefixDist('appcache-loader.html'),
-        prefixDist('service-worker.js'),
-        prefixDist('manifest.json'),
-        prefixDist('manifest.webapp'),
-        prefixDist('browserconfig.xml'),
+        config('../../config/filerev.json'),
+        dist('appcache-loader.html'),
+        dist('service-worker.js'),
+        dist('manifest.json'),
+        dist('manifest.webapp'),
+        dist('browserconfig.xml'),
     ],
 };
 

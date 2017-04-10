@@ -1,27 +1,27 @@
 import gulp from 'gulp';
-import {paths, prefixDist} from './helper/utils';
+import {dist, tmp, config} from './helper/dir';
 import gulpLoadPlugins from 'gulp-load-plugins';
 const $ = gulpLoadPlugins();
 
 export const rev = () =>
-    gulp.src([
+    gulp.src(tmp(
         '.tmp/img/**/*.{jpg,jpeg,gif,png,webp,svg}',
         '.tmp/styles/**/*.css',
         '.tmp/scripts/**/*.js'
-    ], {base: '.tmp'})
+    ), {base: tmp()})
         .pipe($.rev())
-        .pipe(gulp.dest(paths.dist))
+        .pipe(gulp.dest(dist()))
         .pipe($.rev.manifest('rev-manifest.json'))
-        .pipe(gulp.dest('app/config'))
+        .pipe(gulp.dest(config()))
         .pipe($.size({title: 'rev'}));
 
 export const revManifest = () => {
-    var manifest = gulp.src('app/config/rev-manifest.json');
+    const manifest = gulp.src(config('rev-manifest.json'));
 
-    return gulp.src(prefixDist(
+    return gulp.src(dist(
         'styles/*.css',
         'scripts/*.js'
-    ), {base: paths.dist})
+    ), {base: dist()})
         .pipe($.revReplace({manifest: manifest, replaceInExtensions: ['.js', '.css']}))
-        .pipe(gulp.dest(paths.dist));
+        .pipe(gulp.dest(dist()));
 };
