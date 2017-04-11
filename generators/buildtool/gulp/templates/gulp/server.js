@@ -1,5 +1,5 @@
 import browserSync from 'browser-sync';
-import {phpMiddleware, paths} from './helper/utils';
+import {phpMiddleware, paths, bsRootPaths} from './helper/utils';
 import {ENV} from './helper/env';
 import getport from 'getport';
 import pkg from '../package.json';
@@ -15,7 +15,7 @@ export const bs = browserSync.create(pkg.name || 'generator-sf');
 
 const options = {
     server: {
-        baseDir: nodeEnv ? ['.tmp', paths.app, './', 'node_modules', paths.dist] : paths.dist
+      baseDir: nodeEnv ? bsRootPaths : paths.dist
     },
     watchTask: nodeEnv,
     notify: nodeEnv,
@@ -49,4 +49,3 @@ export const serve = cb => done => {<% if (props.loader === 'webpack') { %>
 };
 
 export const stream = browserSync.stream;
-
