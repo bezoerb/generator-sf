@@ -57,7 +57,7 @@
     "gulp-plumber": "1.1.0",
     "path-exists": "3.0.0",
     "run-sequence": "1.2.2",
-    "shelljs": "0.7.6",
+    "shelljs": "0.7.7",
     "vinyl-source-stream": "1.1.0",
     "yarn": "0.21.3",
     "yeoman-assert": "3.0.0",
