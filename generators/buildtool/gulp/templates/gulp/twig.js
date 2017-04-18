@@ -1,15 +1,15 @@
 import gulp from 'gulp';
 import {basename} from 'path';
-import {tmp, src, dist} from './helper/dir';
+import {tmp, views, dist} from './helper/dir';
 import gulpLoadPlugins from 'gulp-load-plugins';
 
 const $ = gulpLoadPlugins();
 
 export const twig = () =>
-    gulp.src(src('../views/controller/**/*.twig'))
+    gulp.src(views('../views/controller/**/*.twig'))
         .pipe($.newer(tmp('html')))
         .pipe($.twig({
-            base: src('../views'),
+            base: views(),
             functions: [{name: 'asset', func: args => args}],
             namespaces: {web: dist('/')},
             data: {

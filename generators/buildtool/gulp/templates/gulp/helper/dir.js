@@ -2,8 +2,9 @@ import path from 'path';
 import {flatten, first} from 'lodash';
 
 const paths = {
+    bundles: 'src',
     src: 'app/Resources/public',
-    view: 'app/Resources/views',
+    views: 'app/Resources/views',
     config: 'app/config',
     dist: 'web',
     tmp: '.tmp'
@@ -27,7 +28,8 @@ const preparePaths = (source, rest) => {
 };
 
 export const src = (...rest) => preparePaths(paths.src, rest);
+export const bundles = (...rest) => preparePaths(paths.bundles, rest);
 export const dist = (...rest) => preparePaths(paths.dist, rest);
 export const config = (...rest) => preparePaths(paths.config, rest);
 export const tmp = (...rest) => preparePaths(paths.tmp, rest);
-export const view = (...rest) => preparePaths(paths.view, rest);
+export const views = (...rest) => preparePaths(paths.views, rest);
