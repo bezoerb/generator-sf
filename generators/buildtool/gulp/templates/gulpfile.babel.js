@@ -102,9 +102,7 @@ gulp.task('serve', ENV  === 'prod'? ['build'] : [<% if (props.loader !== 'webpac
 gulp.task('eslint', lint);
 gulp.task('karma', karma);
 gulp.task('phpunit', phpunit);
-gulp.task('test', cb =>
-    runSequence(['eslint', 'karma', 'phpunit'], cb)
-);
+gulp.task('test', cb => runSequence('eslint', 'phpunit', 'karma', cb));
 
 // Bring all the assets in place
 // This task skips some optimizations for the dev environment to

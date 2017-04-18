@@ -208,7 +208,10 @@ module.exports = common.extend({
             this.template('gulpfile.babel.js', 'gulpfile.babel.js');
             fs.mkdirsSync(this.destinationPath('gulp'));
 
-            fs.copySync(this.templatePath('gulp/helper'), this.destinationPath('gulp/helper'));
+            // helper
+            this.template('gulp/helper/dir.js');
+            this.template('gulp/helper/env.js');
+            this.template('gulp/helper/middleware.js');
 
             // first all basic tasks for every configuration
             this.template('gulp/server.js');
