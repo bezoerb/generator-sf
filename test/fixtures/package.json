@@ -36,7 +36,6 @@
     "eslint": "^3.7.1",
     "eslint-config-xo": "^0.17.0",
     "fs-extra": "^2.0.0",
-    "get-port": "^2.1.0",
     "getport": "^0.1.0",
     "grunt": "^1.0.1",
     "grunt-appcache": "^0.2.0",

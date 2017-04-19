@@ -80,7 +80,7 @@ module.exports = common.extend({
             pkg.devDependencies['run-sequence'] = '^1.0.1';
             pkg.devDependencies['sw-precache'] = '^5.0.0';
 
-            pkg.devDependencies['eslint-config-xo'] = '^0.17.0';
+            pkg.devDependencies['eslint-config-xo'] = '^0.18.1';
 
             pkg.devDependencies['sw-toolbox'] = '^3.0.1';
             pkg.devDependencies['appcache-nanny'] = '^1.1.0';
@@ -139,7 +139,7 @@ module.exports = common.extend({
                 pkg.devDependencies.babelify = '^7.2.0';
                 pkg.devDependencies.browserify = '^14.0.0';
                 pkg.devDependencies.watchify = '^3.7.0';
-                pkg.devDependencies.deamdify = '^0.2.0';
+                pkg.devDependencies.deamdify = '^0.3.0';
                 pkg.devDependencies.debowerify = '^1.4.1';
                 pkg.devDependencies.rollupify = '^0.3.4';
                 pkg.devDependencies['vinyl-buffer'] = '^1.0.0';

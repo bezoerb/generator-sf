@@ -18,6 +18,9 @@ module.exports = Generator.extend({
             name: _.camelCase(this.appname),
             version: '0.0.0',
             scripts: {},
+            engines: {
+                node: '>=4'
+            },
             dependencies: {},
             devDependencies: {}
         });
