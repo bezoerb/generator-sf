@@ -1,3 +1,4 @@
+/* eslint-env browser */
 import debugFn from 'debug';
 import $ from 'jquery';
 import picturefill from 'picturefill';

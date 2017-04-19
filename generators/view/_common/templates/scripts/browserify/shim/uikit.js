@@ -1,8 +1,10 @@
+/* eslint-env browser */
+/* global require */
 // Shim to make jquery globally available
 // needed for libraries depending on the global jquery object
-/* global require */
-var $ = require('jquery');
-window.jQuery = window.$ = $;
+const $ = require('jquery');
+window.jQuery = $;
+window.$ = $;
 require('uikit');
 
 export default window.UIkit;

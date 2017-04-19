@@ -1,7 +1,6 @@
 'use strict';
 var Promise = require('bluebird');
 var fs = require('fs-extra');
-var _ = require('lodash');
 var common = require('../_common');
 
 Promise.promisifyAll(fs);

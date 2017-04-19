@@ -1,4 +1,6 @@
+/* eslint-env browser */
 import debugFn from 'debug';
+import $ from 'jquery';
 import {Foundation} from 'foundation-sites';
 import picturefill from 'picturefill';
 import svg4everybody from 'svg4everybody';

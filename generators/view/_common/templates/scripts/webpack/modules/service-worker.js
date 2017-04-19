@@ -7,7 +7,7 @@
  * http://bezoerb.mit-license.org/
  * All rights reserved.
  */
-/* eslint-env worker */
+/* eslint-env browser */
 import debugFn from 'debug';
 import appCacheNanny from 'appcache-nanny';
 
