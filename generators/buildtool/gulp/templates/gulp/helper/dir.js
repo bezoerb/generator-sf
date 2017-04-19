@@ -19,9 +19,8 @@ const preparePaths = (source, rest) => {
         if (match) {
             const file = path.join(paths[source] || source, match[2]);
             return `${match[1]}${file}`;
-        } else {
-            return path.join(paths[source] || source, dir);
         }
+        return path.join(paths[source] || source, dir);
     });
 
     return dirs.length === 1 ? first(dirs) : dirs;

@@ -1,6 +1,6 @@
 // Generated on <%= (new Date).toISOString().split('T')[0] %> using
 // <%= pkg.name %> <%= pkg.version %>
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     var _ = require('lodash');
     var fs = require('fs');
     var path = require('path');
@@ -14,19 +14,19 @@ module.exports = function(grunt) {
         dist: 'web'
     };
 
-    require('jit-grunt')(grunt,{
+    require('jit-grunt')(grunt, {
         availabletasks: 'grunt-available-tasks'
     });
 
-    // load grunt config
+    // Load grunt config
     require('load-grunt-config')(grunt, {
-        // path to task.js files, defaults to grunt dir
+        // Path to task.js files, defaults to grunt dir
         configPath: path.join(process.cwd(), 'grunt'),
 
-        // auto grunt.initConfig
+        // Auto grunt.initConfig
         init: true,
 
-        // data passed into config.
+        // Data passed into config.
         data: {
             paths: paths,
             env: env

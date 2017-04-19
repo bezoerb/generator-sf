@@ -3,7 +3,7 @@ import {src, tmp} from './helper/dir';
 import gulpLoadPlugins from 'gulp-load-plugins';
 const $ = gulpLoadPlugins();
 
-// copy unoptimized images in dev mode
+// Copy unoptimized images in dev mode
 export const imagecopy = () =>
     gulp.src(src('img/**/*', '!img/icons/**/*.svg'))
         .pipe(gulp.dest(tmp('img')))

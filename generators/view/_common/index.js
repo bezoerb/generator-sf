@@ -210,7 +210,7 @@ module.exports = Generator.extend({
         var file = path.join('scripts', 'sw', 'runtime-caching.js');
         this.template(file, path.join(this.props.base, file));
 
-        // testfiles
+        // Testfiles
         var dest = 'tests/Frontend';
         if (this.props.loader === 'jspm') {
             fs.copySync(
@@ -236,10 +236,10 @@ module.exports = Generator.extend({
         fs.removeSync(this.destinationPath('app/Resources/views'));
         fs.mkdirsSync(this.destinationPath('app/Resources/views/controller/default'));
 
-        // copy base template
+        // Copy base template
         this.template('base.html.twig', path.join(this.props.base, '..', 'views', 'base.html.twig'));
 
-        // copy default action template
+        // Copy default action template
         this.template('index.html.twig', path.join(this.props.base, '..', 'views', 'controller', 'default', 'index.html.twig'));
 
         fs.copySync(this.commonTemplatePath('img'), path.join(this.props.base, 'img'));

@@ -76,7 +76,7 @@ module.exports = Generator.extend({
 
         Generator.apply(this, arguments);
 
-        //     this.option('symfonyStandard', {
+        //     This.option('symfonyStandard', {
         //         type: Boolean,
         //         desc: 'Would you like to use the Symfony "Standard Edition"'
         //     });
@@ -142,11 +142,11 @@ module.exports = Generator.extend({
         var dest = this.destinationRoot();
         var cache = path.join(xdgBasedir.cache, 'generator-sf');
 
-        // will be generated from the zip
+        // Will be generated from the zip
         var dirname = 'symfony-standard-' + this.props.commit;
         var log = this.log.write();
 
-        // check cache first
+        // Check cache first
         return fs.statAsync(path.join(cache, dirname))
             .catch(function () {
                 log.info('Fetching %s ...', source)
@@ -182,23 +182,23 @@ module.exports = Generator.extend({
     writing: {
 
         /**
-         * remove assetic
+         * Remove assetic
          */
         updateComposerJson: function () {
             var data = this.fs.readJSON(this.destinationPath('composer.json'));
             fs.removeSync(this.destinationPath('composer.json'));
 
-            // remove assetic
+            // Remove assetic
             delete data.require['symfony/assetic-bundle'];
 
-            // add filerev bundle
+            // Add filerev bundle
             if (this.props.version >= 2.7) {
                 data.require['zoerb/filerevbundle'] = '^1.1';
             } else {
                 data.require['zoerb/filerevbundle'] = '~0.1.2';
             }
 
-            // add phpunit
+            // Add phpunit
             data['require-dev'] = _.assign(data['require-dev'] || {}, {'phpunit/phpunit': '~4.6'});
 
             this.fs.writeJSON(this.destinationPath('composer.json'), data);
@@ -209,20 +209,20 @@ module.exports = Generator.extend({
                 return;
             }
 
-            // remove assetic from config_dev.yml
+            // Remove assetic from config_dev.yml
             var confDev = YAML.load('app/config/config_dev.yml');
             delete confDev.assetic;
             var newConfDev = YAML.stringify(confDev, 2, 4);
             fs.writeFileSync('app/config/config_dev.yml', newConfDev);
 
-            // remove assetic from config.yml
+            // Remove assetic from config.yml
             var conf = YAML.load('app/config/config.yml');
             delete conf.assetic;
 
             var newConf = YAML.stringify(conf, 2, 4);
             fs.writeFileSync('app/config/config.yml', newConf);
 
-            // remove assetic from app kernel
+            // Remove assetic from app kernel
             var appKernel = read('app/AppKernel.php').replace('new Symfony\\Bundle\\AsseticBundle\\AsseticBundle(),', '');
             fs.writeFileSync('app/AppKernel.php', appKernel);
 
@@ -239,10 +239,10 @@ module.exports = Generator.extend({
         updateConfig: function () {
             var conf = read('app/config/config.yml').replace(/\[([^"']+)]/igm, '["$1"]');
 
-            // change parameter names to use dot notation
+            // Change parameter names to use dot notation
             conf = conf.replace(/%(database|mailer)_(.*)%/g, '%$1.$2%');
 
-            // add twig namespaces
+            // Add twig namespaces
             conf = YAML.parse(conf);
             conf.twig = _.assign({}, conf.twig, {
                 paths: {
@@ -253,15 +253,15 @@ module.exports = Generator.extend({
 
             fs.writeFileSync('app/config/config.yml', conf);
 
-            // update routing
+            // Update routing
             fs.copySync(this.templatePath('routing.yml'), 'app/config/routing.yml');
 
-            // add node environment for browsersync
+            // Add node environment for browsersync
             fs.copySync(this.templatePath('config_node.yml'), 'app/config/config_node.yml');
         },
 
         /**
-         * update parameters.yml.dist to use dot notation
+         * Update parameters.yml.dist to use dot notation
          */
         updateParameters: function () {
             var file = 'app/config/parameters.yml.dist';
@@ -271,7 +271,7 @@ module.exports = Generator.extend({
         },
 
         /**
-         * update app.php to consider environment variables SYMFONY_ENV and SYMFONY_DEBUG
+         * Update app.php to consider environment variables SYMFONY_ENV and SYMFONY_DEBUG
          * add extend .htaccess with best practices from h5b
          */
         updateApp: function () {
@@ -312,7 +312,7 @@ module.exports = Generator.extend({
                 appKernel = appKernel.replace('[\'dev\', \'test\']', '[\'node\', \'dev\', \'test\']');
             }
 
-            // add bundle
+            // Add bundle
             appKernel = addBundle(appKernel, 'new Zoerb\\Bundle\\FilerevBundle\\ZoerbFilerevBundle(),');
             fs.writeFileSync('app/AppKernel.php', appKernel);
 
@@ -320,7 +320,7 @@ module.exports = Generator.extend({
         },
 
         /**
-         * update default controller to use own template
+         * Update default controller to use own template
          */
         updateController: function () {
             var controllerPath = 'src/AppBundle/Controller/DefaultController.php';
@@ -332,7 +332,7 @@ module.exports = Generator.extend({
         },
 
         /**
-         * update default controller test to use own template
+         * Update default controller test to use own template
          */
         updateControllerTest: function () {
             var controllerPath = this.props.version < 3 ?
@@ -358,7 +358,7 @@ module.exports = Generator.extend({
     },
 
     end: function () {
-        // cleanup
+        // Cleanup
         fs.removeSync(this.destinationPath('web/apple-touch-icon.png'));
         fs.removeSync(this.destinationPath('web/favicon.ico'));
 

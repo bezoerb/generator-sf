@@ -11,4 +11,4 @@ module.exports = {
         src: '<%%= paths.app %>/styles/main.less',
         dest: '.tmp/less/main.css'
     }
-}
+};

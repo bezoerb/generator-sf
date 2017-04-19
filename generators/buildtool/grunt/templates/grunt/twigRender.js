@@ -6,10 +6,12 @@ module.exports = {
     dist: {
         options: {
             functions: {
-                asset: function (arg) { return arg; },
+                asset: function (arg) {
+                    return arg;
+                }
             },
             base: '<%%= paths.app %>/../views',
-            namespaces: { web: '<%%= paths.dist %>/' }
+            namespaces: {web: '<%%= paths.dist %>/'}
         },
         files: [{
             data: {
@@ -21,7 +23,7 @@ module.exports = {
             cwd: '<%%= paths.app %>/../views',
             src: ['controller/**/*.twig'], // Match twig templates but not partials
             dest: '.tmp/html',
-            ext: '.html'   // index.twig + datafile.json => index.html,
+            ext: '.html'   // Index.twig + datafile.json => index.html,
         }]
     }
 };

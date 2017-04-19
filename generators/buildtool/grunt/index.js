@@ -75,7 +75,7 @@ module.exports = common.extend({
             pkg.devDependencies.slash = '^1.0.0';
             pkg.devDependencies['fs-extra'] = '^1.0.0';
 
-            // css preprocessors
+            // Css preprocessors
             if (this.props.preprocessor === 'sass' && !this.props.libsass) {
                 pkg.devDependencies['grunt-contrib-sass'] = '^1.0.0';
             } else if (this.props.preprocessor === 'sass') {
@@ -89,7 +89,7 @@ module.exports = common.extend({
                 pkg.devDependencies['grunt-contrib-concat'] = '^1.0.0';
             }
 
-            // js loader
+            // Js loader
             if (this.props.loader === 'jspm') {
                 pkg.devDependencies.jspm = '^0.16.19';
                 pkg.devDependencies['grunt-contrib-uglify'] = '^2.0.0';
@@ -189,7 +189,7 @@ module.exports = common.extend({
             this.template('Gruntfile.js');
             fs.mkdirsSync(this.destinationPath('grunt'));
 
-            // first all basic tasks for every configuration
+            // First all basic tasks for every configuration
             this.template('grunt/aliases.js');
             this.template('grunt/clean.js');
             this.template('grunt/watch.js');
@@ -209,7 +209,7 @@ module.exports = common.extend({
             this.template('grunt/sw-precache.js');
             this.template('grunt/appcache.js');
 
-            // css
+            // Css
             switch (this.props.preprocessor) {
                 case 'none':
                     this.template('grunt/concat.js');
@@ -238,7 +238,7 @@ module.exports = common.extend({
                 this.template('grunt/critical.js');
             }
 
-            // js
+            // Js
             this.template('grunt/karma.js');
 
             switch (this.props.loader) {

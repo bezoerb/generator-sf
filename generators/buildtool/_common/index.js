@@ -107,7 +107,7 @@ module.exports = Generator.extend({
     },
 
     /**
-     *  initialization methods (checking current project state, getting configs, etc)
+     *  Initialization methods (checking current project state, getting configs, etc)
      */
     initializing: function () {
 

@@ -24,7 +24,7 @@ export const appcacheNanny = () =>
     gulp.src([require.resolve('appcache-nanny/appcache-loader.html')])
         .pipe(gulp.dest(dist('')));
 
-// generate appcahe manifest fpr browsers not supporting servive workers
+// Generate appcahe manifest fpr browsers not supporting servive workers
 export const appcache = () =>
     gulp.src(staticFiles, {base: baseDir})
         .pipe($.manifest({
@@ -52,7 +52,7 @@ export const generateServiceWorker = () => {
     return swPrecache.write(filepath, {
         // Used to avoid cache conflicts when serving on localhost.
         cacheId: pkg.name || 'generator-sf',
-        // sw-toolbox.js needs to be listed first. It sets up methods used in runtime-caching.js.
+        // Sw-toolbox.js needs to be listed first. It sets up methods used in runtime-caching.js.
         importScripts: [
             'scripts/sw/sw-toolbox.js',
             'scripts/sw/runtime-caching.js'

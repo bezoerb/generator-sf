@@ -7,7 +7,7 @@ module.exports = common.extend({
     },
 
     /**
-     *  initialization methods (checking current project state, getting configs, etc)
+     *  Initialization methods (checking current project state, getting configs, etc)
      */
     initializing: function () {
 
@@ -26,11 +26,11 @@ module.exports = common.extend({
     dependencies: function () {
         if (this.props.noBower) {
             this.addNpmDependencies({
-                // dependencies ?
+                // Dependencies ?
             });
         } else {
             this.addBowerDependencies({
-                // dependencies ?
+                // Dependencies ?
             });
         }
     },

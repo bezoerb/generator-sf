@@ -87,7 +87,7 @@ module.exports = Generator.extend({
         },
 
         gitignore: function () {
-            // append gitignore
+            // Append gitignore
             var ignores = fs.readFileSync(this.templatePath('gitignore'), 'utf-8');
             fs.ensureFileSync(this.destinationPath('.gitignore'));
             fs.appendFileSync(this.destinationPath('.gitignore'), ignores);

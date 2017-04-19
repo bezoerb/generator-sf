@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
     options: {
-        prefix : 'icon-'
+        prefix: 'icon-'
     },
     icons: {
         files: {

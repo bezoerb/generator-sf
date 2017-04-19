@@ -27,8 +27,8 @@ module.exports = function (grunt) {
                 },
                 groups: {
                     'Main:': ['default', 'serve', 'build', 'assets', 'test'],
-                    'Assets': ['js', 'css', 'img', 'copy', 'rev'],
-                    'Tests': ['eslint', 'karma', 'phpunit']
+                    Assets: ['js', 'css', 'img', 'copy', 'rev'],
+                    Tests: ['eslint', 'karma', 'phpunit']
                 }
             }
         }

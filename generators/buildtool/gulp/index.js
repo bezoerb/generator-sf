@@ -94,7 +94,7 @@ module.exports = common.extend({
             pkg.devDependencies['phantomjs-prebuilt'] = '>=1.9';
             pkg.devDependencies['fs-extra'] = '^2.0.0';
 
-            // css preprocessors
+            // Css preprocessors
             if (this.props.preprocessor === 'sass' && !this.props.libsass) {
                 pkg.devDependencies['gulp-ruby-sass'] = '^2.1.0';
             } else if (this.props.preprocessor === 'sass') {
@@ -108,7 +108,7 @@ module.exports = common.extend({
                 pkg.devDependencies['gulp-concat'] = '^2.6.0';
             }
 
-            // js loader
+            // Js loader
             if (this.props.loader === 'jspm') {
                 pkg.devDependencies.jspm = '^0.16.19';
                 pkg.devDependencies.systemjs = '^0.20.5';
@@ -210,12 +210,12 @@ module.exports = common.extend({
             this.template('gulpfile.babel.js', 'gulpfile.babel.js');
             fs.mkdirsSync(this.destinationPath('gulp'));
 
-            // helper
+            // Helper
             this.template('gulp/helper/dir.js');
             this.template('gulp/helper/env.js');
             this.template('gulp/helper/middleware.js');
 
-            // first all basic tasks for every configuration
+            // First all basic tasks for every configuration
             this.template('gulp/server.js');
             this.template('gulp/clean.js');
             this.template('gulp/copy.js');

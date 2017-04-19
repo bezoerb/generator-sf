@@ -12,8 +12,8 @@ const mapping = {
         dist('service-worker.js'),
         dist('manifest.json'),
         dist('manifest.webapp'),
-        dist('browserconfig.xml'),
-    ],
+        dist('browserconfig.xml')
+    ]
 };
 
 // Clean output directory

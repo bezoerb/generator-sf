@@ -41,9 +41,9 @@ export function init() {
                     registration.update();
                 }
 
-                // updatefound is fired if service-worker.js changes.
+                // Updatefound is fired if service-worker.js changes.
                 registration.onupdatefound = function () {
-                    // updatefound is also fired the very first time the SW is installed,
+                    // Updatefound is also fired the very first time the SW is installed,
                     // and there's no need to prompt for a reload at that point.
                     // So check here to see if the page is already controlled,
                     // i.e. whether there's an existing service worker.
@@ -76,7 +76,7 @@ export function init() {
             });
     } else if ('applicationCache' in window) {
         debug('initializing application cache');
-        // start to check for updates every 30s
+        // Start to check for updates every 30s
         appCacheNanny.start();
     }
 }
