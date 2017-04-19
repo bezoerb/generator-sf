@@ -32,4 +32,4 @@ export const uncss = () =>
         }))
         .pipe($.sourcemaps.write('./'))
         .pipe($.size({title: 'uncss'}))
-        .pipe(gulp.dest(tmp('.tmp')));
+        .pipe(gulp.dest(tmp()));

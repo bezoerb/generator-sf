@@ -1,5 +1,5 @@
 import gulp from 'gulp';
-import {src} from './helper/dir';
+import {src, tmp} from './helper/dir';
 import {ENV} from './helper/env';
 import gulpLoadPlugins from 'gulp-load-plugins';<% if (props.preprocessor === 'stylus') { %>
 import nib from 'nib';<% } %>
@@ -43,7 +43,7 @@ export const styles = bs => () => {<% if (props.preprocessor === 'sass' && !prop
         // Concatenate and minify styles
         .pipe($.if('*.css', $.cssnano({safe: true})))
         .pipe($.sourcemaps.write('./'))
-        .pipe(gulp.dest('.tmp/styles'))
+        .pipe(gulp.dest(tmp('styles')))
         .pipe($.size({title: 'styles'}));
 
     if (ENV !== 'prod') {

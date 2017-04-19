@@ -5,9 +5,9 @@ const $ = gulpLoadPlugins();
 
 export const rev = () =>
     gulp.src(tmp(
-        '.tmp/img/**/*.{jpg,jpeg,gif,png,webp,svg}',
-        '.tmp/styles/**/*.css',
-        '.tmp/scripts/**/*.js'
+        'img/**/*.{jpg,jpeg,gif,png,webp,svg}',
+        'styles/**/*.css',
+        'scripts/**/*.js'
     ), {base: tmp()})
         .pipe($.rev())
         .pipe(gulp.dest(dist()))
