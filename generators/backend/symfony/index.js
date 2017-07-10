@@ -55,8 +55,14 @@ module.exports = Generator.extend({
                     this.log('See: http://symfony.com/doc/current/book/installation.html#book-installation-permissions');
 
                     // Without using ACL
-                    var consoleContents = read('app/console').replace('<?php', '<?php' + os.EOL + 'umask(0002);');
-                    fs.outputFileSync('app/console', consoleContents);
+                    var consoleContents = '';
+                    if ((this.version || 3) < 2.8) {
+                        consoleContents = read('app/console').replace('<?php', '<?php' + os.EOL + 'umask(0002);');
+                        fs.outputFileSync('app/console', consoleContents);
+                    } else {
+                        consoleContents = read('bin/console').replace('<?php', '<?php' + os.EOL + 'umask(0002);');
+                        fs.outputFileSync('bin/console', consoleContents);
+                    }
 
                     var appContents = read('web/app.php').replace('<?php', '<?php' + os.EOL + 'umask(0002);');
                     fs.outputFileSync('web/app.php', appContents);
