@@ -32,11 +32,11 @@ module.exports = common.extend({
 
             pkg.devDependencies.bower = '^1.3.12';
             pkg.devDependencies.grunt = '^1.0.1';
-            pkg.devDependencies.chalk = '^1.1.1';
+            pkg.devDependencies.chalk = '^2.0.1';
             pkg.devDependencies.lodash = '^4.6.1';
-            pkg.devDependencies.eslint = '^3.7.1';
-            pkg.devDependencies['eslint-config-xo'] = '^0.17.0';
-            pkg.devDependencies['grunt-eslint'] = '^19.0.0';
+            pkg.devDependencies.eslint = '^4.2.0';
+            pkg.devDependencies['eslint-config-xo'] = '^0.18.2';
+            pkg.devDependencies['grunt-eslint'] = '^20.0.0';
             pkg.devDependencies['grunt-available-tasks'] = '^0.6.1';
             pkg.devDependencies['grunt-browser-sync'] = '^2.0.0';
             pkg.devDependencies['grunt-contrib-clean'] = '^1.0.0';
@@ -46,7 +46,7 @@ module.exports = common.extend({
             pkg.devDependencies['sw-toolbox'] = '^3.0.1';
             pkg.devDependencies['appcache-nanny'] = '^1.1.0';
             pkg.devDependencies['grunt-appcache'] = '^0.2.0';
-            pkg.devDependencies['grunt-contrib-imagemin'] = '^1.0.0';
+            pkg.devDependencies['grunt-contrib-imagemin'] = '^2.0.1';
             pkg.devDependencies['grunt-autoprefixer'] = '^3.0.0';
             pkg.devDependencies['grunt-contrib-watch'] = '^1.0.0';
             pkg.devDependencies['grunt-filerev'] = '^2.1.2';
@@ -60,7 +60,7 @@ module.exports = common.extend({
             pkg.devDependencies['php-proxy-middleware'] = '^1.0.1';
             pkg.devDependencies['load-grunt-config'] = '^0.19.0';
             pkg.devDependencies['core-js'] = '^2.4.0';
-            pkg.devDependencies.chai = '^3.3.0';
+            pkg.devDependencies.chai = '^4.0.2';
             pkg.devDependencies.karma = '^1.3.0';
             pkg.devDependencies.mocha = '^3.1.2';
             pkg.devDependencies['grunt-karma'] = '^2.0.0';
@@ -72,7 +72,7 @@ module.exports = common.extend({
             pkg.devDependencies['time-grunt'] = '^1.1.0';
             pkg.devDependencies['phantomjs-prebuilt'] = '>=1.9';
             pkg.devDependencies.slash = '^1.0.0';
-            pkg.devDependencies['fs-extra'] = '^1.0.0';
+            pkg.devDependencies['fs-extra'] = '^3.0.1';
 
             // Css preprocessors
             if (this.props.preprocessor === 'sass' && !this.props.libsass) {
@@ -91,7 +91,7 @@ module.exports = common.extend({
             // Js loader
             if (this.props.loader === 'jspm') {
                 pkg.devDependencies.jspm = '^0.16.19';
-                pkg.devDependencies['grunt-contrib-uglify'] = '^2.0.0';
+                pkg.devDependencies['grunt-contrib-uglify'] = '^3.0.1';
                 pkg.devDependencies['karma-jspm'] = '^2.0.1';
                 pkg.devDependencies.systemjs = '^0.20.5';
                 pkg.devDependencies['babel-cli'] = '^6.16.0';
@@ -102,10 +102,10 @@ module.exports = common.extend({
             } else if (this.props.loader === 'webpack') {
                 pkg.devDependencies['babel-cli'] = '^6.16.0';
                 pkg.devDependencies['babel-core'] = '^6.6.5';
-                pkg.devDependencies['babel-loader'] = '^6.2.4';
+                pkg.devDependencies['babel-loader'] = '^7.1.1';
                 pkg.devDependencies['babel-runtime'] = '^6.6.1';
-                pkg.devDependencies['grunt-webpack'] = '^1.0.11';
-                pkg.devDependencies.webpack = '^2.2.1';
+                pkg.devDependencies['grunt-webpack'] = '^3.0.1';
+                pkg.devDependencies.webpack = '^3.1.0';
                 pkg.devDependencies['babel-plugin-transform-object-rest-spread'] = '^6.22.0';
                 pkg.devDependencies['babel-preset-env'] = '^1.1.8';
                 pkg.devDependencies['webpack-dev-server'] = '^1.12.1';
@@ -123,13 +123,13 @@ module.exports = common.extend({
                 pkg.devDependencies.babelify = '^7.2.0';
                 pkg.devDependencies.browserify = '^14.0.0';
                 pkg.devDependencies.watchify = '^3.7.0';
-                pkg.devDependencies.deamdify = '^0.2.0';
+                pkg.devDependencies.deamdify = '^0.3.0';
                 pkg.devDependencies.debowerify = '^1.4.1';
-                pkg.devDependencies.rollupify = '^0.3.4';
+                pkg.devDependencies.rollupify = '^0.4.0';
                 pkg.devDependencies['grunt-browserify'] = '^5.0.0';
                 pkg.devDependencies['karma-browserify'] = '^5.0.2';
                 pkg.devDependencies['karma-babel-preprocessor'] = '^6.0.1';
-                pkg.devDependencies['grunt-contrib-uglify'] = '^1.0.0';
+                pkg.devDependencies['grunt-contrib-uglify'] = '^3.0.1';
             }
 
             if (this.props.uncss) {
