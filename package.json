@@ -28,13 +28,18 @@
   "dependencies": {
     "bluebird": "3.5.0",
     "chalk": "^2.0.1",
+    "cross-spawn": "^5.1.0",
     "decompress": "^4.2.0",
     "download": "^6.2.5",
     "find-up": "2.1.0",
     "fs-extra": "^3.0.1",
+    "glob": "^7.1.2",
     "globby": "6.1.0",
     "got": "^7.1.0",
+    "has-yarn": "^1.0.0",
+    "indent-string": "^3.1.0",
     "lodash": "4.17.4",
+    "path-is-absolute": "^1.0.1",
     "resolve": "1.3.3",
     "wsfp": "0.0.7",
     "xdg-basedir": "3.0.0",
@@ -44,44 +49,51 @@
   },
   "devDependencies": {
     "chai": "^4.0.2",
+    "coveralls": "^2.13.1",
+    "debug": "^2.6.8",
     "eslint": "^4.2.0",
     "eslint-config-xo-space": "^0.16.0",
     "gulp": "3.9.1",
-    "gulp-coveralls": "0.1.4",
-    "gulp-eslint": "^4.0.0",
-    "gulp-exclude-gitignore": "1.1.1",
-    "gulp-istanbul": "^1.1.2",
     "gulp-line-ending-corrector": "1.0.1",
     "gulp-mocha": "^4.3.0",
     "gulp-nsp": "2.4.2",
     "gulp-plumber": "1.1.0",
+    "nyc": "^11.0.3",
     "path-exists": "3.0.0",
     "run-sequence": "^2.0.0",
     "shelljs": "^0.7.7",
     "vinyl-source-stream": "1.1.0",
+    "xo": "^0.18.2",
     "yarn": "^0.27.5",
     "yeoman-assert": "3.0.0",
     "yeoman-test": "^1.7.0"
   },
+  "repository": "bezoerb/generator-sf",
+  "scripts": {
+    "prepare-fixtures": "gulp fixtures",
+    "prepublish": "gulp prepublish",
+    "test": "npm run prepare-fixtures && xo && nyc gulp test",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "license": "MIT",
   "eslintConfig": {
     "extends": "xo-space",
     "env": {
-      "mocha": true
-    },
-    "rules": {
-      "indent": [
-        2,
-        4,
-        {
-          "SwitchCase": 1
-        }
-      ]
+      "mocha": true,
+      "node": true
     }
   },
-  "repository": "bezoerb/generator-sf",
-  "scripts": {
-    "prepublish": "gulp prepublish",
-    "test": "gulp"
-  },
-  "license": "MIT"
+  "xo": {
+    "space": true,
+    "envs": [
+      "node",
+      "mocha"
+    ],
+    "rules": {
+      "object-shorthand": 0
+    },
+    "ignores": [
+      "generators/**/templates/**/*.js"
+    ]
+  }
 }

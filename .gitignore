@@ -1,5 +1,6 @@
 .vscode
 .idea
+.nyc_output
 node_modules
 coverage
 temp

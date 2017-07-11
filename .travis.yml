@@ -39,3 +39,5 @@ cache:
     - node_modules
     - test/fixtures/bower_components
     - test/fixtures/jspm_packages
+
+after_success: npm run coveralls
