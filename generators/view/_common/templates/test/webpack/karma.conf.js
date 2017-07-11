@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on Thu May 07 2015 20:08:12 GMT+0200 (CEST)
 'use strict';
-var webpackConfig = require('../../webpack.config');
+var webpackConfig = require('../../webpack.config')<% if (props.buildtool === 'grunt') { %>.dev<% } %>;
 module.exports = function (config) {
     config.set({
         // Base path that will be used to resolve all patterns (eg. files, exclude)

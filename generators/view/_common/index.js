@@ -213,19 +213,22 @@ module.exports = Generator.extend({
         // Testfiles
         var dest = 'tests/Frontend';
         if (this.props.loader === 'jspm') {
-            fs.copySync(
+            this.fs.copyTpl(
                 this.commonTemplatePath(path.join('test', 'jspm')),
-                this.destinationPath(dest)
+                this.destinationPath(dest),
+                this
             );
         } else if (this.props.loader === 'webpack') {
-            fs.copySync(
+            this.fs.copyTpl(
                 this.commonTemplatePath(path.join('test', 'webpack')),
-                this.destinationPath(dest)
+                this.destinationPath(dest),
+                this
             );
         } else if (this.props.loader === 'browserify') {
-            fs.copySync(
+            this.fs.copyTpl(
                 this.commonTemplatePath(path.join('test', 'browserify')),
-                this.destinationPath(dest)
+                this.destinationPath(dest),
+                this
             );
         }
 
