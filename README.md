@@ -101,7 +101,7 @@ MIT
 [dlcounter-image]: https://img.shields.io/npm/dm/generator-sf.svg
 
 [coveralls-url]: https://coveralls.io/github/bezoerb/generator-sf?branch=master
-[coveralls-image]: https://coveralls.io/repos/github/bezoerb/generator-sf/badge.svg?branch=master
+[coveralls-image]: https://coveralls.io/repos/github/bezoerb/generator-sf/badge.svg?branch=master&cache=0
 
 
 
