@@ -1,8 +1,10 @@
 # generator-sf 
 
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url][![Dependency Status][depstat-image]][depstat-url] [![Download][dlcounter-image]][dlcounter-url]
-
-#  [![Coverage Status][coveralls-image]][coveralls-url] 
+[![NPM version][npm-image]][npm-url] 
+[![Build Status][travis-image]][travis-url] 
+[![Dependency Status][depstat-image]][depstat-url] 
+[![Download][dlcounter-image]][dlcounter-url] 
+[![Coverage Status][coveralls-image]][coveralls-url] 
 
 This [Yeoman](http://yeoman.io) generator scaffolds a symfony app with full featured frontend `grunt`/`gulp` tooling. 
 Just scaffold your app and you are ready to go. 
