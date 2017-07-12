@@ -1,4 +1,24 @@
 
+v0.3.0 / 2017-07-12
+===================
+
+  * Bump dependencies
+  * Minor bugfixes
+  * Update README.md
+  * bump generator deps
+  * switched to gulp-watch
+  * Fixed tmp path
+  * Better middleware (#54) + minor improvements
+  * Watches bundle templates (#52)
+  * Travis yml tweaks
+  * Fixed offline task
+  * Added appcache manifest
+
+v0.2.9 / 2017-02-19
+===================
+
+  * Minor maintenance tweaks
+
 v0.2.8 / 2017-02-19
 ===================
 
