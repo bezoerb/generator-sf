@@ -4,7 +4,6 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
 const _ = require('lodash');
-const hasYarn = require('has-yarn');
 
 const commands = require('../../lib/commands');
 
@@ -43,7 +42,7 @@ module.exports = Generator.extend({
     this._invoke('../backend/symfony');
     this._invoke('../git');
 
-    this.props.yarn = hasYarn();
+    this.props.yarn = commands.hasYarn();
   },
 
   prompting: {
@@ -170,7 +169,7 @@ module.exports = Generator.extend({
 
     const cb = function () {
       if (!this.options['skip-install']) {
-        const installNodeModules = hasYarn() ? commands.yarn : commands.npm;
+        const installNodeModules = commands.hasYarn() ? commands.yarn : commands.npm;
 
         installNodeModules().then(() => {
           commands.composer(['update'], {cwd: this.destinationPath()}).then(() => {
@@ -180,16 +179,16 @@ module.exports = Generator.extend({
       }
     }.bind(this);
 
-    if (!this.props.noBower || !this.props.yarn) {
+    if (this.props.noBower) {
+      cb();
+    } else {
       this.installDependencies({
         skipMessage: true,
         skipInstall: this.options.skipInstall,
-        bower: !this.props.noBower,
-        npm: !this.props.yarn,
+        bower: true,
+        npm: false,
         callback: cb
       });
-    } else {
-      cb();
     }
   }
 });

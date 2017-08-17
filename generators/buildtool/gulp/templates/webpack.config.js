@@ -4,7 +4,6 @@ require('babel-register');
 
 const path = require('path');
 const webpack = require('webpack');
-const assign = require('lodash/assign');
 const {ENV} = require('./gulp/helper/env');
 const DEV = ENV === 'dev' || ENV === 'node';
 
@@ -19,8 +18,8 @@ const provide = {
 };
 
 const aliases = {
-    'jquery': resolveNpmPath('jquery/dist/jquery')<% if (props.preprocessor === 'sass' && props.view === 'bootstrap') { %>,
-    'bootstrap': resolveNpmPath('bootstrap-sass/assets/javascripts/bootstrap')<% } %>
+    jquery: resolveNpmPath('jquery/dist/jquery')<% if (props.preprocessor === 'sass' && props.view === 'bootstrap') { %>,
+    bootstrap: resolveNpmPath('bootstrap-sass/assets/javascripts/bootstrap')<% } %>
 };
 
 
@@ -46,7 +45,8 @@ const config = {
 
     plugins: [
         new webpack.NoEmitOnErrorsPlugin(),
-        new webpack.ProvidePlugin(provide)
+        new webpack.ProvidePlugin(provide),
+        new webpack.optimize.ModuleConcatenationPlugin()
     ],
 
     module: { rules: [] }

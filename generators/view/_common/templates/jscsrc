@@ -1,5 +1,5 @@
 {
-  "disallowCapitalizedComments": true,
+  "disallowCapitalizedComments": false,
   "disallowEmptyBlocks": true,
   "disallowIdentifierNames": [
     "temp"
@@ -25,7 +25,7 @@
   "disallowNodeTypes": [
     "LabeledStatement"
   ],
-  "disallowNotOperatorsInConditionals": true,
+  "disallowNotOperatorsInConditionals": false,
   "disallowOperatorBeforeLineBreak": [
     "+",
     "."
@@ -137,6 +137,5 @@
   "fileExtensions": [
     ".js",
     ".jsx"
-  ],
-  "esnext": true
+  ]
 }

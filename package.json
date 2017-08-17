@@ -36,7 +36,6 @@
     "glob": "^7.1.2",
     "globby": "6.1.0",
     "got": "^7.1.0",
-    "has-yarn": "^1.0.0",
     "indent-string": "^3.1.0",
     "lodash": "4.17.4",
     "path-is-absolute": "^1.0.1",
