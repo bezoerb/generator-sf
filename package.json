@@ -23,7 +23,7 @@
     "service-worker"
   ],
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "dependencies": {
     "bluebird": "3.5.0",
