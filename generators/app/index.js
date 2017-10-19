@@ -51,7 +51,7 @@ module.exports = Generator.extend({
         this.log(yosay('\'Allo \'allo! Let\'s scaffold your Symfony PHP app with full featured frontend tooling'));
       }
     },
-
+    /* Deprecated grunt
     askTask: function () {
       const prompts = [{
         type: 'list',
@@ -67,8 +67,10 @@ module.exports = Generator.extend({
         this.props = _.merge(this.props, props);
       });
     },
+    */
 
     askTools: function () {
+      this.props.buildtool = 'gulp';
       const useSass = function (answers) {
         return _.result(answers, 'preprocessor') === 'sass';
       };
