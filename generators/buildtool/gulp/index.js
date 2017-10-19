@@ -45,7 +45,7 @@ module.exports = common.extend({
 
       pkg.devDependencies['browser-sync'] = '^2.9.0';
       pkg.devDependencies['gulp-autoprefixer'] = '^4.0.0';
-      pkg.devDependencies['gulp-babel'] = '^6.1.2';
+      pkg.devDependencies['gulp-babel'] = '^7.0.0';
       pkg.devDependencies['gulp-batch'] = '^1.0.5';
       pkg.devDependencies['gulp-watch'] = '^4.3.11';
       pkg.devDependencies['gulp-cache'] = '^0.4.5';
@@ -59,7 +59,7 @@ module.exports = common.extend({
       pkg.devDependencies['gulp-minify-html'] = '^1.0.6';
       pkg.devDependencies['gulp-manifest'] = '^0.1.1';
       pkg.devDependencies['gulp-newer'] = '^1.3.0';
-      pkg.devDependencies['gulp-phpunit'] = '^0.23.0';
+      pkg.devDependencies['gulp-phpunit'] = '^0.24.1';
       pkg.devDependencies['gulp-remote-src'] = '^0.4.0';
       pkg.devDependencies['gulp-rev'] = '^7.1.2';
       pkg.devDependencies['gulp-rev-replace'] = '^0.4.2';
@@ -92,7 +92,7 @@ module.exports = common.extend({
       pkg.devDependencies['karma-mocha-reporter'] = '^2.0.0';
       pkg.devDependencies['karma-phantomjs-launcher'] = '^1.0.0';
       pkg.devDependencies['phantomjs-prebuilt'] = '>=1.9';
-      pkg.devDependencies['fs-extra'] = '^3.0.1';
+      pkg.devDependencies['fs-extra'] = '^4.0.2';
 
       // Css preprocessors
       if (this.props.preprocessor === 'sass' && !this.props.libsass) {
@@ -158,10 +158,10 @@ module.exports = common.extend({
         pkg.devDependencies['gulp-uncss'] = '^1.0.0';
       }
       if (this.props.critical) {
-        pkg.devDependencies.critical = '^0.8.0';
+        pkg.devDependencies.critical = '^0.9.1';
       }
       if (this.props.uncss || this.props.critical) {
-        pkg.devDependencies['gulp-twig'] = '^0.7.0';
+        pkg.devDependencies['gulp-twig'] = '^1.1.1';
       }
 
       this._writePkg(pkg);

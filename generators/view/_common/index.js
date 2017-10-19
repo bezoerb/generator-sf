@@ -137,6 +137,7 @@ module.exports = Generator.extend({
     this.template('eslintrc', '.eslintrc');
     this.template('jscsrc', '.jscsrc');
     this.template('babelrc', '.babelrc');
+    this.template('browserlistrc', '.browserlistrc');
 
     if (!this.props.noBower) {
       this.template('bowerrc', '.bowerrc');

@@ -5,18 +5,6 @@ import gulpLoadPlugins from 'gulp-load-plugins';<% if (props.preprocessor === 's
 import nib from 'nib';<% } %>
 const $ = gulpLoadPlugins();
 
-const AUTOPREFIXER_BROWSERS = [
-    'ie >= 10',
-    'ie_mob >= 10',
-    'ff >= 30',
-    'chrome >= 34',
-    'safari >= 7',
-    'opera >= 23',
-    'ios >= 7',
-    'android >= 4.4',
-    'bb >= 10'
-];
-
 // Compile and automatically prefix stylesheets
 export const styles = bs => () => {<% if (props.preprocessor === 'sass' && !props.libsass) { %>
     const stream = $.rubySass(src('styles/main.scss'), {
@@ -39,7 +27,7 @@ export const styles = bs => () => {<% if (props.preprocessor === 'sass' && !prop
             use: [nib]
         }))<% } %>
     <% } %>
-        .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
+        .pipe($.autoprefixer())
         // Concatenate and minify styles
         .pipe($.if('*.css', $.cssnano({safe: true})))
         .pipe($.sourcemaps.write('./'))

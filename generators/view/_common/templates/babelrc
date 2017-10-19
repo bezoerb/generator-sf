@@ -1,12 +1,10 @@
 {
-    "presets": [
-        ["env", {
-            "targets": {
-                "browsers": ["last 2 versions", "safari >= 7"],
-                "node": "current"
-            }
-        }]
-    ],
-    "plugins": ["transform-object-rest-spread"],
-    "retainLines": true
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": "current"
+      }<% if (props.loader === 'webpack') { %>,
+      "modules": false<% } %>
+    }]
+  ]
 }
