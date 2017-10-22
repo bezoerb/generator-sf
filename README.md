@@ -36,7 +36,7 @@ yo sf
 * Browsersync dev/prod server with livereload
 * Choose the build tool which fits your needs
   - [Gulp](http://gulpjs.com/)
-  - [Grunt](http://gruntjs.com/)
+  - ~~[Grunt](http://gruntjs.com/)~~
 * Choose the CSS preprocessor which fits your needs
   - [Sass](http://sass-lang.com/)
   - [Less](http://lesscss.org)
@@ -49,9 +49,9 @@ yo sf
   * [inuitcss](http://inuitcss.com) (sass only)
   * no framework?
 * Choose Javascript module loader
-  * [JSPM](http://jspm.io/) + [SystemJS](https://github.com/systemjs/systemjs) (ES6)
   * [Webpack](https://webpack.github.io/) (ES6)
-  * [Browserify](http://browserify.org/) (ES6)
+  * ~~[JSPM](http://jspm.io/) + [SystemJS](https://github.com/systemjs/systemjs) (ES6)~~
+  * ~~[Browserify](http://browserify.org/) (ES6)~~
 * File revving
 * Image optimization
 * [Critical](https://github.com/addyosmani/critical) (Extract & Inline Critical-path CSS) 

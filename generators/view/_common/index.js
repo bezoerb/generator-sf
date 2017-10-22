@@ -28,7 +28,8 @@ module.exports = Generator.extend({
         debug: '^2.2.0',
         jquery: '^3.1.1',
         picturefill: '^3.0.2',
-        svg4everybody: '^2.1.0'
+        svg4everybody: '^2.1.0',
+        'appcache-nanny': '^1.1.0'
       }
     });
   },

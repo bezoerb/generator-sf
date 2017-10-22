@@ -23,11 +23,11 @@ describe('symfony generator (gulp)', function () {
   // it('', some({buildtool: 'gulp', loader: 'browserify', framework: 'uikit', preprocessor: 'stylus'}));
 
   // browserify bootstrap
-  it('', some({buildtool: 'gulp', loader: 'browserify', framework: 'bootstrap'}));
-  it('', some({buildtool: 'gulp', loader: 'browserify', framework: 'bootstrap', preprocessor: 'less'}));
+  //  it('', some({buildtool: 'gulp', loader: 'browserify', framework: 'bootstrap'}));
+  //  it('', some({buildtool: 'gulp', loader: 'browserify', framework: 'bootstrap', preprocessor: 'less'}));
   // It('', all({buildtool: 'gulp', loader: 'browserify', framework: 'bootstrap', preprocessor: 'sass', libsass: false}));
-  it('', all({buildtool: 'gulp', loader: 'browserify', framework: 'bootstrap', preprocessor: 'sass', libsass: true}));
-  it('', some({buildtool: 'gulp', loader: 'browserify', framework: 'bootstrap', preprocessor: 'stylus'}));
+  //  it('', all({buildtool: 'gulp', loader: 'browserify', framework: 'bootstrap', preprocessor: 'sass', libsass: true}));
+  //  it('', some({buildtool: 'gulp', loader: 'browserify', framework: 'bootstrap', preprocessor: 'stylus'}));
 
   // Browserify foundation
   // it('', some({buildtool: 'gulp', loader: 'browserify', framework: 'foundation'}));
@@ -65,37 +65,37 @@ describe('symfony generator (gulp)', function () {
   // it('', all({buildtool: 'gulp', loader: 'jspm', framework: 'foundation', preprocessor: 'stylus'}));
 
   // // jspm foundation
-  it('', some({buildtool: 'gulp', loader: 'jspm', framework: 'inuit'}));
-  it('', some({buildtool: 'gulp', loader: 'jspm', framework: 'inuit', preprocessor: 'less'}));
-  it('', all({buildtool: 'gulp', loader: 'jspm', framework: 'inuit', preprocessor: 'sass', libsass: false}));
+  //  it('', some({buildtool: 'gulp', loader: 'jspm', framework: 'inuit'}));
+  //  it('', some({buildtool: 'gulp', loader: 'jspm', framework: 'inuit', preprocessor: 'less'}));
+  //  it('', all({buildtool: 'gulp', loader: 'jspm', framework: 'inuit', preprocessor: 'sass', libsass: false}));
   // It('', all({buildtool: 'gulp', loader: 'jspm', framework: 'foundation', preprocessor: 'sass', libsass: true}));
-  it('', some({buildtool: 'gulp', loader: 'jspm', framework: 'inuit', preprocessor: 'stylus'}));
+  //  it('', some({buildtool: 'gulp', loader: 'jspm', framework: 'inuit', preprocessor: 'stylus'}));
 
   // Webpack no framework
   it('', some({buildtool: 'gulp', loader: 'webpack'}));
-  it('', some({buildtool: 'gulp', loader: 'webpack', preprocessor: 'less'}));
-  // It('', all({buildtool: 'gulp', loader: 'webpack', preprocessor: 'sass', libsass: false}));
+  it('', all({buildtool: 'gulp', loader: 'webpack', preprocessor: 'less'}));
+  it('', some({buildtool: 'gulp', loader: 'webpack', preprocessor: 'sass', libsass: false}));
   it('', some({buildtool: 'gulp', loader: 'webpack', preprocessor: 'sass', libsass: true}));
-  it('', all({buildtool: 'gulp', loader: 'webpack', preprocessor: 'stylus'}));
+  it('', some({buildtool: 'gulp', loader: 'webpack', preprocessor: 'stylus'}));
 
   // Webpack uikit
-  // it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'uikit'}));
-  // it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'uikit', preprocessor: 'less'}));
-  // it('', all({buildtool: 'gulp', loader: 'webpack', framework: 'uikit', preprocessor: 'sass', libsass: false}));
-  // // it('', all({buildtool: 'gulp', loader: 'webpack', framework: 'uikit', preprocessor: 'sass', libsass: true}));
-  // it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'uikit', preprocessor: 'stylus'}));
+  it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'uikit'}));
+  it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'uikit', preprocessor: 'less'}));
+  it('', all({buildtool: 'gulp', loader: 'webpack', framework: 'uikit', preprocessor: 'sass', libsass: false}));
+  it('', all({buildtool: 'gulp', loader: 'webpack', framework: 'uikit', preprocessor: 'sass', libsass: true}));
+  it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'uikit', preprocessor: 'stylus'}));
 
-  // webpack bootstrap
+  // Webpack bootstrap
   it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'bootstrap'}));
-  it('', all({buildtool: 'gulp', loader: 'webpack', framework: 'bootstrap', preprocessor: 'less'}));
-  // It('', all({buildtool: 'gulp', loader: 'webpack', framework: 'bootstrap', preprocessor: 'sass', libsass: false}));
+  it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'bootstrap', preprocessor: 'less'}));
+  it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'bootstrap', preprocessor: 'sass', libsass: false}));
   it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'bootstrap', preprocessor: 'sass', libsass: true}));
-  it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'bootstrap', preprocessor: 'stylus'}));
+  it('', all({buildtool: 'gulp', loader: 'webpack', framework: 'bootstrap', preprocessor: 'stylus'}));
 
   // Webpack foundation
-  // it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'foundation'}));
-  // it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'foundation', preprocessor: 'less'}));
-  // it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'foundation', preprocessor: 'sass', libsass: false}));
-  // // it('', all({buildtool: 'gulp', loader: 'webpack', framework: 'foundation', preprocessor: 'sass', libsass: true}));
-  // it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'foundation', preprocessor: 'stylus'}));
+  it('', all({buildtool: 'gulp', loader: 'webpack', framework: 'foundation'}));
+  it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'foundation', preprocessor: 'less'}));
+  it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'foundation', preprocessor: 'sass', libsass: false}));
+  it('', all({buildtool: 'gulp', loader: 'webpack', framework: 'foundation', preprocessor: 'sass', libsass: true}));
+  it('', some({buildtool: 'gulp', loader: 'webpack', framework: 'foundation', preprocessor: 'stylus'}));
 });

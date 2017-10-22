@@ -71,6 +71,8 @@ module.exports = Generator.extend({
 
     askTools: function () {
       this.props.buildtool = 'gulp';
+      this.props.loader = 'webpack';
+
       const useSass = function (answers) {
         return _.result(answers, 'preprocessor') === 'sass';
       };
@@ -93,7 +95,7 @@ module.exports = Generator.extend({
         message: 'Would you like to use libsass? Read up more at' + os.EOL +
         chalk.green('https://github.com/andrew/node-sass#node-sass'),
         default: true
-      }, {
+      }, /* {
         type: 'list',
         name: 'loader',
         message: 'Which module loader would you like to use?',
@@ -102,7 +104,7 @@ module.exports = Generator.extend({
           {name: 'SystemJS (jspm)', value: 'jspm'},
           {name: 'Browserify (babel)', value: 'browserify'}
         ]
-      }, {
+      }, */{
         type: 'checkbox',
         name: 'additional',
         message: 'Which additional plugins should i integrate for you?',
