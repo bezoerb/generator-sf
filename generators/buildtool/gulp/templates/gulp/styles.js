@@ -1,12 +1,12 @@
-import gulp from 'gulp';
-import {src, tmp} from './helper/dir';
-import {ENV} from './helper/env';
-import gulpLoadPlugins from 'gulp-load-plugins';<% if (props.preprocessor === 'stylus') { %>
-import nib from 'nib';<% } %>
+const gulp = require('gulp');
+const {src, tmp} = require('./helper/dir');
+const {ENV} = require('./helper/env');
+const gulpLoadPlugins = require('gulp-load-plugins');<% if (props.preprocessor === 'stylus') { %>
+const nib = require('nib');<% } %>
 const $ = gulpLoadPlugins();
 
 // Compile and automatically prefix stylesheets
-export const styles = bs => () => {<% if (props.preprocessor === 'sass' && !props.libsass) { %>
+const styles = bs => () => {<% if (props.preprocessor === 'sass' && !props.libsass) { %>
     const stream = $.rubySass(src('styles/main.scss'), {
             sourcemap: true,
             precision: 10,
@@ -39,4 +39,8 @@ export const styles = bs => () => {<% if (props.preprocessor === 'sass' && !prop
     }
 
     return stream;
+};
+
+module.exports = {
+    styles
 };

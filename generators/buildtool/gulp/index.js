@@ -81,7 +81,7 @@ module.exports = common.extend({
       pkg.devDependencies['run-sequence'] = '^2.0.0';
       pkg.devDependencies['sw-precache'] = '^5.0.0';
 
-      pkg.devDependencies['eslint-config-xo'] = '^0.18.1';
+      pkg.devDependencies['eslint-config-xo'] = '^0.19.0';
 
       pkg.devDependencies['sw-toolbox'] = '^3.0.1';
       pkg.devDependencies['appcache-nanny'] = '^1.1.0';

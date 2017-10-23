@@ -55,7 +55,7 @@ function prompts2String(promts) {
 function runTask(tool, task) {
   if (tool === 'gulp') {
     const p = path.resolve(__dirname, '..', 'temp');
-    tool = 'gulp --cwd ' + p + ' --gulpfile ' + path.join(p, 'gulpfile.babel.js');
+    tool = 'gulp --cwd ' + p + ' --gulpfile ' + path.join(p, 'gulpfile.js');
   }
   return new Bluebird((resolve, reject) => {
     debug(tool + ' ' + task);

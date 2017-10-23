@@ -50,7 +50,7 @@ Base.prototype.addGrunt = function () {
 };
 
 Base.prototype.addGulp = function () {
-  this.files.concat([path.join(this._dir, 'gulpfile.babel.js')]);
+  this.files.concat([path.join(this._dir, 'gulpfile.js')]);
   this.files.concat([path.join(this._dir, '.babelrc')]);
   return this;
 };

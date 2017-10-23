@@ -31,7 +31,7 @@ const svgstore = () =>
         .pipe($.size({title: 'svgstore'}));
 
 module.exports = {
-    imageCopy,
+    imagecopy,
     imagemin,
     svgstore
 };
