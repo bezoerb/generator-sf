@@ -3,7 +3,8 @@
     ["env", {
       "targets": {
         "node": "current"
-      }
+      }<% if (props.loader === 'webpack') { %>,
+      "modules": false<% } %>
     }]
   ],
   "plugins": ["transform-object-rest-spread"]

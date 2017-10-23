@@ -1,9 +1,9 @@
-import gulp from 'gulp';
-import {dist, tmp, config} from './helper/dir';
-import gulpLoadPlugins from 'gulp-load-plugins';
+const gulp = require('gulp');
+const {dist, tmp, config} = require('./helper/dir');
+const gulpLoadPlugins = require('gulp-load-plugins');
 const $ = gulpLoadPlugins();
 
-export const rev = () =>
+const rev = () =>
     gulp.src(tmp(
         'img/**/*.{jpg,jpeg,gif,png,webp,svg}',
         'styles/**/*.css',
@@ -15,7 +15,7 @@ export const rev = () =>
         .pipe(gulp.dest(config()))
         .pipe($.size({title: 'rev'}));
 
-export const revManifest = () => {
+const revManifest = () => {
     const manifest = gulp.src(config('rev-manifest.json'));
 
     return gulp.src(dist(
@@ -24,4 +24,9 @@ export const revManifest = () => {
     ), {base: dist()})
         .pipe($.revReplace({manifest: manifest, replaceInExtensions: ['.js', '.css']}))
         .pipe(gulp.dest(dist()));
+};
+
+module.exports = {
+    rev,
+    revManifest
 };

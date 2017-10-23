@@ -1,16 +1,16 @@
-<% if (props.loader === 'browserify') { %>import watchify from 'watchify';
-import babelify from 'babelify';
-import rollupify from 'rollupify';
-import browserify from 'browserify';
-import gulp from 'gulp';
-import source from 'vinyl-source-stream';
-import buffer from 'vinyl-buffer';
-import sourcemaps from 'gulp-sourcemaps';
-import {first} from 'lodash';
-import {src, tmp} from './helper/dir';
-import {ENV} from './helper/env';
+<% if (props.loader === 'browserify') { %>const watchify = require('watchify');
+const babelify = require('babelify');
+const rollupify = require('rollupify');
+const browserify = require('browserify');
+const gulp = require('gulp');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
+const sourcemaps = require('gulp-sourcemaps');
+const {first} = require('lodash');
+const {src, tmp} = require('./helper/dir');
+const {ENV} = require('./helper/env');
 
-export const scripts = bs => {
+const scripts = bs => {
     const watch = ENV !== 'prod';
     let bundler = browserify(src('scripts/main.js'), {debug: watch});
     if (watch) {
@@ -41,11 +41,15 @@ export const scripts = bs => {
     }
 
     return rebundle;
-};<% } else if (props.loader === 'webpack') { %>import gutil from 'gulp-util';
-import webpack from 'webpack';
-import wpc from '../webpack.config';
+};
 
-export const scripts = () => cb => {
+module.exports = {
+    scripts
+};<% } else if (props.loader === 'webpack') { %>const gutil = require('gulp-util');
+const webpack = require('webpack');
+const wpc = require('../webpack.config');
+
+const scripts = () => cb => {
     const config = {
         ...wpc, stats: {
             // Configure the console output
@@ -65,14 +69,21 @@ export const scripts = () => cb => {
         }));
         cb();
     });
-};<% } else if (props.loader === 'jspm') { %>
-import {exec} from 'child_process';
-import {ENV} from './helper/env';
+};
 
-export const scripts = () => cb =>
+module.exports = {
+    scripts
+};<% } else if (props.loader === 'jspm') { %>
+const {exec} = require('child_process');
+const {ENV} = require('./helper/env');
+
+const scripts = () => cb =>
     (ENV !== 'node' && exec(`node_modules/.bin/jspm bundle-sfx scripts/main .tmp/scripts/main.js`, (err, stdout, stderr) => {
         console.log(stdout);
         console.log(stderr);
         cb(err);
     })) || cb();
-<% } %>
+
+module.exports = {
+    scripts
+};<% } %>

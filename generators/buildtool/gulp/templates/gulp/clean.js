@@ -1,5 +1,5 @@
-import {dist, config} from './helper/dir';
-import del from 'del';
+const {dist, config} = require('./helper/dir');
+const del = require('del');
 
 const mapping = {
     tmp: ['.tmp'],
@@ -17,4 +17,8 @@ const mapping = {
 };
 
 // Clean output directory
-export const clean = target => () => del(mapping[target] || [], {dot: true});
+const clean = target => () => del(mapping[target] || [], {dot: true});
+
+module.exports = {
+    clean
+};

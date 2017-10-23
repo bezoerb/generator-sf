@@ -1,7 +1,7 @@
-import minimist from 'minimist';
-import dotenv from 'dotenv';
-import {join} from 'path';
-import {existsSync} from 'fs';
+const minimist = require('minimist');
+const dotenv = require('dotenv');
+const {join} = require('path');
+const {existsSync} = require('fs');
 
 const envFile = join(__dirname, '../../', '.env');
 if (existsSync(envFile)) {
@@ -17,5 +17,10 @@ const defaultOptions = {
 
 const options = minimist(process.argv.slice(2), defaultOptions);
 
-export const getenv = (key, defaultValue) => (options[key] !== undefined && options[key]) || defaultValue;
-export const ENV = getenv('env');
+const getenv = (key, defaultValue) => (options[key] !== undefined && options[key]) || defaultValue;
+const ENV = getenv('env');
+
+module.exports = {
+    getenv,
+    ENV
+};

@@ -1,18 +1,18 @@
-import browserSync from 'browser-sync';
-import {php} from './helper/middleware';
-import {tmp, src, dist} from './helper/dir';
-import {ENV} from './helper/env';
-import getport from 'getport';
-import pkg from '../package.json';
+const browserSync = require('browser-sync');
+const {php} = require('./helper/middleware');
+const {tmp, src, dist} = require('./helper/dir');
+const {ENV} = require('./helper/env');
+const getport = require('getport');
+const pkg = require('../package.json');
 <% if (props.loader === 'webpack') { %>
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import config from '../webpack.config.js';
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const config = require('../webpack.config.js');
 <% } %>
 const nodeEnv = ENV !== 'prod';
 
-export const bs = browserSync.create(pkg.name || 'generator-sf');
+const bs = browserSync.create(pkg.name || 'generator-sf');
 
 const options = {
     server: {
@@ -29,7 +29,7 @@ const options = {
     }
 };
 
-export const serve = cb => done => {<% if (props.loader === 'webpack') { %>
+const serve = cb => done => {<% if (props.loader === 'webpack') { %>
     const bundler = webpack(config);
     const middleware = [
         webpackDevMiddleware(bundler, {
@@ -49,5 +49,10 @@ export const serve = cb => done => {<% if (props.loader === 'webpack') { %>
     });
 };
 
-export const stream = browserSync.stream;
+const stream = browserSync.stream;
 
+module.exports = {
+    bs,
+    serve,
+    stream
+};

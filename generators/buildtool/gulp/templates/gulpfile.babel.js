@@ -4,27 +4,27 @@
 // Babel handles this without us having to do anything. It just works.
 // You can read more about the new JavaScript features here:
 // https://babeljs.io/docs/learn-es2015/
-import gulp from 'gulp';
-import watch from 'gulp-watch';
-import batch from 'gulp-batch';
-import runSequence from 'run-sequence';
-import {src, views, bundles} from './gulp/helper/dir';
-import {ENV} from './gulp/helper/env';
+const gulp = require('gulp');
+const watch = require('gulp-watch');
+const batch = require('gulp-batch');
+const runSequence = require('run-sequence');
+const {src, views, bundles} = require('./gulp/helper/dir');
+const {ENV} = require('./gulp/helper/env');
 
 // require the tasks
-import {serve, bs} from './gulp/server';
-import {styles} from './gulp/styles';
-import {scripts} from './gulp/scripts';
-import {rev, revManifest} from './gulp/rev';
-import {imagemin, imagecopy, svgstore} from './gulp/images';
-import {copy} from './gulp/copy';
-import {clean} from './gulp/clean';
-<% if (props.uncss || props.critical) { %>import {twig} from './gulp/twig';<% } %>
-<% if (props.critical) { %>import {critical} from './gulp/critical';<% } %>
-<% if (props.uncss) { %>import {uncss} from './gulp/uncss';<% } %>
-import {sfcl} from './gulp/exec';
-import {appcache, appcacheNanny, copySwScripts, generateServiceWorker} from './gulp/offline';
-import {lint, karma, phpunit} from './gulp/tests';
+const {serve, bs} = require('./gulp/server');
+const {styles} = require('./gulp/styles');
+const {scripts} = require('./gulp/scripts');
+const {rev, revManifest} = require('./gulp/rev');
+const {imagemin, imagecopy, svgstore} = require('./gulp/images');
+const {copy} = require('./gulp/copy');
+const {clean} = require('./gulp/clean');
+<% if (props.uncss || props.critical) { %>const {twig} = require('./gulp/twig');<% } %>
+<% if (props.critical) { %>const {critical} = require('./gulp/critical');<% } %>
+<% if (props.uncss) { %>const {uncss} = require('./gulp/uncss');<% } %>
+const {sfcl} = require('./gulp/exec');
+const {appcache, appcacheNanny, copySwScripts, generateServiceWorker} = require('./gulp/offline');
+const {lint, karma, phpunit} = require('./gulp/tests');
 
 // Clean output directory
 gulp.task('clean:tmp', clean('tmp'));

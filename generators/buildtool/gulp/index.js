@@ -18,6 +18,7 @@ module.exports = common.extend({
       const pkg = this._readPkg();
       pkg.scripts.test = 'gulp test';
       pkg.scripts.start = 'gulp serve';
+      pkg.scripts.build = 'NODE_ENV=production gulp build --env prod';
       this._writePkg(pkg);
     },
     pkgDev: function () {

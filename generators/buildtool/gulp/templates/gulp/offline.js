@@ -1,9 +1,9 @@
-import path from 'path';
-import gulp from 'gulp';
-import swPrecache from 'sw-precache';
-import {dist, src} from './helper/dir';
-import gulpLoadPlugins from 'gulp-load-plugins';
-import pkg from '../package.json';
+const path = require('path');
+const gulp = require('gulp');
+const swPrecache = require('sw-precache');
+const {dist, src} = require('./helper/dir');
+const gulpLoadPlugins = require('gulp-load-plugins');
+const pkg = require('../package.json');
 
 const $ = gulpLoadPlugins();
 const baseDir = dist(path.sep);
@@ -20,12 +20,12 @@ const staticFiles = [
 
 // Copy html for appcache fallback based on the "Offline IFRAME Hack"
 // by the awesome Financial Times Labs team: http://labs.ft.com/category/tutorial/
-export const appcacheNanny = () =>
+const appcacheNanny = () =>
     gulp.src([require.resolve('appcache-nanny/appcache-loader.html')])
         .pipe(gulp.dest(dist('')));
 
-// Generate appcahe manifest fpr browsers not supporting servive workers
-export const appcache = () =>
+// Generate appcache manifest for browsers not supporting servive workers
+const appcache = () =>
     gulp.src(staticFiles, {base: baseDir})
         .pipe($.manifest({
             hash: true,
@@ -37,7 +37,7 @@ export const appcache = () =>
         .pipe(gulp.dest(baseDir));
 
 // Copy over the scripts that are used in importScripts as part of the generate-service-worker task.
-export const copySwScripts = () =>
+const copySwScripts = () =>
     gulp.src(['node_modules/sw-toolbox/sw-toolbox.js', src('scripts/sw/runtime-caching.js')])
         .pipe(gulp.dest(dist('scripts/sw')));
 
@@ -46,7 +46,7 @@ export const copySwScripts = () =>
 // Generate a service worker file that will provide offline functionality for
 // local resources. This should only be done for the 'dist' directory, to allow
 // live reload to work as expected when serving from the 'app' directory.
-export const generateServiceWorker = () => {
+const generateServiceWorker = () => {
     const filepath = dist('service-worker.js');
 
     return swPrecache.write(filepath, {
@@ -61,4 +61,11 @@ export const generateServiceWorker = () => {
         // Translates a static file path to the relative URL that it's served from.
         stripPrefix: baseDir
     });
+};
+
+module.exports = {
+    appcacheNanny,
+    appcache,
+    copySwScripts,
+    generateServiceWorker
 };

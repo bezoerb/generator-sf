@@ -1,13 +1,13 @@
-import { existsSync, statSync } from 'fs';
-import { join } from 'path';
-import { find, isArray } from 'lodash';
-import parseurl from 'parseurl';
-import phpMiddleare from 'php-proxy-middleware';
-import {getenv} from './env';
-import {dist} from './dir';
+const { existsSync, statSync } = require('fs');
+const { join } = require('path');
+const { find, isArray } = require('lodash');
+const parseurl = require('parseurl');
+const phpMiddleare = require('php-proxy-middleware');
+const {getenv} = require('./env');
+const {dist} = require('./dir');
 
 
-export function php(base = [dist()]) {
+function php(base = [dist()]) {
     const env = getenv('env');
     const middleware = phpMiddleare({
         address: '127.0.0.1', // which interface to bind to
@@ -39,3 +39,7 @@ export function php(base = [dist()]) {
         }
     };
 }
+
+module.exports = {
+    php
+};

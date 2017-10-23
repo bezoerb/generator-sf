@@ -1,9 +1,9 @@
-import gulp from 'gulp';
-import gulpLoadPlugins from 'gulp-load-plugins';
-import {tmp} from './helper/dir';
+const gulp = require('gulp');
+const gulpLoadPlugins = require('gulp-load-plugins');
+const {tmp} = require('./helper/dir');
 const $ = gulpLoadPlugins();
 
-export const uncss = () =>
+const uncss = () =>
     gulp.src(tmp('styles/**/*.css'))
         .pipe(gulp.dest(tmp('no-uncss')))
         .pipe($.sourcemaps.init())
@@ -33,3 +33,7 @@ export const uncss = () =>
         .pipe($.sourcemaps.write('./'))
         .pipe($.size({title: 'uncss'}))
         .pipe(gulp.dest(tmp()));
+
+module.exports = {
+    uncss
+};

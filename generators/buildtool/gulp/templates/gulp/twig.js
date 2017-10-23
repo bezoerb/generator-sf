@@ -1,7 +1,7 @@
-import gulp from 'gulp';
-import {basename} from 'path';
-import {tmp, views, dist} from './helper/dir';
-import gulpLoadPlugins from 'gulp-load-plugins';
+const gulp = require('gulp');
+const {basename} = require('path');
+const {tmp, views, dist} = require('./helper/dir');
+const gulpLoadPlugins = require('gulp-load-plugins');
 
 const $ = gulpLoadPlugins();
 
@@ -23,3 +23,7 @@ export const twig = () =>
         }))
         .pipe(gulp.dest(tmp('html')))
         .pipe($.size({title: 'twig'}));
+
+module.exports = {
+    twig
+};
