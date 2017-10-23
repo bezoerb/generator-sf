@@ -50,15 +50,15 @@ const webpack = require('webpack');
 const wpc = require('../webpack.config');
 
 const scripts = () => cb => {
-    const config = {
-        ...wpc, stats: {
+    const config = Object.assign({}, wpc, {
+        stats: {
             // Configure the console output
             colors: true,
             modules: true,
             reasons: true,
             errorDetails: true
         }
-    };
+    });
 
     webpack(config, (err, stats) => {
         if (err) {

@@ -208,7 +208,7 @@ module.exports = common.extend({
     gulp: function () {
       this.pkg = this._readPkg();
 
-      this.template('gulpfile.babel.js', 'gulpfile.babel.js');
+      this.template('gulpfile.js', 'gulpfile.js');
       fs.mkdirsSync(this.destinationPath('gulp'));
 
       // Helper

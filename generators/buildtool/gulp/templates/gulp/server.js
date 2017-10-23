@@ -39,7 +39,7 @@ const serve = cb => done => {<% if (props.loader === 'webpack') { %>
         webpackHotMiddleware(bundler)
     ];<% } %>
     getport(8000, 8999, (err, port) => {
-        bs.init({...options, port, middleware: [<% if (props.loader === 'webpack') { %>...middleware, <% } %>php(options.server.baseDir)]}, err => {
+        bs.init(Object.assign({}, options, {port, middleware: [<% if (props.loader === 'webpack') { %>...middleware, <% } %>php(options.server.baseDir)]}), err => {
             if (cb) {
                 cb(err, done);
             } else {
